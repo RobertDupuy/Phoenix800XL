@@ -128,27 +128,27 @@ def prepare():
         centered(page, 'AMSTAR ELECTRONICS CORP.', 176)
         centered(page, 'PHOENIX T.M. U.S.A.', 184)
 
-    # Use a flying gameplay pose with a visible head, body and spread wing.
+    # Compact upright gameplay birds leave clear gaps between letter strokes.
     letters = {
         'P': ['111', '101', '111', '100', '100'],
         'H': ['101', '101', '111', '101', '101'],
         'O': ['111', '101', '101', '101', '111'],
         'E': ['111', '100', '110', '100', '111'],
-        'N': ['1001', '1101', '1011', '1001', '1001'],
-        'I': ['1']*5,
-        'X': ['101', '101', '010', '101', '101'],
+        'N': ['10001', '11001', '10101', '10011', '10001'],
+        'I': ['111', '010', '010', '010', '111'],
+        'X': ['10001', '01010', '00100', '01010', '10001'],
     }
-    bird = poses[80]
+    bird = poses[78]
     left = min(x for line in bird for x, v in enumerate(line) if v)
-    cursor = 1
+    cursor = 6
     for char in 'PHOENIX':
         rows = letters[char]
         for row, line in enumerate(rows):
             for col, value in enumerate(line):
                 if value == '1':
-                    stamp(title, bird, cursor+col*7-left, 64+row*12, SMALL,
-                          dict(kind='small', shape=80, letter=char))
-        cursor += len(rows[0])*7+3
+                    stamp(title, bird, cursor+col*5-left, 64+row*12, SMALL,
+                          dict(kind='small', shape=78, letter=char))
+        cursor += len(rows[0])*5+4
 
     # The logo area contains only its bird sprites, including N-I-X gaps.
     stars = json.loads((A/'stars-irregular.json').read_text())['cells']
@@ -186,7 +186,7 @@ def prepare():
     info.update(pages=['native-sprite PHOENIX title', 'native-sprite score table'],
                 startup_font_ram=[4096, 4096+info['font_bytes']],
                 sprite_method='Unscaled gameplay pixels; explicit text from native HUD glyphs',
-                title_shape=80, title_birds=sum(c['page']=='title' for c in copies),
+                title_shape=78, title_birds=sum(c['page']=='title' for c in copies),
                 band_start_rows=START_ROWS, colors=[title_palette, score_palette],
                 font_switches_during_visible_page=0)
     (B/'intro-art-manifest.json').write_text(json.dumps(dict(**info, sprite_copies=copies,
