@@ -1,4 +1,4 @@
-# Phoenix v0.12 — gameplay sprites on the title and score screens.
+# Phoenix v0.13 — clean presentation and shootable mothership escorts.
 # All code executed by the console is NMOS 6502 assembly.
 # Foreground builds buffered graphics independently of the arcade-rate clock.
 # VBI samples input and publishes audio each video frame, committing ready graphics
@@ -932,7 +932,7 @@ intro_count_done:
  bne intro_wait
  lda #1
  sta start_requested
- jmp nmi_commit
+ jmp frame_done
 intro_wait:
  lda intro_ticks
  ora intro_ticks+1
@@ -941,7 +941,7 @@ intro_wait:
  eor #1
  sta intro_page
  jsr startup_select
- jmp nmi_commit
+ jmp frame_done
 intro_countdown:
  lda intro_ticks
  bne intro_tick_low
@@ -949,7 +949,8 @@ intro_countdown:
 intro_tick_low:
  dec intro_ticks
  jsr startup_fonts
- jmp nmi_commit
+ # The gameplay VBI tail changes COLPF3 for sprites. Startup owns its palette.
+ jmp frame_done
 
 startup_dli:
  pha
@@ -957,9 +958,8 @@ startup_dli:
  pha
  ldx intro_next_font
  jsr startup_colors
- lda intro_font_table,x
- sta 0xd40a
- sta 0xd409
+ # Each entire page uses one font, selected in VBI. There is no CHBASE write
+ # here: a late interrupt must never replace the top scanlines of a character.
  inc intro_next_font
  pla
  tax
@@ -967,8 +967,7 @@ startup_dli:
  rti
 
 startup_colors:
- # All band boundaries have a blank final scanline. Change the palette there,
- # before WSYNC, so the first pixels of the following band use its own colors.
+ # Palette changes have blank guard scanlines on both sides of the boundary.
  lda intro_maps+960,x
  sta 0xc016
  lda intro_maps+974,x

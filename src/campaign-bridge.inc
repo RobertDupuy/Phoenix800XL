@@ -86,14 +86,30 @@ campaign_next:
  sta wave
 1: jsr wave_reset
  jmp begin_wave
+boss_shot_collision:
+ # Escorts are drawn in front of the mothership and take a matching shot first.
+ # Do not hit hidden birds during entry, explosion or the score display.
+ lda boss_status
+ cmp #2
+ bne 1f
+ jsr shot_collision
+ jmp mothership_collision
+1: rts
 boss_play:
- jsr mothership_collision
  lda boss_status
  cmp #2
  beq 1f
  rts
 1: jsr arcade_step
  lda aliens_left
+ bne 2f
+ # Keep the last hit visible and let its award finish before replenishing.
+ lda burst_count
+ ora burst_count+1
+ ora burst_count+2
+ ora bonus_count
+ ora bonus_count+1
+ ora pending_scores
  bne 2f
  jsr arcade_reset
 2: rts

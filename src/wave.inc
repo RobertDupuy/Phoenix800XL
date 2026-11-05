@@ -86,7 +86,7 @@ player_shots:
  beq small_player_collision
  cmp #3
  bne 1f
- jmp mothership_collision
+ jmp boss_shot_collision
 1: jmp large_collision
 small_player_collision:
  jsr shot_collision
