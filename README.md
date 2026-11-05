@@ -1,4 +1,4 @@
-# Phoenix v0.13 for Atari 5200
+# Phoenix v0.13.1 for Atari 5200
 
 Phoenix for an NTSC Atari 5200 with 16 KiB RAM. The 256 KiB cartridge uses CAR
 type 73 and includes the repeating five-wave game: two small-bird waves, two
@@ -8,10 +8,17 @@ large-bird waves and the mothership, followed by harder cycles.
 [Complete source and test fixtures](Phoenix5200-Source-and-Tests.zip) ·
 [Emulator preview with sound](Phoenix5200-Preview.mp4)
 
-## Corrected in v0.13
+## Corrected in v0.13.1
 
-- PHOENIX uses 69 copies of a flying gameplay bird pose with a visible head,
-  body and wing. The gaps between N, I and X contain no stray marks.
+A title-only revision uses compact upright gameplay birds, larger gaps between
+letters, a diagonal N and X, and a barred I. The title/score raster checks were
+rerun on this cartridge. The gameplay checks below are from v0.13; game logic
+is unchanged.
+
+## Retained from v0.13
+
+- PHOENIX uses 74 compact upright gameplay birds. The gaps between letters
+  are wider than the gaps between birds within a letter.
 - All labels are rebuilt from native HUD glyphs. The complete copyright line,
   INSERT 1 COIN, player/coin instructions and 200-point entry display correctly.
 - Presentation pages use one font each throughout the visible frame. This

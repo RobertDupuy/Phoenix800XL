@@ -1,34 +1,10 @@
-Phoenix v0.13 — presentation and mothership-escort fixes
-Atari 5200 NTSC / 16 KiB RAM / 256 KiB cartridge / CAR type 73
+Phoenix v0.13.1 — readable bird-letter title
 
-PHOENIX now uses 69 copies of gameplay flying pose 80. All presentation text is
-rebuilt from native HUD glyphs: copyright, INSERT 1 COIN, both player/coin lines,
-and the score table. There are no stray marks between N, I and X.
+Title-only correction: native compact upright bird pose 78, wider letter gaps,
+clear diagonal N/X and a barred I. All gameplay fixes from v0.13 are retained.
 
-The corruption was caused by late display-interrupt font switches damaging the
-first two scanlines of character rows. Each page now retains a single font.
-Startup also bypasses the gameplay palette override. The obsolete converted
-picture-page binaries are removed.
-
-Mothership escorts now receive bullet collision checks. Birds in front of the
-mothership absorb matching shots before its armor. Hit effects and awards finish
-before two replacements appear. Unobstructed shots still damage the mothership.
-
-VERIFIED ON THIS CARTRIDGE
-Four Altirra presentation captures: 245,760 pixels checked, zero missing/stray
-pixels and zero inconsistent color pixels. Both pages repeat and start gameplay.
-Both escort slots, misses, hidden-bird phases, scoring, armor priority and
-replenishment passed CPU regression fixtures. 411 campaign checks passed.
-A physical-controller Altirra run shot four observed mothership escorts,
-cleared the mothership and entered round two. No game-memory writes or skips.
-
-CONTROLS
-Joystick left/right. Lower fire starts/shoots; release between shots. Upper fire
-activates the shield. Test keyboard: Left/Right, Left Ctrl, Left Shift.
-
-Bird waves render at about 30 updates/s, the mothership around 15–20. Input and
-audio run every NTSC VBI. Colors/audio approximate arcade hardware. Tested in
-AltirraSDL with the original Atari BIOS, not yet on a physical 5200.
+Verified four Altirra title/score captures and startup into gameplay.
+245,760 pixels checked; no missing/stray pixels or inconsistent colors.
 
 CAR SHA-256
-c68bf57caf987cbdf244cb7292839f80c4a6b96a7cbcd417ab1eb355e5cb582c
+198126f7d3f8ccf31f31dda91fe836c38d0317d3c33ebe86a4fee809dd1d0de7
