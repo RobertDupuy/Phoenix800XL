@@ -92,10 +92,19 @@ class Player:
   return (1 if d>0 else 2 if d<0 else 0)|fire|shield
 if __name__=='__main__':
  p=argparse.ArgumentParser();p.add_argument('--out',type=Path,required=True);p.add_argument('--exe',type=Path,required=True);p.add_argument('--frames',type=int,default=48000);p.add_argument('--seed',type=int,default=1);p.add_argument('--record',action='store_true');p.add_argument('--goal-wave',type=int,default=6);args=p.parse_args()
- out=args.out.resolve();e=Frontend(out,args.exe.resolve(),args.record);player=Player(args.seed);trace=[];events=[];last=None;m=e.a.memdump(0,16384);won=False;wall=time.monotonic()
+ out=args.out.resolve();e=Frontend(out,args.exe.resolve(),args.record);player=Player(args.seed);trace=[];events=[];escort_shot_hits=[];last=None;m=e.a.memdump(0,16384);won=False;wall=time.monotonic()
  try:
   for f in range(0,args.frames,8):
+   previous=m
    m=e.step(player.action(m));key=(m[0x83],m[0x80],m[0x82],m[0x7a3])
+   if previous[0x33c]==m[0x33c]==3 and previous[0x7a3]==m[0x7a3]==2 and previous[0x80]==m[0x80]==1:
+    for slot in range(2):
+     # The shield/body collision region begins at Y=202. A disappearing bird
+     # well above it during live boss combat is an observed shot kill.
+     if previous[0x400+slot] and not m[0x400+slot] and 32<previous[0x440+slot]<176 and 32<m[0x440+slot]<176:
+      hit=dict(frame=e.frames,slot=slot,x=previous[0x430+slot],y=previous[0x440+slot],shot_before=list(previous[0xa6:0xa8]))
+      escort_shot_hits.append(hit);print('escort shot hit',hit,flush=True)
+      e.a.screenshot(path=str(out/f'escort-hit-{e.frames:06}.png'))
    if key!=last:
     event=dict(frame=e.frames,wave=m[0x83],state=m[0x80],lives=m[0x82],boss=m[0x7a3],score=list(m[0xc0:0xc6]));events.append(event);last=key;print(event,flush=True)
     e.a.screenshot(path=str(out/f'event-{e.frames:06}.png'))
@@ -106,4 +115,4 @@ if __name__=='__main__':
     break
   print('complete',won,'wall seconds',time.monotonic()-wall,flush=True)
  finally:
-  e.close();report=dict(completed_first_cycle=any(v['wave']>=6 for v in events),completed_requested_route=won,goal_wave=args.goal_wave,requested_step_frames=e.frames,video_frames=int.from_bytes(m[0x300:0x304],'little'),events=events,telemetry=trace,car_sha256=e.car_sha256,method=__doc__,final_counters=list(m[0x300:0x330]));(out/'playthrough.json').write_text(json.dumps(report,indent=2))
+  e.close();report=dict(completed_first_cycle=any(v['wave']>=6 for v in events),completed_requested_route=won,goal_wave=args.goal_wave,requested_step_frames=e.frames,video_frames=int.from_bytes(m[0x300:0x304],'little'),events=events,escort_shot_hits=escort_shot_hits,telemetry=trace,car_sha256=e.car_sha256,method=__doc__,final_counters=list(m[0x300:0x330]));(out/'playthrough.json').write_text(json.dumps(report,indent=2))
