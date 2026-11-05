@@ -1,0 +1,37 @@
+Phoenix v0.12 — gameplay-sprite title and score table
+Atari 5200 NTSC / 16 KiB RAM / 256 KiB cartridge / CAR type 73
+
+The title spells PHOENIX with 69 intact gameplay bird sprites. The score
+explanation page uses the actual small-bird poses, large-bird pose and pilot
+glyphs used during gameplay, at native size and with the same GTIA colors.
+The previous converted illustrations are removed. The score-page footer is
+cyan and the 200-point text moves up one scanline for a clean palette change.
+
+The complete five-wave game from v0.11 is retained: two small-bird waves,
+two large-bird waves, the destructible mothership, arcade wipe transitions,
+changing palettes, harder subsequent cycles, center-hit scores and POKEY audio.
+Population: sixteen small birds, six large birds, two mothership escorts.
+
+CONTROLS
+Joystick left/right. Lower fire button shoots and starts a game; press again
+for each shot. Upper fire button activates the shield. In the test keyboard
+mapping: Left/Right, Left Ctrl (fire), Left Shift (shield).
+
+VERIFICATION ON THIS CARTRIDGE
+Original-BIOS cold boot displayed both corrected pages and started gameplay.
+Decoded all 61,440 presentation pixels from the generated fonts and maps and
+matched the intended pages. Checked packed fonts and cartridge payload.
+All 77 non-intro binary data files match v0.11; campaign.S is unchanged.
+A controller-driven AltirraSDL run cleared all five waves and entered round
+two, with two lives remaining. It reads RAM for targeting but does not write
+game memory, load states, grant invulnerability or skip waves.
+
+PERFORMANCE AND SCOPE
+Bird waves render at about 30 updates per second; the mothership remains
+around 15–20. Input and audio run on every NTSC video interrupt. Elapsed-frame
+catch-up handles normal boss rendering delays. Atari colors and POKEY audio
+approximate arcade hardware. Validation used AltirraSDL, not a physical 5200.
+The preview contains recorded emulator audio, raised 6 dB, with no added music.
+
+CAR SHA-256
+79f5fd453dc81f8178800149c2de063f43ea8c5bbeff8f78e74da2d1d25674bd
