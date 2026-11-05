@@ -1,0 +1,172 @@
+diff --git a/src/AltirraSDL/source/app/commandline_sdl3.cpp b/src/AltirraSDL/source/app/commandline_sdl3.cpp
+index 9dc9d42..4eb802d 100644
+--- a/src/AltirraSDL/source/app/commandline_sdl3.cpp
++++ b/src/AltirraSDL/source/app/commandline_sdl3.cpp
+@@ -331,7 +331,9 @@ static bool ProcessCommandLine(int argc, char **argv, const char* workingDirecto
+ 	// the live MRU "Order" against the baseline; without an early
+ 	// snapshot the order matches → gate stays closed → Play Together
+ 	// never publishes.  Cheap, idempotent — see InitAutoHostBaseline.
++#ifdef ALTIRRA_NETPLAY_ENABLED
+ 	ATNetplayUI::InitAutoHostBaseline();
++#endif
+ 
+ 	if (argc <= 1)
+ 		return false;
+@@ -730,6 +732,7 @@ static bool ProcessCommandLine(int argc, char **argv, const char* workingDirecto
+ 		// lives in the deep-link state machine, which routes to the
+ 		// standard Error screen on any failure.  The two flags are
+ 		// stored independently so they can arrive in either order.
++#ifdef ALTIRRA_NETPLAY_ENABLED
+ 		if ((val = ConsumeArg(argc, argv, i, consumed, "join-session")) != nullptr) {
+ 			std::string id = val;
+ 			if (id.size() > 128) {
+@@ -769,6 +772,7 @@ static bool ProcessCommandLine(int argc, char **argv, const char* workingDirecto
+ 			continue;
+ 		}
+ 
++#endif
+ 		// ---- Hardware mode ----
+ 		if ((val = ConsumeArg(argc, argv, i, consumed, "hardware")) != nullptr) {
+ 			if (strcasecmp(val, "800") == 0) g_sim.SetHardwareMode(kATHardwareMode_800);
+diff --git a/src/AltirraSDL/source/app/main_sdl3.cpp b/src/AltirraSDL/source/app/main_sdl3.cpp
+index 7a9c468..e8ada88 100644
+--- a/src/AltirraSDL/source/app/main_sdl3.cpp
++++ b/src/AltirraSDL/source/app/main_sdl3.cpp
+@@ -3190,7 +3190,9 @@ int main(int argc, char *argv[]) {
+ 			ATMacLeakDebugSetPaused(true);
+ 			RenderAndPresent();
+ #ifndef __EMSCRIPTEN__
+-			SDL_Delay(16);
++			// Keep the paused automation transport responsive in unlimited
++			// headless mode. No emulated cycles advance while paused.
++			SDL_Delay(ATIsFramePacingDisabled() ? 1 : 16);
+ #endif
+ 			return;
+ 		}
+diff --git a/src/AltirraSDL/source/commands_sdl3.cpp b/src/AltirraSDL/source/commands_sdl3.cpp
+index d156841..df21b29 100644
+--- a/src/AltirraSDL/source/commands_sdl3.cpp
++++ b/src/AltirraSDL/source/commands_sdl3.cpp
+@@ -170,8 +170,10 @@ static void CmdWarmReset() {
+ 		g_sim.WarmReset();
+ 		g_sim.Resume();
+ 	};
++	#ifdef ALTIRRA_NETPLAY_ENABLED
+ 	if (ATNetplayUI_TryConfirmResetEndsSession("Warm Reset", doReset))
+ 		return;
++	#endif
+ 	doReset();
+ }
+ 
+@@ -182,8 +184,10 @@ static void CmdColdReset() {
+ 		if (!g_kbdOpts.mbAllowShiftOnColdReset)
+ 			g_sim.GetPokey().SetShiftKeyState(false, true);
+ 	};
++	#ifdef ALTIRRA_NETPLAY_ENABLED
+ 	if (ATNetplayUI_TryConfirmResetEndsSession("Cold Reset", doReset))
+ 		return;
++	#endif
+ 	doReset();
+ }
+ 
+@@ -956,9 +960,11 @@ static const ATUICommand kSDL3CommandsExtra[] = {
+ 				if (!g_kbdOpts.mbAllowShiftOnColdReset)
+ 					g_sim.GetPokey().SetShiftKeyState(false, true);
+ 			};
++			#ifdef ALTIRRA_NETPLAY_ENABLED
+ 			if (ATNetplayUI_TryConfirmResetEndsSession(
+ 					"Cold Reset (Computer Only)", doReset))
+ 				return;
++			#endif
+ 			doReset();
+ 		} },
+ 	{ "System.TogglePauseWhenInactive",
+diff --git a/src/AltirraSDL/source/ui/testmode/testmode_ipc.cpp b/src/AltirraSDL/source/ui/testmode/testmode_ipc.cpp
+index 594387e..1037a3c 100644
+--- a/src/AltirraSDL/source/ui/testmode/testmode_ipc.cpp
++++ b/src/AltirraSDL/source/ui/testmode/testmode_ipc.cpp
+@@ -214,6 +214,7 @@ int TestModeIPC::Recv(void *buf, size_t len) {
+ #include <unistd.h>
+ #include <fcntl.h>
+ #include <errno.h>
++#include <cstdlib>
+ #include "logging.h"
+ 
+ TestModeIPC::TestModeIPC() {
+@@ -224,6 +225,21 @@ TestModeIPC::~TestModeIPC() {
+ }
+ 
+ std::string TestModeIPC::Init() {
++	// Local test driver transport. Only the existing UI command channel
++	// changes; controller events, video, audio and emulation are untouched.
++	const char *inFd = std::getenv("ALTIRRA_TESTMODE_IN_FD");
++	const char *outFd = std::getenv("ALTIRRA_TESTMODE_OUT_FD");
++	if (inFd && outFd) {
++		mClientFd = dup(std::atoi(inFd));
++		mPipeOutputFd = dup(std::atoi(outFd));
++		if (mClientFd < 0 || mPipeOutputFd < 0) {
++			Shutdown();
++			return {};
++		}
++		fcntl(mClientFd, F_SETFL, O_NONBLOCK);
++		fcntl(mPipeOutputFd, F_SETFL, O_NONBLOCK);
++		return "inherited-pipes";
++	}
+ 	mSockPath = "/tmp/altirra-test-" + std::to_string(getpid()) + ".sock";
+ 
+ 	// Remove stale socket file if it exists
+@@ -264,6 +280,7 @@ std::string TestModeIPC::Init() {
+ 
+ void TestModeIPC::Shutdown() {
+ 	if (mClientFd >= 0) { close(mClientFd); mClientFd = -1; }
++	if (mPipeOutputFd >= 0) { close(mPipeOutputFd); mPipeOutputFd = -1; }
+ 	if (mListenFd >= 0) { close(mListenFd); mListenFd = -1; }
+ 	if (!mSockPath.empty()) { unlink(mSockPath.c_str()); mSockPath.clear(); }
+ }
+@@ -287,6 +304,10 @@ bool TestModeIPC::HasClient() const {
+ }
+ 
+ void TestModeIPC::DisconnectClient() {
++	if (mPipeOutputFd >= 0) {
++		close(mPipeOutputFd);
++		mPipeOutputFd = -1;
++	}
+ 	if (mClientFd >= 0) {
+ 		close(mClientFd);
+ 		mClientFd = -1;
+@@ -298,9 +319,11 @@ int TestModeIPC::Send(const void *data, size_t len) {
+ 		return -1;
+ 
+ #ifdef MSG_NOSIGNAL
+-	ssize_t sent = send(mClientFd, data, len, MSG_NOSIGNAL);
++	ssize_t sent = mPipeOutputFd >= 0 ? write(mPipeOutputFd, data, len)
++		: send(mClientFd, data, len, MSG_NOSIGNAL);
+ #else
+-	ssize_t sent = send(mClientFd, data, len, 0);
++	ssize_t sent = mPipeOutputFd >= 0 ? write(mPipeOutputFd, data, len)
++		: send(mClientFd, data, len, 0);
+ #endif
+ 
+ 	if (sent < 0) {
+@@ -315,7 +338,8 @@ int TestModeIPC::Recv(void *buf, size_t len) {
+ 	if (mClientFd < 0)
+ 		return -1;
+ 
+-	ssize_t n = recv(mClientFd, buf, len, 0);
++	ssize_t n = mPipeOutputFd >= 0 ? read(mClientFd, buf, len)
++		: recv(mClientFd, buf, len, 0);
+ 	if (n > 0)
+ 		return (int)n;
+ 	if (n == 0)
+diff --git a/src/AltirraSDL/source/ui/testmode/testmode_ipc.h b/src/AltirraSDL/source/ui/testmode/testmode_ipc.h
+index d6e2b43..3541f9a 100644
+--- a/src/AltirraSDL/source/ui/testmode/testmode_ipc.h
++++ b/src/AltirraSDL/source/ui/testmode/testmode_ipc.h
+@@ -58,6 +58,7 @@ private:
+ 	// POSIX Unix domain socket fds
+ 	int mListenFd = -1;
+ 	int mClientFd = -1;
++	int mPipeOutputFd = -1;
+ 	std::string mSockPath;
+ #endif
+ };

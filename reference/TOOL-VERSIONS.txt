@@ -1,0 +1,14 @@
+LLVM MOS clang 24.0.0git, commit a40207a371b60ff787ece46817d9c0f62eada719
+MAME 0.264
+AltirraBridge 6ec52575 — Linux x86_64
+Built 2026-10-30 from commit 6ec52575a851e160df070733bd43f955572db5dc
+
+Requirements:
+  - Linux x86_64, glibc >= 2.35
+    (Ubuntu 22.04+, Debian 12+ / Raspberry Pi OS Bookworm+,
+     Fedora 36+, RHEL 9+)
+  - Python >= 3.9 for the Python SDK (stdlib only)
+
+See README.md for the full walkthrough and usage guide.
+
+Original Atari 5200 four-port BIOS SHA-256: 06b250f18983d058c0f156ce7ee88ae48b6eaf11e6f10f21dccf6ac7ffb6a6af
