@@ -1,5 +1,5 @@
 {
-  "car_sha256": "c68bf57caf987cbdf244cb7292839f80c4a6b96a7cbcd417ab1eb355e5cb582c",
+  "car_sha256": "198126f7d3f8ccf31f31dda91fe836c38d0317d3c33ebe86a4fee809dd1d0de7",
   "method": "Check actual Altirra raster captures, including repeated title/score changes.\n\nCold boot with the original BIOS and physical fire input. No game-memory writes.\nThe image check covers the final emulator output, not just generated font bytes.\n",
   "captures": [
     {
@@ -64,6 +64,6 @@
     ]
   },
   "started_game": true,
-  "title_pose": 80,
-  "title_birds": 69
+  "title_pose": 78,
+  "title_birds": 74
 }
