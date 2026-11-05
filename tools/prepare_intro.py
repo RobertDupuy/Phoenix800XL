@@ -128,35 +128,35 @@ def prepare():
         centered(page, 'AMSTAR ELECTRONICS CORP.', 176)
         centered(page, 'PHOENIX T.M. U.S.A.', 184)
 
-    # Compact upright gameplay birds leave clear gaps between letter strokes.
-    letters = {
-        'P': ['111', '101', '111', '100', '100'],
-        'H': ['101', '101', '111', '101', '101'],
-        'O': ['111', '101', '101', '101', '111'],
-        'E': ['111', '100', '110', '100', '111'],
-        'N': ['10001', '11001', '10101', '10011', '10001'],
-        'I': ['111', '010', '010', '010', '111'],
-        'X': ['10001', '01010', '00100', '01010', '10001'],
-    }
-    bird = poses[78]
-    left = min(x for line in bird for x, v in enumerate(line) if v)
-    cursor = 6
-    for char in 'PHOENIX':
-        rows = letters[char]
-        for row, line in enumerate(rows):
-            for col, value in enumerate(line):
-                if value == '1':
-                    stamp(title, bird, cursor+col*5-left, 64+row*12, SMALL,
-                          dict(kind='small', shape=78, letter=char))
-        cursor += len(rows[0])*5+4
-
-    # The logo area contains only its bird sprites, including N-I-X gaps.
-    stars = json.loads((A/'stars-irregular.json').read_text())['cells']
-    for row, col in stars:
-        y, x = row*8+3, col*4
-        if 32 <= y < 160 and not (56 <= y < 128):
-            assert title[y][x] == 0
-            title[y][x] = 168
+    # Reference arrangement, made only of unscaled existing gameplay sprites.
+    title_placements = []
+    logo = [[0]*108 for _ in range(72)]
+    def logo_bird(shape, x, y):
+        title_placements.append(dict(shape=shape, x=x, y=y))
+        for yy, line in enumerate(poses[shape]):
+            for xx, value in enumerate(line):
+                if value:
+                    assert 0 <= x+xx < 108 and 0 <= y+yy < 72
+                    logo[y+yy][x+xx] = value
+    for y in range(0,72,8): logo_bird(36,0,y)
+    for y in (0,16):
+        for x in (8,16): logo_bird(36,x,y)
+        logo_bird(72,24,y)
+    logo_bird(36,24,8)
+    for y in range(32,72,8):
+        for x in (12,20,28,36,44,60,72,80): logo_bird(72,x,y)
+    for x,y in ((16,48),(32,32),(32,64)): logo_bird(72,x,y)
+    for y in (32,48,64): logo_bird(36,48,y)
+    for x,y,shape in ((60,40,80),(64,48,80),(68,56,84)):
+        logo_bird(shape,x,y)
+    for x in (88,100):
+        for y in (32,64): logo_bird(72,x,y)
+    for x,y,shape in ((88,40,80),(96,40,82),(88,56,86),(96,56,84)):
+        logo_bird(shape,x,y)
+    logo_bird(36,92,48)
+    stamp(title, logo, 28, 40, [0,14,90,202], dict(kind='gameplay-bird-title', placements=title_placements))
+    # Actual 32-by-16 gameplay frame: no height enlargement.
+    stamp(title, large[40], 64, 134, LARGE, dict(kind='large', pose=40))
 
     centered(scores, 'INSERT 1 COIN', 32)
     centered(scores, '* 1 PLAYER  1 COIN *', 48)
@@ -177,7 +177,8 @@ def prepare():
                 for x in range(4):
                     pilot[cy*8+y][cx*4+x] = (byte >> (6-x*2)) & 3
     stamp(scores, pilot, 24, 152, BOSS, dict(kind='pilot', tiles=[0x74, 0x7c, 0x75, 0x7d]))
-    title_palette = [BASE[:] for _ in START_ROWS]
+    title_palette = [[14,90,202,168] for _ in START_ROWS]
+    for i in (4,5,6): title_palette[i] = [172,44,134,168]
     score_palette = [BASE[:] for _ in START_ROWS]
     score_palette[4] = [172, 44, 134, 90]
     score_palette[5] = [26, 44, 90, 168]
@@ -186,7 +187,8 @@ def prepare():
     info.update(pages=['native-sprite PHOENIX title', 'native-sprite score table'],
                 startup_font_ram=[4096, 4096+info['font_bytes']],
                 sprite_method='Unscaled gameplay pixels; explicit text from native HUD glyphs',
-                title_shape=78, title_birds=sum(c['page']=='title' for c in copies),
+                title_shape='mixed gameplay poses', title_birds=len(title_placements),
+                title_placements=title_placements, title_large_frame=40, title_large_size=[32,16],
                 band_start_rows=START_ROWS, colors=[title_palette, score_palette],
                 font_switches_during_visible_page=0)
     (B/'intro-art-manifest.json').write_text(json.dumps(dict(**info, sprite_copies=copies,
