@@ -1,0 +1,69 @@
+{
+  "car_sha256": "c68bf57caf987cbdf244cb7292839f80c4a6b96a7cbcd417ab1eb355e5cb582c",
+  "method": "Check actual Altirra raster captures, including repeated title/score changes.\n\nCold boot with the original BIOS and physical fire input. No game-memory writes.\nThe image check covers the final emulator output, not just generated font bytes.\n",
+  "captures": [
+    {
+      "page": 0,
+      "file": "title.png",
+      "frame": 432
+    },
+    {
+      "page": 1,
+      "file": "scores.png",
+      "frame": 592
+    },
+    {
+      "page": 0,
+      "file": "title-repeat.png",
+      "frame": 896
+    },
+    {
+      "page": 1,
+      "file": "scores-repeat.png",
+      "frame": 1200
+    }
+  ],
+  "compared_pixels": 245760,
+  "missing_or_stray_pixels": 0,
+  "inconsistent_color_pixels": 0,
+  "rgb_palette": {
+    "0": [
+      0,
+      0,
+      0
+    ],
+    "14": [
+      243,
+      235,
+      248
+    ],
+    "44": [
+      245,
+      197,
+      100
+    ],
+    "90": [
+      250,
+      132,
+      209
+    ],
+    "168": [
+      0,
+      147,
+      184
+    ],
+    "26": [
+      167,
+      179,
+      39
+    ],
+    "134": [
+      76,
+      98,
+      218
+    ]
+  },
+  "started_game": true,
+  "title_pose": 80,
+  "title_birds": 69
+}
