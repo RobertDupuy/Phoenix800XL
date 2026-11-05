@@ -4,8 +4,6 @@ original ownership. ORIGINAL-NOTICES.md preserves the legacy project's complete
 notices; its references to C game code and sound-model libraries describe that
 legacy project, not the assembly-only foundation's newly written game logic.
 
-presentation-8.bin: prebuilt arcade score-table page.
-presentation-9.bin: prebuilt arcade Phoenix logo/title page.
 art-bank1.bin: preceding port's small-enemy formation artwork.
 ship_native.inc: preceding port's red/white player-ship pixel planes.
 hud-glyphs.bin: preceding port's native arcade-lettering glyph data.
@@ -49,11 +47,10 @@ vertical routines, checked against MAME RAM traces. audio-circuit.json holds
 MAME/HHi-derived tune, envelope and circuit tables; the console renders their
 POKEY approximation. Preserved licenses are in reference/notices.
 
-Version 0.12 presentation changes:
-prepare_intro.py uses presentation-8.bin and presentation-9.bin only for
-lettering. All illustrated sprites are replaced by unscaled copies from the
-current gameplay manifests. The PHOENIX title contains 69 copies of small-bird
-pose 32. The score table uses small-bird poses 36, 220 and 204, large-bird draw
-state 40, and the same pilot glyphs as the mothership renderer. Palette changes
-preserve their gameplay GTIA colors. The 200-point text moves up one scanline
-to leave a blank palette boundary, and the score-page footer is cyan.
+Version 0.13 presentation:
+prepare_intro.py builds all labels directly from hud-glyphs.bin. It no longer
+reads converted picture pages; the two obsolete presentation binaries were
+removed. PHOENIX is formed from 69 unscaled copies of gameplay flying pose 80.
+The score icons use gameplay poses 36, 220, 204, large-bird draw state 40 and
+the mothership pilot glyphs. Each presentation page keeps one character font
+for the entire visible frame; only palettes change across blank scanlines.
