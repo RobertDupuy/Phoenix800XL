@@ -1,0 +1,14 @@
+{
+  "car_sha256": "c68bf57caf987cbdf244cb7292839f80c4a6b96a7cbcd417ab1eb355e5cb582c",
+  "method": "CPU regression for the real mothership shot path; explicit synthetic fixtures.",
+  "checks": [
+    "shot kills escort slot 0 and awards 20 once",
+    "shot kills escort slot 1 and awards 20 once",
+    "misses remain misses",
+    "hidden escorts cannot be hit during entry or victory",
+    "foreground escort absorbs shot before armor behind it",
+    "unobstructed shot damages armor exactly once",
+    "both hit animations and awards finish before two escorts replenish"
+  ],
+  "replenishment_wait_ticks": 23
+}
