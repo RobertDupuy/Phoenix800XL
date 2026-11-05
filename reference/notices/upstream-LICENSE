@@ -1,0 +1,41 @@
+MIT License — original Phoenix Arcade contributions only
+
+Copyright (c) Phoenix Arcade contributors
+
+Scope
+
+This licence applies only to copyrightable material in this repository that is
+an original contribution by Phoenix Arcade contributors and is not a port,
+translation, copy, adaptation, or other derivative of third-party material.
+
+It does not grant any right in:
+
+- Phoenix game code, ROMs, graphics, colour PROMs, or representations derived
+  from them;
+- material derived from, ported from, or otherwise governed by MAME or another
+  third-party project;
+- material from Computer Archeology or any other documentation source; or
+- third-party libraries and their distributed binaries.
+
+The applicable third-party notices and licences take precedence. See
+THIRD_PARTY_NOTICES.md. Where the provenance or applicable licence of a file
+is not yet established, this licence grants no right in that file pending
+review.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of the original Phoenix Arcade contributions covered by this licence (the
+"Software"), to deal in the Software without restriction, including without
+limitation the rights to use, copy, modify, merge, publish, distribute,
+sublicense, and/or sell copies of the Software, and to permit persons to whom
+the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
