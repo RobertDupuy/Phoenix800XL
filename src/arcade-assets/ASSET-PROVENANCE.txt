@@ -1,0 +1,59 @@
+These files are copied from the preceding Phoenix 5200 project supplied in
+this conversation. The original Phoenix artwork and game identity retain their
+original ownership. ORIGINAL-NOTICES.md preserves the legacy project's complete
+notices; its references to C game code and sound-model libraries describe that
+legacy project, not the assembly-only foundation's newly written game logic.
+
+presentation-8.bin: prebuilt arcade score-table page.
+presentation-9.bin: prebuilt arcade Phoenix logo/title page.
+art-bank1.bin: preceding port's small-enemy formation artwork.
+ship_native.inc: preceding port's red/white player-ship pixel planes.
+hud-glyphs.bin: preceding port's native arcade-lettering glyph data.
+
+prepare_art.py preserves both original ship planes and all eight poses. The red
+plane is identical in every pose, so it is stored once. Only six white-plane
+rows vary; the console copies those rows when the pose changes. In v0.5, enemies
+use multicolor ANTIC character graphics with all 55 recovered opening poses.
+In versions before v0.12, startup pixels used those prebuilt pages.
+
+original-art-bank1.bin: original earlier-port arcade tile bank, before the
+formation-only edits. Sprite-block order is column-major (TL, BL, TR, BR).
+phoenix_tables.c: recovered immutable arcade data, read by host build scripts;
+this C data file is not compiled or executed on the console.
+explosion-art.json: RGB foreground/background glyphs needed by the ship death
+sequence, decoded from the supplied arcade ROMs using the MAME Phoenix layout
+and palette. Only required glyphs are included, not a full ROM image.
+
+Death glyph decode: for displayed pixel (x,y), byte index is code*8+7-x and
+bit index is y. The two graphics files form pen bits 0/1. Palette index is
+((code>>5)|(8 for foreground, otherwise 0))*4+pen. The saved PROM-order palette
+is addressed through bit order [6,5,1,0,4,3,2]. A direct comparison at observed
+MAME frame 1102 matched all 1,845 nontransparent foreground pixels.
+prepare_native.py quantizes these source colors to the 5200 palette, composes
+the foreground particles and background core, and records losses in the
+sprite manifest. The 200-line gameplay viewport clips lower effect pixels.
+See the release report for the precise compromises and alternatives.
+
+Large-bird work recovered in v0.9:
+original-art-bank2.bin and original-bird-shapes.bin are recovered earlier-port
+assets. tools/prepare_large.py builds six wing and seven hatching poses,
+with four horizontal alignments. Full-flight silhouettes are mirrored to
+preserve the approved symmetric presentation. No 2600 game code is included.
+
+Version 0.10 additions:
+prepare_flight_art.py now derives all 60 native bird draw states from
+phoenix_tables.c and original-art-bank2.bin, with padded rows and occupancy
+masks for every vertical pixel offset. The approved intact silhouette
+symmetry is retained. large_motion.inc translates the original flight and
+vertical routines, checked against MAME RAM traces. audio-circuit.json holds
+MAME/HHi-derived tune, envelope and circuit tables; the console renders their
+POKEY approximation. Preserved licenses are in reference/notices.
+
+Version 0.12 presentation changes:
+prepare_intro.py uses presentation-8.bin and presentation-9.bin only for
+lettering. All illustrated sprites are replaced by unscaled copies from the
+current gameplay manifests. The PHOENIX title contains 69 copies of small-bird
+pose 32. The score table uses small-bird poses 36, 220 and 204, large-bird draw
+state 40, and the same pilot glyphs as the mothership renderer. Palette changes
+preserve their gameplay GTIA colors. The 200-point text moves up one scanline
+to leave a blank palette boundary, and the score-page footer is cyan.

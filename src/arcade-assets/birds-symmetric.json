@@ -1,0 +1,1631 @@
+{
+  "description": "Native pixel artwork for the symmetry comparison. Explicit rows are authoritative; live birds are not RGB-downsampled. Front/up/down poses mirror left/right; side-on poses mirror top/bottom; oblique banking poses retain directional detail and exact mirrored left/right partners. All 55 pose slots and original phase selection remain. The narrow upright birds gain one native pixel of width to keep a central body and equal wings.",
+  "palette": {
+    ".": 0,
+    "W": 1,
+    "Y": 2,
+    "P": 3
+  },
+  "poses": {
+    "32": {
+      "kind": 1,
+      "rows": [
+        "YW.WY...",
+        "YYPYY...",
+        "YYPYY...",
+        "YPPPY...",
+        "YPPPY...",
+        "YPPPY...",
+        ".YPY....",
+        ".YPY...."
+      ],
+      "design_axis": "vertical",
+      "heading": "up",
+      "design_origin": [
+        0,
+        0
+      ],
+      "design_size": [
+        5,
+        8
+      ],
+      "vertical_pixel_repeat": 1
+    },
+    "34": {
+      "kind": 1,
+      "rows": [
+        "Y.WW.Y..",
+        "YYPPYY..",
+        "YYPPYY..",
+        "YYPPYY..",
+        "Y.PP.Y..",
+        "Y.PP.Y..",
+        "Y.PP.Y..",
+        "YP..PY.."
+      ],
+      "design_axis": "vertical",
+      "heading": "up",
+      "design_origin": [
+        0,
+        0
+      ],
+      "design_size": [
+        6,
+        8
+      ],
+      "vertical_pixel_repeat": 1
+    },
+    "36": {
+      "kind": 1,
+      "rows": [
+        ".YYWWYY.",
+        "YYYPPYYY",
+        "YYYPPYYY",
+        "YYYPPYYY",
+        "YY.PP.YY",
+        "Y..PP..Y",
+        "Y.P..P.Y",
+        "YP....PY"
+      ],
+      "design_axis": "vertical",
+      "heading": "up",
+      "design_origin": [
+        0,
+        0
+      ],
+      "design_size": [
+        8,
+        8
+      ],
+      "vertical_pixel_repeat": 1
+    },
+    "38": {
+      "kind": 1,
+      "rows": [
+        "..Y.WW.Y",
+        "..YYPPYY",
+        "..YYPPYY",
+        "..YYPPYY",
+        "..Y.PP.Y",
+        "..Y.PP.Y",
+        "..Y.PP.Y",
+        "..YP..PY"
+      ],
+      "design_axis": "vertical",
+      "heading": "up",
+      "design_origin": [
+        2,
+        0
+      ],
+      "design_size": [
+        6,
+        8
+      ],
+      "vertical_pixel_repeat": 1
+    },
+    "40": {
+      "kind": 1,
+      "rows": [
+        "........",
+        "YYYY....",
+        ".YY.....",
+        ".PPW....",
+        "PPPP....",
+        ".PPW....",
+        ".YY.....",
+        "YYYY...."
+      ],
+      "design_axis": "horizontal",
+      "heading": "right",
+      "design_origin": [
+        0,
+        1
+      ],
+      "design_size": [
+        4,
+        7
+      ],
+      "vertical_pixel_repeat": 1
+    },
+    "42": {
+      "kind": 1,
+      "rows": [
+        "........",
+        "YYYY....",
+        ".YY.....",
+        ".PPW....",
+        "PPPP....",
+        ".PPW....",
+        ".YY.....",
+        "YYYY...."
+      ],
+      "design_axis": "horizontal",
+      "heading": "right",
+      "design_origin": [
+        0,
+        1
+      ],
+      "design_size": [
+        4,
+        7
+      ],
+      "vertical_pixel_repeat": 1
+    },
+    "78": {
+      "kind": 1,
+      "rows": [
+        "........",
+        "YYYY....",
+        ".YY.....",
+        ".PPW....",
+        "PPPP....",
+        ".PPW....",
+        ".YY.....",
+        "YYYY...."
+      ],
+      "design_axis": "horizontal",
+      "heading": "right",
+      "design_origin": [
+        0,
+        1
+      ],
+      "design_size": [
+        4,
+        7
+      ],
+      "vertical_pixel_repeat": 1
+    },
+    "44": {
+      "kind": 1,
+      "rows": [
+        "........",
+        "..YYYY..",
+        "...YY...",
+        "P..PPW..",
+        "WPPPPP..",
+        "P..PPW..",
+        "...YY...",
+        "..YYYY.."
+      ],
+      "design_axis": "horizontal",
+      "heading": "right",
+      "design_origin": [
+        0,
+        1
+      ],
+      "design_size": [
+        6,
+        7
+      ],
+      "vertical_pixel_repeat": 1
+    },
+    "46": {
+      "kind": 1,
+      "rows": [
+        "........",
+        "..YYYY..",
+        "...YY...",
+        "P..PPW..",
+        "WPPPPP..",
+        "P..PPW..",
+        "...YY...",
+        "..YYYY.."
+      ],
+      "design_axis": "horizontal",
+      "heading": "right",
+      "design_origin": [
+        0,
+        1
+      ],
+      "design_size": [
+        6,
+        7
+      ],
+      "vertical_pixel_repeat": 1
+    },
+    "48": {
+      "kind": 1,
+      "rows": [
+        "........",
+        "YYYY....",
+        ".YY.....",
+        "WPP.....",
+        "PPPP....",
+        "WPP.....",
+        ".YY.....",
+        "YYYY...."
+      ],
+      "design_axis": "horizontal",
+      "heading": "left",
+      "design_origin": [
+        0,
+        1
+      ],
+      "design_size": [
+        4,
+        7
+      ],
+      "vertical_pixel_repeat": 1
+    },
+    "50": {
+      "kind": 1,
+      "rows": [
+        "........",
+        "YYYY....",
+        ".YY.....",
+        "WPP.....",
+        "PPPP....",
+        "WPP.....",
+        ".YY.....",
+        "YYYY...."
+      ],
+      "design_axis": "horizontal",
+      "heading": "left",
+      "design_origin": [
+        0,
+        1
+      ],
+      "design_size": [
+        4,
+        7
+      ],
+      "vertical_pixel_repeat": 1
+    },
+    "74": {
+      "kind": 1,
+      "rows": [
+        "........",
+        "YYYY....",
+        ".YY.....",
+        "WPP.....",
+        "PPPP....",
+        "WPP.....",
+        ".YY.....",
+        "YYYY...."
+      ],
+      "design_axis": "horizontal",
+      "heading": "left",
+      "design_origin": [
+        0,
+        1
+      ],
+      "design_size": [
+        4,
+        7
+      ],
+      "vertical_pixel_repeat": 1
+    },
+    "52": {
+      "kind": 1,
+      "rows": [
+        "........",
+        "..YYYY..",
+        "...YY...",
+        "..WPP..Y",
+        "..PPPPYW",
+        "..WPP..Y",
+        "...YY...",
+        "..YYYY.."
+      ],
+      "design_axis": "horizontal",
+      "heading": "left",
+      "design_origin": [
+        2,
+        1
+      ],
+      "design_size": [
+        6,
+        7
+      ],
+      "vertical_pixel_repeat": 1
+    },
+    "54": {
+      "kind": 1,
+      "rows": [
+        "........",
+        "..YYYY..",
+        "...YY...",
+        "..WPP..Y",
+        "..PPPPYW",
+        "..WPP..Y",
+        "...YY...",
+        "..YYYY.."
+      ],
+      "design_axis": "horizontal",
+      "heading": "left",
+      "design_origin": [
+        2,
+        1
+      ],
+      "design_size": [
+        6,
+        7
+      ],
+      "vertical_pixel_repeat": 1
+    },
+    "72": {
+      "kind": 1,
+      "rows": [
+        "YW.WY...",
+        "Y.P.Y...",
+        "YYPYY...",
+        "YPPPY...",
+        "YPPPY...",
+        "YPPPY...",
+        "Y.P.Y...",
+        "Y.P.Y..."
+      ],
+      "design_axis": "vertical",
+      "heading": "up",
+      "design_origin": [
+        0,
+        0
+      ],
+      "design_size": [
+        5,
+        8
+      ],
+      "vertical_pixel_repeat": 1
+    },
+    "56": {
+      "kind": 3,
+      "rows": [
+        "YW.WY...",
+        "Y.P.Y...",
+        "YYPYY...",
+        "YPPPY...",
+        "YPPPY...",
+        "YPPPY...",
+        "Y.P.Y...",
+        "Y.P.Y...",
+        "........",
+        "........",
+        "........",
+        "........",
+        "........",
+        "........",
+        "........",
+        "........"
+      ],
+      "design_axis": "vertical",
+      "heading": "up",
+      "design_origin": [
+        0,
+        0
+      ],
+      "design_size": [
+        5,
+        8
+      ],
+      "vertical_pixel_repeat": 1
+    },
+    "58": {
+      "kind": 3,
+      "rows": [
+        "YW.WY...",
+        "Y.P.Y...",
+        "YYPYY...",
+        "YPPPY...",
+        "YPPPY...",
+        "YPPPY...",
+        "Y.P.Y...",
+        "Y.P.Y...",
+        "........",
+        "........",
+        "........",
+        "........",
+        "........",
+        "........",
+        "........",
+        "........"
+      ],
+      "design_axis": "vertical",
+      "heading": "up",
+      "design_origin": [
+        0,
+        0
+      ],
+      "design_size": [
+        5,
+        8
+      ],
+      "vertical_pixel_repeat": 1
+    },
+    "88": {
+      "kind": 3,
+      "rows": [
+        "YW.WY...",
+        "Y.P.Y...",
+        "YYPYY...",
+        "YPPPY...",
+        "YPPPY...",
+        "YPPPY...",
+        "Y.P.Y...",
+        "Y.P.Y...",
+        "........",
+        "........",
+        "........",
+        "........",
+        "........",
+        "........",
+        "........",
+        "........"
+      ],
+      "design_axis": "vertical",
+      "heading": "up",
+      "design_origin": [
+        0,
+        0
+      ],
+      "design_size": [
+        5,
+        8
+      ],
+      "vertical_pixel_repeat": 1
+    },
+    "104": {
+      "kind": 4,
+      "rows": [
+        "YW.WY...",
+        "Y.P.Y...",
+        "YYPYY...",
+        "YPPPY...",
+        "YPPPY...",
+        "YPPPY...",
+        "Y.P.Y...",
+        "Y.P.Y...",
+        "........",
+        "........",
+        "........",
+        "........",
+        "........",
+        "........",
+        "........",
+        "........"
+      ],
+      "design_axis": "vertical",
+      "heading": "up",
+      "design_origin": [
+        0,
+        0
+      ],
+      "design_size": [
+        5,
+        8
+      ],
+      "vertical_pixel_repeat": 1
+    },
+    "76": {
+      "kind": 1,
+      "rows": [
+        "Y.P.Y...",
+        "Y.P.Y...",
+        "YPPPY...",
+        "YPPPY...",
+        "YPPPY...",
+        "YYPYY...",
+        "Y.P.Y...",
+        "YW.WY..."
+      ],
+      "design_axis": "vertical",
+      "heading": "down",
+      "design_origin": [
+        0,
+        0
+      ],
+      "design_size": [
+        5,
+        8
+      ],
+      "vertical_pixel_repeat": 1
+    },
+    "64": {
+      "kind": 3,
+      "rows": [
+        "Y.P.Y...",
+        "Y.P.Y...",
+        "YPPPY...",
+        "YPPPY...",
+        "YPPPY...",
+        "YYPYY...",
+        "Y.P.Y...",
+        "YW.WY...",
+        "........",
+        "........",
+        "........",
+        "........",
+        "........",
+        "........",
+        "........",
+        "........"
+      ],
+      "design_axis": "vertical",
+      "heading": "down",
+      "design_origin": [
+        0,
+        0
+      ],
+      "design_size": [
+        5,
+        8
+      ],
+      "vertical_pixel_repeat": 1
+    },
+    "66": {
+      "kind": 3,
+      "rows": [
+        "Y.P.Y...",
+        "Y.P.Y...",
+        "YPPPY...",
+        "YPPPY...",
+        "YPPPY...",
+        "YYPYY...",
+        "Y.P.Y...",
+        "YW.WY...",
+        "........",
+        "........",
+        "........",
+        "........",
+        "........",
+        "........",
+        "........",
+        "........"
+      ],
+      "design_axis": "vertical",
+      "heading": "down",
+      "design_origin": [
+        0,
+        0
+      ],
+      "design_size": [
+        5,
+        8
+      ],
+      "vertical_pixel_repeat": 1
+    },
+    "96": {
+      "kind": 3,
+      "rows": [
+        "Y.P.Y...",
+        "Y.P.Y...",
+        "YPPPY...",
+        "YPPPY...",
+        "YPPPY...",
+        "YYPYY...",
+        "Y.P.Y...",
+        "YW.WY...",
+        "........",
+        "........",
+        "........",
+        "........",
+        "........",
+        "........",
+        "........",
+        "........"
+      ],
+      "design_axis": "vertical",
+      "heading": "down",
+      "design_origin": [
+        0,
+        0
+      ],
+      "design_size": [
+        5,
+        8
+      ],
+      "vertical_pixel_repeat": 1
+    },
+    "120": {
+      "kind": 4,
+      "rows": [
+        "Y.P.Y...",
+        "Y.P.Y...",
+        "YPPPY...",
+        "YPPPY...",
+        "YPPPY...",
+        "YYPYY...",
+        "Y.P.Y...",
+        "YW.WY...",
+        "........",
+        "........",
+        "........",
+        "........",
+        "........",
+        "........",
+        "........",
+        "........"
+      ],
+      "design_axis": "vertical",
+      "heading": "down",
+      "design_origin": [
+        0,
+        0
+      ],
+      "design_size": [
+        5,
+        8
+      ],
+      "vertical_pixel_repeat": 1
+    },
+    "60": {
+      "kind": 3,
+      "rows": [
+        "........",
+        "........",
+        "........",
+        "........",
+        "YW.WY...",
+        "Y.P.Y...",
+        "YYPYY...",
+        "YPPPY...",
+        "YPPPY...",
+        "YPPPY...",
+        "Y.P.Y...",
+        "Y.P.Y...",
+        "........",
+        "........",
+        "........",
+        "........"
+      ],
+      "design_axis": "vertical",
+      "heading": "up",
+      "design_origin": [
+        0,
+        4
+      ],
+      "design_size": [
+        5,
+        8
+      ],
+      "vertical_pixel_repeat": 1
+    },
+    "62": {
+      "kind": 3,
+      "rows": [
+        "........",
+        "........",
+        "........",
+        "........",
+        "YW.WY...",
+        "Y.P.Y...",
+        "YYPYY...",
+        "YPPPY...",
+        "YPPPY...",
+        "YPPPY...",
+        "Y.P.Y...",
+        "Y.P.Y...",
+        "........",
+        "........",
+        "........",
+        "........"
+      ],
+      "design_axis": "vertical",
+      "heading": "up",
+      "design_origin": [
+        0,
+        4
+      ],
+      "design_size": [
+        5,
+        8
+      ],
+      "vertical_pixel_repeat": 1
+    },
+    "68": {
+      "kind": 3,
+      "rows": [
+        "........",
+        "........",
+        "........",
+        "........",
+        "Y.P.Y...",
+        "Y.P.Y...",
+        "YPPPY...",
+        "YPPPY...",
+        "YPPPY...",
+        "YYPYY...",
+        "Y.P.Y...",
+        "YW.WY...",
+        "........",
+        "........",
+        "........",
+        "........"
+      ],
+      "design_axis": "vertical",
+      "heading": "down",
+      "design_origin": [
+        0,
+        4
+      ],
+      "design_size": [
+        5,
+        8
+      ],
+      "vertical_pixel_repeat": 1
+    },
+    "70": {
+      "kind": 3,
+      "rows": [
+        "........",
+        "........",
+        "........",
+        "........",
+        "Y.P.Y...",
+        "Y.P.Y...",
+        "YPPPY...",
+        "YPPPY...",
+        "YPPPY...",
+        "YYPYY...",
+        "Y.P.Y...",
+        "YW.WY...",
+        "........",
+        "........",
+        "........",
+        "........"
+      ],
+      "design_axis": "vertical",
+      "heading": "down",
+      "design_origin": [
+        0,
+        4
+      ],
+      "design_size": [
+        5,
+        8
+      ],
+      "vertical_pixel_repeat": 1
+    },
+    "160": {
+      "kind": 4,
+      "rows": [
+        "........",
+        "........",
+        "........",
+        "........",
+        "Y.P.Y...",
+        "Y.P.Y...",
+        "YPPPY...",
+        "YPPPY...",
+        "YPPPY...",
+        "YYPYY...",
+        "Y.P.Y...",
+        "YW.WY...",
+        "........",
+        "........",
+        "........",
+        "........"
+      ],
+      "design_axis": "vertical",
+      "heading": "down",
+      "design_origin": [
+        0,
+        4
+      ],
+      "design_size": [
+        5,
+        8
+      ],
+      "vertical_pixel_repeat": 1
+    },
+    "92": {
+      "kind": 3,
+      "rows": [
+        "........",
+        "YYYY....",
+        ".YY.....",
+        ".PPW....",
+        "PPPP....",
+        ".PPW....",
+        ".YY.....",
+        "YYYY....",
+        "........",
+        "........",
+        "........",
+        "........",
+        "........",
+        "........",
+        "........",
+        "........"
+      ],
+      "design_axis": "horizontal",
+      "heading": "right",
+      "design_origin": [
+        0,
+        1
+      ],
+      "design_size": [
+        4,
+        7
+      ],
+      "vertical_pixel_repeat": 1
+    },
+    "112": {
+      "kind": 4,
+      "rows": [
+        "........",
+        "YYYY....",
+        ".YY.....",
+        ".PPW....",
+        "PPPP....",
+        ".PPW....",
+        ".YY.....",
+        "YYYY....",
+        "........",
+        "........",
+        "........",
+        "........",
+        "........",
+        "........",
+        "........",
+        "........"
+      ],
+      "design_axis": "horizontal",
+      "heading": "right",
+      "design_origin": [
+        0,
+        1
+      ],
+      "design_size": [
+        4,
+        7
+      ],
+      "vertical_pixel_repeat": 1
+    },
+    "100": {
+      "kind": 3,
+      "rows": [
+        "........",
+        "YYYY....",
+        ".YY.....",
+        "WPP.....",
+        "PPPP....",
+        "WPP.....",
+        ".YY.....",
+        "YYYY....",
+        "........",
+        "........",
+        "........",
+        "........",
+        "........",
+        "........",
+        "........",
+        "........"
+      ],
+      "design_axis": "horizontal",
+      "heading": "left",
+      "design_origin": [
+        0,
+        1
+      ],
+      "design_size": [
+        4,
+        7
+      ],
+      "vertical_pixel_repeat": 1
+    },
+    "128": {
+      "kind": 4,
+      "rows": [
+        "........",
+        "YYYY....",
+        ".YY.....",
+        "WPP.....",
+        "PPPP....",
+        "WPP.....",
+        ".YY.....",
+        "YYYY....",
+        "........",
+        "........",
+        "........",
+        "........",
+        "........",
+        "........",
+        "........",
+        "........"
+      ],
+      "design_axis": "horizontal",
+      "heading": "left",
+      "design_origin": [
+        0,
+        1
+      ],
+      "design_size": [
+        4,
+        7
+      ],
+      "vertical_pixel_repeat": 1
+    },
+    "80": {
+      "kind": 1,
+      "rows": [
+        "...WY...",
+        "..WY.Y..",
+        ".Y.PPY..",
+        "..YPPYY.",
+        "..YYPPY.",
+        "...YPP.Y",
+        "...Y.P..",
+        "....P..."
+      ],
+      "design_axis": "paired_bank",
+      "heading": "right",
+      "design_origin": [
+        1,
+        0
+      ],
+      "design_size": [
+        7,
+        8
+      ],
+      "vertical_pixel_repeat": 1,
+      "mirror_partner": 82
+    },
+    "82": {
+      "kind": 1,
+      "rows": [
+        "...YW...",
+        "..Y.YW..",
+        "..YPP.Y.",
+        ".YYPPY..",
+        ".YPPYY..",
+        "Y.PPY...",
+        "..P.Y...",
+        "...P...."
+      ],
+      "design_axis": "paired_bank",
+      "heading": "left",
+      "design_origin": [
+        0,
+        0
+      ],
+      "design_size": [
+        7,
+        8
+      ],
+      "vertical_pixel_repeat": 1,
+      "mirror_partner": 80
+    },
+    "84": {
+      "kind": 1,
+      "rows": [
+        "....Y...",
+        "...P.Y..",
+        ".Y.PPY..",
+        "..YPPYY.",
+        "..YYPPY.",
+        "...YPP.Y",
+        "...Y.YW.",
+        "....PW.."
+      ],
+      "design_axis": "paired_bank",
+      "heading": "right",
+      "design_origin": [
+        1,
+        0
+      ],
+      "design_size": [
+        7,
+        8
+      ],
+      "vertical_pixel_repeat": 1,
+      "mirror_partner": 86
+    },
+    "86": {
+      "kind": 1,
+      "rows": [
+        "....Y...",
+        "...Y.P..",
+        "...YPP.Y",
+        "..YYPPY.",
+        "..YPPYY.",
+        ".Y.PPY..",
+        "..WY.Y..",
+        "...WP..."
+      ],
+      "design_axis": "paired_bank",
+      "heading": "left",
+      "design_origin": [
+        1,
+        0
+      ],
+      "design_size": [
+        7,
+        8
+      ],
+      "vertical_pixel_repeat": 1,
+      "mirror_partner": 84
+    },
+    "90": {
+      "kind": 3,
+      "rows": [
+        "........",
+        "........",
+        "........",
+        "..Y.....",
+        "..Y.....",
+        ".YYW....",
+        ".YPW....",
+        "YYP.....",
+        "PPP.....",
+        ".PPY....",
+        ".PYY....",
+        "PPY.....",
+        ".YY.....",
+        ".Y......",
+        ".Y......",
+        "........"
+      ],
+      "design_axis": "paired_bank",
+      "heading": "NE",
+      "design_origin": [
+        0,
+        3
+      ],
+      "design_size": [
+        4,
+        12
+      ],
+      "vertical_pixel_repeat": 1,
+      "mirror_partner": 102
+    },
+    "94": {
+      "kind": 3,
+      "rows": [
+        "........",
+        "........",
+        ".Y......",
+        ".Y......",
+        ".YY.....",
+        "PPY.....",
+        ".PYY....",
+        ".PPY....",
+        "PPP.....",
+        "YYP.....",
+        ".YPW....",
+        ".YYW....",
+        "..Y.....",
+        "..Y.....",
+        "........",
+        "........"
+      ],
+      "design_axis": "paired_bank",
+      "heading": "SE",
+      "design_origin": [
+        0,
+        2
+      ],
+      "design_size": [
+        4,
+        12
+      ],
+      "vertical_pixel_repeat": 1,
+      "mirror_partner": 98
+    },
+    "98": {
+      "kind": 3,
+      "rows": [
+        "........",
+        "........",
+        "........",
+        "..Y.....",
+        "..Y.....",
+        ".YY.....",
+        ".YPP....",
+        "YYP.....",
+        "YPP.....",
+        ".PPP....",
+        ".PYY....",
+        "WPY.....",
+        "WYY.....",
+        ".Y......",
+        ".Y......",
+        "........"
+      ],
+      "design_axis": "paired_bank",
+      "heading": "SW",
+      "design_origin": [
+        0,
+        3
+      ],
+      "design_size": [
+        4,
+        12
+      ],
+      "vertical_pixel_repeat": 1,
+      "mirror_partner": 94
+    },
+    "102": {
+      "kind": 3,
+      "rows": [
+        "........",
+        "........",
+        ".Y......",
+        ".Y......",
+        "WYY.....",
+        "WPY.....",
+        ".PYY....",
+        ".PPP....",
+        "YPP.....",
+        "YYP.....",
+        ".YPP....",
+        ".YY.....",
+        "..Y.....",
+        "..Y.....",
+        "........",
+        "........"
+      ],
+      "design_axis": "paired_bank",
+      "heading": "NW",
+      "design_origin": [
+        0,
+        2
+      ],
+      "design_size": [
+        4,
+        12
+      ],
+      "vertical_pixel_repeat": 1,
+      "mirror_partner": 90
+    },
+    "108": {
+      "kind": 4,
+      "rows": [
+        "........",
+        "........",
+        "....P...",
+        "...Y....",
+        "...Y.W..",
+        "..YY.W..",
+        "..YYP...",
+        ".Y.PP.Y.",
+        ".Y.PPYY.",
+        "...PYY..",
+        "..P.YY..",
+        "....Y...",
+        "....Y...",
+        "...Y....",
+        "........",
+        "........"
+      ],
+      "design_axis": "paired_bank",
+      "heading": "NE",
+      "design_origin": [
+        1,
+        2
+      ],
+      "design_size": [
+        6,
+        12
+      ],
+      "vertical_pixel_repeat": 1,
+      "mirror_partner": 132
+    },
+    "116": {
+      "kind": 4,
+      "rows": [
+        "........",
+        "........",
+        "...Y....",
+        "....Y...",
+        "....Y...",
+        "..P.YY..",
+        "...PYY..",
+        ".Y.PPYY.",
+        ".Y.PP.Y.",
+        "..YYP...",
+        "..YY.W..",
+        "...Y.W..",
+        "...Y....",
+        "....P...",
+        "........",
+        "........"
+      ],
+      "design_axis": "paired_bank",
+      "heading": "SE",
+      "design_origin": [
+        1,
+        2
+      ],
+      "design_size": [
+        6,
+        12
+      ],
+      "vertical_pixel_repeat": 1,
+      "mirror_partner": 124
+    },
+    "124": {
+      "kind": 4,
+      "rows": [
+        "........",
+        "........",
+        "....Y...",
+        "...Y....",
+        "...Y....",
+        "..YY.P..",
+        "..YYP...",
+        ".YYPP.Y.",
+        ".Y.PP.Y.",
+        "...PYY..",
+        "..W.YY..",
+        "..W.Y...",
+        "....Y...",
+        "...P....",
+        "........",
+        "........"
+      ],
+      "design_axis": "paired_bank",
+      "heading": "SW",
+      "design_origin": [
+        1,
+        2
+      ],
+      "design_size": [
+        6,
+        12
+      ],
+      "vertical_pixel_repeat": 1,
+      "mirror_partner": 116
+    },
+    "132": {
+      "kind": 4,
+      "rows": [
+        "........",
+        "........",
+        "...P....",
+        "....Y...",
+        "..W.Y...",
+        "..W.YY..",
+        "...PYY..",
+        ".Y.PP.Y.",
+        ".YYPP.Y.",
+        "..YYP...",
+        "..YY.P..",
+        "...Y....",
+        "...Y....",
+        "....Y...",
+        "........",
+        "........"
+      ],
+      "design_axis": "paired_bank",
+      "heading": "NW",
+      "design_origin": [
+        1,
+        2
+      ],
+      "design_size": [
+        6,
+        12
+      ],
+      "vertical_pixel_repeat": 1,
+      "mirror_partner": 108
+    },
+    "168": {
+      "kind": 4,
+      "rows": [
+        "........",
+        "........",
+        "...YPY..",
+        "...YPY..",
+        "..YPPPY.",
+        "..YPPPY.",
+        "..YPPPY.",
+        "..YYPYY.",
+        "..YYPYY.",
+        "..YW.WY.",
+        "........",
+        "........",
+        "........",
+        "........",
+        "........",
+        "........"
+      ],
+      "design_axis": "vertical",
+      "heading": "down",
+      "design_origin": [
+        2,
+        2
+      ],
+      "design_size": [
+        5,
+        8
+      ],
+      "vertical_pixel_repeat": 1
+    },
+    "172": {
+      "kind": 4,
+      "rows": [
+        "........",
+        "........",
+        "........",
+        "........",
+        "........",
+        "........",
+        "...YPY..",
+        "...YPY..",
+        "..YPPPY.",
+        "..YPPPY.",
+        "..YPPPY.",
+        "..YYPYY.",
+        "..YYPYY.",
+        "..YW.WY.",
+        "........",
+        "........"
+      ],
+      "design_axis": "vertical",
+      "heading": "down",
+      "design_origin": [
+        2,
+        6
+      ],
+      "design_size": [
+        5,
+        8
+      ],
+      "vertical_pixel_repeat": 1
+    },
+    "192": {
+      "kind": 4,
+      "rows": [
+        "YYYW....",
+        "YYYW....",
+        "YYP.....",
+        "YPPY....",
+        "YPYY....",
+        ".P.Y....",
+        "P.YY....",
+        ".YYY....",
+        "........",
+        "........",
+        "........",
+        "........",
+        "........",
+        "........",
+        "........",
+        "........"
+      ],
+      "design_axis": "paired_bank",
+      "heading": "right",
+      "design_origin": [
+        0,
+        0
+      ],
+      "design_size": [
+        4,
+        8
+      ],
+      "vertical_pixel_repeat": 1,
+      "mirror_partner": 208
+    },
+    "196": {
+      "kind": 4,
+      "rows": [
+        "........",
+        "........",
+        ".YYY.W..",
+        ".YYYYW..",
+        "YY.YP...",
+        "...PPY..",
+        "...PYY..",
+        "...PYY..",
+        "..P..Y..",
+        "..P..Y..",
+        "....YY..",
+        "....YY..",
+        "....Y...",
+        "........",
+        "........",
+        "........"
+      ],
+      "design_axis": "paired_bank",
+      "heading": "right",
+      "design_origin": [
+        0,
+        2
+      ],
+      "design_size": [
+        6,
+        11
+      ],
+      "vertical_pixel_repeat": 1,
+      "mirror_partner": 212
+    },
+    "200": {
+      "kind": 4,
+      "rows": [
+        "........",
+        "........",
+        "Y.......",
+        "YY......",
+        "YYYW....",
+        ".YYPW...",
+        ".YYP....",
+        "..PY....",
+        ".PPYY...",
+        ".PPYY...",
+        ".P.YY...",
+        "....Y...",
+        "....YY..",
+        "........",
+        "........",
+        "........"
+      ],
+      "design_axis": "paired_bank",
+      "heading": "right",
+      "design_origin": [
+        0,
+        2
+      ],
+      "design_size": [
+        6,
+        11
+      ],
+      "vertical_pixel_repeat": 1,
+      "mirror_partner": 216
+    },
+    "204": {
+      "kind": 4,
+      "rows": [
+        "........",
+        "........",
+        ".YY.....",
+        "..YY....",
+        "..YY....",
+        "..YY....",
+        "...YYW..",
+        "...YYW..",
+        "...YP...",
+        "...PPY..",
+        "...PYYY.",
+        "...P.YYY",
+        "..P...YY",
+        ".......Y",
+        ".......Y",
+        "........"
+      ],
+      "design_axis": "paired_bank",
+      "heading": "right",
+      "design_origin": [
+        1,
+        2
+      ],
+      "design_size": [
+        7,
+        13
+      ],
+      "vertical_pixel_repeat": 1,
+      "mirror_partner": 220
+    },
+    "208": {
+      "kind": 4,
+      "rows": [
+        "WYYY....",
+        "WYYY....",
+        ".PYY....",
+        "YPPY....",
+        "YYPY....",
+        "Y.P.....",
+        "YY.P....",
+        "YYY.....",
+        "........",
+        "........",
+        "........",
+        "........",
+        "........",
+        "........",
+        "........",
+        "........"
+      ],
+      "design_axis": "paired_bank",
+      "heading": "left",
+      "design_origin": [
+        0,
+        0
+      ],
+      "design_size": [
+        4,
+        8
+      ],
+      "vertical_pixel_repeat": 1,
+      "mirror_partner": 192
+    },
+    "212": {
+      "kind": 4,
+      "rows": [
+        "........",
+        "........",
+        "..W.YYY.",
+        "..WYYYY.",
+        "...PY.YY",
+        "..YPP...",
+        "..YYP...",
+        "..YYP...",
+        "..Y..P..",
+        "..Y..P..",
+        "..YY....",
+        "..YY....",
+        "...Y....",
+        "........",
+        "........",
+        "........"
+      ],
+      "design_axis": "paired_bank",
+      "heading": "left",
+      "design_origin": [
+        2,
+        2
+      ],
+      "design_size": [
+        6,
+        11
+      ],
+      "vertical_pixel_repeat": 1,
+      "mirror_partner": 196
+    },
+    "216": {
+      "kind": 4,
+      "rows": [
+        "........",
+        "........",
+        "........",
+        ".....Y..",
+        "....YY..",
+        "..WYYY..",
+        ".WPYY...",
+        "..PYY...",
+        "..YP....",
+        ".YYPP...",
+        ".YYPP...",
+        ".YY.P...",
+        ".Y......",
+        "YY......",
+        "........",
+        "........"
+      ],
+      "design_axis": "paired_bank",
+      "heading": "left",
+      "design_origin": [
+        0,
+        3
+      ],
+      "design_size": [
+        6,
+        11
+      ],
+      "vertical_pixel_repeat": 1,
+      "mirror_partner": 200
+    },
+    "220": {
+      "kind": 4,
+      "rows": [
+        "........",
+        "........",
+        ".....YY.",
+        "....YY..",
+        "....YY..",
+        "....YY..",
+        "..WYY...",
+        "..WYY...",
+        "...PY...",
+        "..YPP...",
+        ".YYYP...",
+        "YYY.P...",
+        "YY...P..",
+        "Y.......",
+        "Y.......",
+        "........"
+      ],
+      "design_axis": "paired_bank",
+      "heading": "left",
+      "design_origin": [
+        0,
+        2
+      ],
+      "design_size": [
+        7,
+        13
+      ],
+      "vertical_pixel_repeat": 1,
+      "mirror_partner": 204
+    }
+  }
+}
