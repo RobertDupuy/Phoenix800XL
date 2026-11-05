@@ -1,10 +1,13 @@
-Phoenix v0.13.1 — readable bird-letter title
+Phoenix v0.14 — native gameplay-sprite title
+Atari 5200 NTSC, 256 KiB, CAR type 73
 
-Title-only correction: native compact upright bird pose 78, wider letter gaps,
-clear diagonal N/X and a barred I. All gameplay fixes from v0.13 are retained.
+Tall P, close H spacing, mixed wing poses, pink wings and green centers.
+Centered large gameplay bird uses its original flat 32-by-16 frame.
+No enlarged or higher-resolution replacement bird artwork is used.
 
-Verified four Altirra title/score captures and startup into gameplay.
-245,760 pixels checked; no missing/stray pixels or inconsistent colors.
+Mothership bird collision, scoring, text and campaign fixes are retained.
+Four Altirra title/score captures passed all 245,760 pixel checks; startup
+entered gameplay normally. Gameplay code is unchanged from v0.13.
 
 CAR SHA-256
-198126f7d3f8ccf31f31dda91fe836c38d0317d3c33ebe86a4fee809dd1d0de7
+60823b46d0b1f5e9bb02e3502e80ec6fa7b57c44f3b98ab86e0b05c3811b45d7
