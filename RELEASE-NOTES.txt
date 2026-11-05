@@ -1,37 +1,34 @@
-Phoenix v0.12 — gameplay-sprite title and score table
+Phoenix v0.13 — presentation and mothership-escort fixes
 Atari 5200 NTSC / 16 KiB RAM / 256 KiB cartridge / CAR type 73
 
-The title spells PHOENIX with 69 intact gameplay bird sprites. The score
-explanation page uses the actual small-bird poses, large-bird pose and pilot
-glyphs used during gameplay, at native size and with the same GTIA colors.
-The previous converted illustrations are removed. The score-page footer is
-cyan and the 200-point text moves up one scanline for a clean palette change.
+PHOENIX now uses 69 copies of gameplay flying pose 80. All presentation text is
+rebuilt from native HUD glyphs: copyright, INSERT 1 COIN, both player/coin lines,
+and the score table. There are no stray marks between N, I and X.
 
-The complete five-wave game from v0.11 is retained: two small-bird waves,
-two large-bird waves, the destructible mothership, arcade wipe transitions,
-changing palettes, harder subsequent cycles, center-hit scores and POKEY audio.
-Population: sixteen small birds, six large birds, two mothership escorts.
+The corruption was caused by late display-interrupt font switches damaging the
+first two scanlines of character rows. Each page now retains a single font.
+Startup also bypasses the gameplay palette override. The obsolete converted
+picture-page binaries are removed.
+
+Mothership escorts now receive bullet collision checks. Birds in front of the
+mothership absorb matching shots before its armor. Hit effects and awards finish
+before two replacements appear. Unobstructed shots still damage the mothership.
+
+VERIFIED ON THIS CARTRIDGE
+Four Altirra presentation captures: 245,760 pixels checked, zero missing/stray
+pixels and zero inconsistent color pixels. Both pages repeat and start gameplay.
+Both escort slots, misses, hidden-bird phases, scoring, armor priority and
+replenishment passed CPU regression fixtures. 411 campaign checks passed.
+A physical-controller Altirra run shot four observed mothership escorts,
+cleared the mothership and entered round two. No game-memory writes or skips.
 
 CONTROLS
-Joystick left/right. Lower fire button shoots and starts a game; press again
-for each shot. Upper fire button activates the shield. In the test keyboard
-mapping: Left/Right, Left Ctrl (fire), Left Shift (shield).
+Joystick left/right. Lower fire starts/shoots; release between shots. Upper fire
+activates the shield. Test keyboard: Left/Right, Left Ctrl, Left Shift.
 
-VERIFICATION ON THIS CARTRIDGE
-Original-BIOS cold boot displayed both corrected pages and started gameplay.
-Decoded all 61,440 presentation pixels from the generated fonts and maps and
-matched the intended pages. Checked packed fonts and cartridge payload.
-All 77 non-intro binary data files match v0.11; campaign.S is unchanged.
-A controller-driven AltirraSDL run cleared all five waves and entered round
-two, with two lives remaining. It reads RAM for targeting but does not write
-game memory, load states, grant invulnerability or skip waves.
-
-PERFORMANCE AND SCOPE
-Bird waves render at about 30 updates per second; the mothership remains
-around 15–20. Input and audio run on every NTSC video interrupt. Elapsed-frame
-catch-up handles normal boss rendering delays. Atari colors and POKEY audio
-approximate arcade hardware. Validation used AltirraSDL, not a physical 5200.
-The preview contains recorded emulator audio, raised 6 dB, with no added music.
+Bird waves render at about 30 updates/s, the mothership around 15–20. Input and
+audio run every NTSC VBI. Colors/audio approximate arcade hardware. Tested in
+AltirraSDL with the original Atari BIOS, not yet on a physical 5200.
 
 CAR SHA-256
-79f5fd453dc81f8178800149c2de063f43ea8c5bbeff8f78e74da2d1d25674bd
+c68bf57caf987cbdf244cb7292839f80c4a6b96a7cbcd417ab1eb355e5cb582c

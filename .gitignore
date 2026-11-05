@@ -1,0 +1,6 @@
+build/
+__pycache__/
+*.pyc
+env.sh
+tests/*/
+evidence/v0*/
