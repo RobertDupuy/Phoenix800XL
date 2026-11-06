@@ -1,0 +1,240 @@
+{
+  "car_sha256": "b701ec0da33148052e4aa484d121143327b9b7c191f6c90967d463c400c798e9",
+  "method": "NTSC Altirra timing and entrance fixtures; includes real DMA/interrupt time.\n\nThis is a staged diagnostic, not a controller-only playthrough. Stage/scene\nfixtures write RAM at a simulation boundary; the ROM then runs normally.\nRequires ALTIRRA_BRIDGE_PACKAGE and ATARI5200_BIOS. Neither dependency is shipped.\n",
+  "emulator_sha256": "5d125e98c766a6aa958b42bf60d33dee272e48263f6a32d5631fc3d31756a02c",
+  "bios_sha256": "06b250f18983d058c0f156ce7ee88ae48b6eaf11e6f10f21dccf6ac7ffb6a6af",
+  "entry_frames_checked": 119,
+  "config": {
+    "machine": "5200",
+    "memory": "16K",
+    "video": "ntsc",
+    "rapidus": false,
+    "vbxe": false
+  },
+  "stress_cases": [
+    {
+      "round": 0,
+      "escorts": 5,
+      "scenario": 0,
+      "foreground_clocks": 90393
+    },
+    {
+      "round": 0,
+      "escorts": 5,
+      "scenario": 1,
+      "foreground_clocks": 135495
+    },
+    {
+      "round": 0,
+      "escorts": 5,
+      "scenario": 2,
+      "foreground_clocks": 122106
+    },
+    {
+      "round": 0,
+      "escorts": 5,
+      "scenario": 3,
+      "foreground_clocks": 126329
+    },
+    {
+      "round": 0,
+      "escorts": 5,
+      "scenario": 4,
+      "foreground_clocks": 131194
+    },
+    {
+      "round": 0,
+      "escorts": 5,
+      "scenario": 5,
+      "foreground_clocks": 126098
+    },
+    {
+      "round": 0,
+      "escorts": 5,
+      "scenario": 6,
+      "foreground_clocks": 111756
+    },
+    {
+      "round": 0,
+      "escorts": 5,
+      "scenario": 7,
+      "foreground_clocks": 139836
+    },
+    {
+      "round": 0,
+      "escorts": 5,
+      "scenario": 8,
+      "foreground_clocks": 132946
+    },
+    {
+      "round": 0,
+      "escorts": 5,
+      "scenario": 9,
+      "foreground_clocks": 141396
+    },
+    {
+      "round": 0,
+      "escorts": 5,
+      "scenario": 10,
+      "foreground_clocks": 119615
+    },
+    {
+      "round": 0,
+      "escorts": 5,
+      "scenario": 11,
+      "foreground_clocks": 150373
+    },
+    {
+      "round": 0,
+      "escorts": 5,
+      "scenario": 12,
+      "foreground_clocks": 139189
+    },
+    {
+      "round": 0,
+      "escorts": 5,
+      "scenario": 13,
+      "foreground_clocks": 129502
+    },
+    {
+      "round": 0,
+      "escorts": 5,
+      "scenario": 14,
+      "foreground_clocks": 125975
+    },
+    {
+      "round": 0,
+      "escorts": 5,
+      "scenario": 15,
+      "foreground_clocks": 141602
+    },
+    {
+      "round": 15,
+      "escorts": 5,
+      "scenario": 0,
+      "foreground_clocks": 100540
+    },
+    {
+      "round": 15,
+      "escorts": 5,
+      "scenario": 1,
+      "foreground_clocks": 136612
+    },
+    {
+      "round": 15,
+      "escorts": 5,
+      "scenario": 2,
+      "foreground_clocks": 121439
+    },
+    {
+      "round": 15,
+      "escorts": 5,
+      "scenario": 3,
+      "foreground_clocks": 126662
+    },
+    {
+      "round": 15,
+      "escorts": 5,
+      "scenario": 4,
+      "foreground_clocks": 124202
+    },
+    {
+      "round": 15,
+      "escorts": 5,
+      "scenario": 5,
+      "foreground_clocks": 125967
+    },
+    {
+      "round": 15,
+      "escorts": 5,
+      "scenario": 6,
+      "foreground_clocks": 112310
+    },
+    {
+      "round": 15,
+      "escorts": 5,
+      "scenario": 7,
+      "foreground_clocks": 141969
+    },
+    {
+      "round": 15,
+      "escorts": 5,
+      "scenario": 8,
+      "foreground_clocks": 133451
+    },
+    {
+      "round": 15,
+      "escorts": 5,
+      "scenario": 9,
+      "foreground_clocks": 138906
+    },
+    {
+      "round": 15,
+      "escorts": 5,
+      "scenario": 10,
+      "foreground_clocks": 124394
+    },
+    {
+      "round": 15,
+      "escorts": 5,
+      "scenario": 11,
+      "foreground_clocks": 144870
+    },
+    {
+      "round": 15,
+      "escorts": 5,
+      "scenario": 12,
+      "foreground_clocks": 118081
+    },
+    {
+      "round": 15,
+      "escorts": 5,
+      "scenario": 13,
+      "foreground_clocks": 110282
+    },
+    {
+      "round": 15,
+      "escorts": 5,
+      "scenario": 14,
+      "foreground_clocks": 119798
+    },
+    {
+      "round": 15,
+      "escorts": 5,
+      "scenario": 15,
+      "foreground_clocks": 141838
+    }
+  ],
+  "steady_runs": [
+    {
+      "round": 0,
+      "escorts": 5,
+      "video_frames": 600,
+      "render_fps": 15.68,
+      "simulation_hz": 60.822,
+      "late_vbi": 0,
+      "layout_faults": 0,
+      "final_survivors": 5,
+      "audio_publishes": 600,
+      "missing_audio_frames": 0,
+      "max_audio_gap_clocks": 29960
+    },
+    {
+      "round": 15,
+      "escorts": 5,
+      "video_frames": 600,
+      "render_fps": 16.079,
+      "simulation_hz": 61.021,
+      "late_vbi": 0,
+      "layout_faults": 0,
+      "final_survivors": 5,
+      "audio_publishes": 600,
+      "missing_audio_frames": 0,
+      "max_audio_gap_clocks": 29958
+    }
+  ],
+  "foreground_limit_clocks": 117424,
+  "steady_runs_pass": true,
+  "all_stress_frames_within_four_vbi": false,
+  "six_escort_timing_pass": null
+}

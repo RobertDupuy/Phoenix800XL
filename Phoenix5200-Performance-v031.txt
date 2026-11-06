@@ -1,0 +1,54 @@
+Phoenix5200 v0.31 — seven large birds / five mothership escorts
+
+Final cartridge SHA-256: b701ec0da33148052e4aa484d121143327b9b7c191f6c90967d463c400c798e9
+Payload: 262,144 bytes. CAR header: 16 bytes. Cartridge type: 73.
+Target: original NTSC Atari 5200, 16 KiB RAM. No accelerated CPU or VBXE.
+
+Identical-scene CPU comparison (previous renderer -> optimized renderer):
+  144 seven-large-bird scenes: 4,279,032 -> 3,963,484 cycles (7.4% less).
+  128 five-escort scenes:     6,656,978 -> 5,581,461 cycles (16.2% less).
+  Pixel differences: 0. Large-wave raster-schedule differences: 0.
+  Cases include clipping, overlap, eggs, shields, death, armor damage,
+  scrolling and repeated reuse of both display buffers.
+
+Normal-code NTSC runs after stage setup (1,200 video frames per stage):
+  Large wave 3, seven birds: 20.474 rendered frames/s, 61.021 simulation Hz.
+  Large wave 4, seven birds: 19.924 rendered frames/s, 61.071 simulation Hz.
+  Mothership, five escorts: 17.977 rendered frames/s, 60.971 simulation Hz.
+  Audio underruns: 0. Missing audio frames: 0. Late VBI: 0.
+  Glyph allocation faults: 0. Enemy counts stayed at seven/seven/five.
+
+Actual ANTIC large-wave checks, 100 samples per wave:
+  10,240,000 playfield pixels compared; missing/extra/wrong-color pixels: 0.
+  Each wave ran 700 video frames, averaging 23.969 and 23.798 rendered
+  frames/s during this earlier portion of its movement cycle.
+  Late VBI, missing audio updates and glyph allocation faults: all 0.
+
+Mothership entrance and stress:
+  Player remains hidden and cannot fire or shield during descent.
+  Five-escort steady stress runs: 15.680 frames/s in round 0 and
+  16.079 frames/s in round 15, each over 600 video frames.
+  Simulation rates: 60.822 and 61.021 Hz. No missed audio frames,
+  late VBI or glyph allocation faults. Five escorts survive each run.
+  32 forced cold-cache/effect scenes: worst foreground update 150,373
+  master clocks (about 84 ms). Some artificial stress cases exceed four
+  video frames; a fixed 15/20/30 fps is not claimed. The existing audio
+  queue covers the tested steady runs without changing sound synthesis.
+
+Other regressions:
+  276 exact source-artwork checks; all 63 supplied frames retained.
+  411 campaign checks across 80 waves, including armor, victory and wipes.
+  256 death/respawn cases across all 16 rounds and 0..7 survivors.
+  896 immediate post-respawn collision checks; zero unfair immediate deaths.
+  The fifth escort is hittable; all five replenish after hits finish.
+  Eight small-bird source-facing checks and sixteen direction/phase cases.
+
+Scope:
+  Rendering/collision checks are explicit synthetic CPU fixtures.
+  Timing/raster checks use original-BIOS Altirra with stage selection and
+  periodic invulnerability writes to retain the full enemy load. Between
+  setup and observation, the cartridge executes its normal code. These are
+  not controller-only playthroughs or physical-hardware certification.
+  Existing release-candidate-2 and its cartridge asset are unchanged.
+
+Artwork: hand-drawn Atari 5200 artwork by T1X.

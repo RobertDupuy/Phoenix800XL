@@ -963,21 +963,14 @@ boss_foreground_glyph:
  lda native_flags,x
  sta draw_palette
  jsr large_cell_glyph
- # Native tile bytes were copied into bank one in the same row-major format.
- .irp row,0,1,2,3,4,5,6,7
+ # Opacity masks are immutable ROM data, just like the native pixels.
+ # Preserve background pairs only where the foreground pixel is zero.
  ldx draw_template
- lda boss_native+(TEMPLATE_COUNT*\row),x
- sta boss_t1
- lsr
- ora boss_t1
- and #85
- sta boss_t2
- asl
- ora boss_t2
- eor #255
+ .irp row,0,1,2,3,4,5,6,7
+ lda boss_native_masks+(TEMPLATE_COUNT*\row),x
  ldy #\row
  and (boss_bgptr),y
- ora boss_t1
+ ora boss_native+(TEMPLATE_COUNT*\row),x
  sta (dst_ptr),y
  .endr
  rts
@@ -1231,6 +1224,7 @@ boss_wipe_glyph: .incbin "build/wipe-glyph.bin"
 .balign 256
 boss_wipe_radius: .incbin "build/wipe-radius.bin"
 boss_native: .incbin "build/native-tiles.bin"
+boss_native_masks: .incbin "build/native-masks.bin"
 
 boss_half_lo:
  .set n,0

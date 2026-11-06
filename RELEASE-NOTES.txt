@@ -1,14 +1,17 @@
-Phoenix5200 v0.30 — separate left/right return animations
+Phoenix5200 release candidate 3 (v0.31)
 
-The four small-bird leftward-return poses now face left. They are horizontal
-reflections of the supplied right-facing frames, with their existing phases
-and drawing anchors retained. Rightward returns and every other sprite pose
-are unchanged. This fixes northwest movement displaying a northeast pose.
+Seven large birds in each large-bird wave; five mothership escorts.
+The added escort can be hit and participates in normal replenishment.
+All seven large-bird survivors are supported by the existing safe respawn.
 
-No changes to movement, bird counts, difficulty, collision rules, sound or
-display interrupts. The v0.29 large-bird scanline corrections are retained.
+Drawing optimizations: cache unchanged adult-bird raster schedules, clip
+old footprints once, copy populated mothership atlas slots only, and use
+precomputed sprite transparency masks. Identical rendering fixtures save
+7.4% and 16.2% CPU work for large birds and mothership scenes respectively.
 
-NTSC Atari 5200; CAR type 73; 256 KiB payload; six large birds;
-four mothership escorts.
+NTSC Atari 5200; 16 KiB RAM; CAR type 73; 256 KiB payload.
+Movement, fast-mode thresholds, sound and sprite pixels are unchanged.
+Hand-drawn Atari 5200 artwork by T1X.
 
-Artwork credit: T1X (hand-drawn Atari 5200 artwork).
+This is a new candidate. Existing release-candidate-2 remains unchanged.
+See Phoenix5200-Performance-v031.txt for measured timing and test scope.

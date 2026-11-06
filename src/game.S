@@ -1,4 +1,4 @@
-# Phoenix v0.15 — raised player, safe small-bird entry, four boss escorts.
+# Phoenix v0.31 — seven large birds and five mothership escorts.
 # All code executed by the console is NMOS 6502 assembly.
 # Foreground builds buffered graphics independently of the arcade-rate clock.
 # VBI samples input and publishes audio each video frame, committing ready graphics

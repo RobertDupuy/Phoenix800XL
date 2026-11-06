@@ -33,6 +33,7 @@
 .set large_mask_saved,0xb8
 .set large_upper_effects,0x385e
 .set large_ready,0x385f
+.set supplied_palette_cached,0x3860 // one key per display buffer
 .set large_base,0xa400
 .section .large_code,"ax",@progbits
 .global large_reset,large_tick,large_collision,large_render,large_resume
@@ -54,6 +55,8 @@ large_reset_yes:
  pha
  lda #0
  sta large_ready
+ sta supplied_palette_cached
+ sta supplied_palette_cached+1
  sta large_buffer
  sta large_buffer+1
  lda #255
@@ -83,27 +86,11 @@ large_reset_clear:
  sta display_enemy_on,x
  dex
  bpl large_reset_clear
- lda #6
+ lda #large_population
  sta aliens_left
  ldx #7
 large_reset_slot:
- lda #1
- sta enemy_on,x
- txa
- and #1
- sta large_dir,x
- txa
- asl
- asl
- clc
- adc #112
- sta large_age,x
- lda large_initial_x,x
- sta large_x,x
- lda #0
- sta large_anim,x
- lda #6
- sta large_pose,x
+ # The original record loader below supplies presence, position and pose.
  lda #0
  sta large_left,x
  sta large_right,x
@@ -111,9 +98,7 @@ large_reset_slot:
  bpl large_reset_slot
  jsr large_motion_reset
  lda #0
- sta bird_records+48
  sta bird_records+56
- sta enemy_on+6
  sta enemy_on+7
  rts
 large_resume:
@@ -453,7 +438,6 @@ large_art_second:
  rts
 
 .section .large_data,"a",@progbits
-large_initial_x: .byte 8,104,48,128,24,80,140,56
 .set large_y,0x3870
 .set large_world_y,0x3878
 large_band_rows: .byte 0,3,6,9,12,15,18,21

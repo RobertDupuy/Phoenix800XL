@@ -15,7 +15,8 @@
 .set player_shield_body_max_y,239-player_raise
 .set player_shield_bomb_y,212-player_raise
 .set player_explosion_row,12-player_raise/8
-.set escort_population,4
+.set escort_population,5
+.set large_population,7
 .set escort_fast_threshold,3
 .set dark_blue_stars,0x82
 .set safe_entry_events,0x7eb

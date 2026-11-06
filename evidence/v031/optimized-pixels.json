@@ -1,0 +1,19 @@
+{
+  "method": "Compare optimized rendering with the published v0.30 ROM, pixel for pixel.\n\nBoth ROMs receive identical seven-bird/five-escort fixtures, including edges,\noverlaps, damage, buffer reuse, eggs, shields and death. This is a CPU fixture;\nreal ANTIC timing and raster output are checked separately.\n",
+  "car_sha256": "b701ec0da33148052e4aa484d121143327b9b7c191f6c90967d463c400c798e9",
+  "baseline_sha256": "698bc3c5855e4394e4850b1a778ec28243fd7b16a7ffed367b00d3781bbdc923",
+  "large_scenes": 144,
+  "boss_scenes": 128,
+  "pixel_errors": 0,
+  "raster_schedule_errors": 0,
+  "cpu_cycles": {
+    "large": [
+      4279032,
+      3963484
+    ],
+    "boss": [
+      6656978,
+      5581461
+    ]
+  }
+}

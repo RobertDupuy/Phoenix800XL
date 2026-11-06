@@ -1,0 +1,49 @@
+{
+  "method": "Original-BIOS NTSC timing/profile fixtures; stage selection is injected.\n\nBetween stage setup and observations the cartridge runs its normal code.\nThe only periodic RAM write refreshes invulnerability to preserve enemy load.\n",
+  "car_sha256": "b701ec0da33148052e4aa484d121143327b9b7c191f6c90967d463c400c798e9",
+  "config": {
+    "machine": "5200",
+    "memory": "16K",
+    "video": "ntsc",
+    "rapidus": false,
+    "vbxe": false
+  },
+  "timing": [
+    {
+      "wave": 3,
+      "enemies": 7,
+      "video_frames": 1200,
+      "render_fps": 20.474,
+      "simulation_hz": 61.021,
+      "late_vbi": 0,
+      "audio_underruns": 0,
+      "missing_audio_frames": 0,
+      "max_audio_gap_clocks": 29961,
+      "layout_faults": 0
+    },
+    {
+      "wave": 4,
+      "enemies": 7,
+      "video_frames": 1200,
+      "render_fps": 19.924,
+      "simulation_hz": 61.071,
+      "late_vbi": 0,
+      "audio_underruns": 0,
+      "missing_audio_frames": 0,
+      "max_audio_gap_clocks": 29958,
+      "layout_faults": 0
+    },
+    {
+      "wave": 5,
+      "enemies": 5,
+      "video_frames": 1200,
+      "render_fps": 17.977,
+      "simulation_hz": 60.971,
+      "late_vbi": 0,
+      "audio_underruns": 0,
+      "missing_audio_frames": 0,
+      "max_audio_gap_clocks": 29961,
+      "layout_faults": 0
+    }
+  ]
+}

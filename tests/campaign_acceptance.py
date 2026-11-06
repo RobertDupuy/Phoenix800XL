@@ -13,7 +13,10 @@ for w in range(1,81):
   p=T['alien_position_pointer_table'][(m[S['level_round']]>>1)&15]
   assert list(m[0x430:0x440])==list(T['alien_position_layout_page'][p:p+32:2])
   assert list(m[0x440:0x450])==list(T['alien_position_layout_page'][p+1:p+32:2])
- else:assert m[S['bird_round']]==rn+(5 if stage==2 else 7) and m[0x374]==6
+ else:assert m[S['bird_round']]==rn+(5 if stage==2 else 7) and m[0x374]==S['large_population']
+ if stage in (2,3,4):
+  expected=S['escort_population'] if stage==4 else S['large_population']
+  assert m[S['aliens_left']]==expected and sum(bool(v) for v in m[S['enemy_on']:S['enemy_on']+16])==expected
  checks+=1
 # Exact armor and rotating barrier half-tile damage tables, including the core gate.
 m[0x83]=5;t.call('wave_reset');m[0x80]=1;m[S['boss_status']]=2;m[S['boss_scroll']]=248

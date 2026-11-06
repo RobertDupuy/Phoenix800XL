@@ -223,26 +223,30 @@ boss_load_atlas:
  sta src_data+1
  lda #0
  sta src_data
+ ldx boss_fine
+ lda boss_atlas_counts,x
+ tax
  ldy #0
 2:
- .rept 4
+ # Only 26..37 of the 64 atlas slots contain shapes. The maps never
+ # reference the unused slots, and dynamic glyphs start at slot 64.
+ .rept 8
  lda (src_data),y
  sta (dst_ptr),y
  iny
  .endr
- bne 2b
+ bne 3f
  inc src_data+1
  inc dst_ptr+1
 3:
- .rept 4
- lda (src_data),y
- sta (dst_ptr),y
- iny
- .endr
- bne 3b
+ dex
+ bne 2b
  lda 0xbfc0
  lda 0xbfd4
  rts
+
+# Counts live immediately after the atlases in the same mapped ROM bank.
+.set boss_atlas_counts,0x9000
 
 .section .expanded_code,"ax",@progbits
 mothership_picture:

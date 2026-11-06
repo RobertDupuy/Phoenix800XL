@@ -1,16 +1,35 @@
-# Phoenix v0.30 for Atari 5200
+# Phoenix5200 release candidate 3 (v0.31)
 
 Phoenix for an NTSC Atari 5200 with 16 KiB RAM. This 256 KiB CAR type 73 cartridge includes the repeating five-wave game: two small-bird waves, two large-bird waves and the mothership, followed by harder cycles.
 
-[Current cartridge release](https://github.com/RobertDupuy/Phoenix5200/releases/tag/release-candidate-2) · [Download source and tests](https://github.com/RobertDupuy/Phoenix5200/archive/refs/heads/main.zip)
+[Download Phoenix5200.car](https://raw.githubusercontent.com/RobertDupuy/Phoenix5200/main/Phoenix5200.car) · [Download source](https://github.com/RobertDupuy/Phoenix5200/archive/refs/heads/main.zip) · [Previous published release candidate](https://github.com/RobertDupuy/Phoenix5200/releases/tag/release-candidate-2)
 
-The source files in this checkout rebuild the v0.30 cartridge in `release-candidate-2`. Build output is `build/Phoenix-First-Flight.car`; its SHA-256 is `698bc3c5855e4394e4850b1a778ec28243fd7b16a7ffed367b00d3781bbdc923`. Earlier validation sections describe their original revision-specific packages; the current focused reports are in `evidence/v030/`.
+The cartridge in this checkout is the new candidate. The existing `release-candidate-2` tag and release asset remain unchanged. Rebuild with `LLVM_MOS=/path/to/llvm-mos python3 tools/build.py`; the result is `build/Phoenix-First-Flight.car`.
 
 ## Artwork credit
 
 Hand-drawn Atari 5200 artwork by **T1X**.
 
-## Changes in v0.30
+## Changes in v0.31
+
+Both large-bird waves now start with **seven birds**. The mothership has **five escorts**, including replenishment after the flock is destroyed. Existing movement, fast-mode thresholds, safe respawns, sound and T1X's sprite pixels are retained.
+
+Four drawing optimizations make room for the added enemies:
+
+- Reuse each display buffer's unchanged adult-bird color schedule. Moving eggs and shield/death color transitions still rebuild it when required.
+- Clip old bird footprints once per sprite when clearing screen edges.
+- Copy only the 26–37 populated mothership character shapes instead of all 64 slots.
+- Precompute foreground transparency masks in ROM instead of recalculating them for every drawn pixel byte.
+
+Identical seven-bird/five-escort CPU fixtures use 7.4% less large-bird drawing work and 16.2% less mothership drawing work than the previous renderer, with zero pixel or raster-schedule differences. In 1,200-frame NTSC runs, large waves averaged 20.47 and 19.92 rendered frames/s; the five-escort mothership averaged 17.98. Simulation remained about 61 Hz. All runs recorded zero audio underruns, missing audio updates, late vertical interrupts or glyph allocation faults.
+
+Validation includes 272 matched rendering scenes, 200 actual ANTIC raster comparisons, 276 source-artwork checks, 411 campaign checks, fifth-escort collision/replenishment checks, and 256 death/respawn cases covering zero through seven survivors. The tests use original-BIOS Altirra emulation; no physical-console test is claimed. Artificial cold-cache stress scenes can take more than four video frames; this is not a fixed-frame-rate engine. Detailed measurements and scope are in `Phoenix5200-Performance-v031.txt` and `evidence/v031/`.
+
+Cartridge SHA-256: `b701ec0da33148052e4aa484d121143327b9b7c191f6c90967d463c400c798e9`.
+
+Earlier sections below describe their original revision-specific packages.
+
+## Changes in v0.30 (historical)
 
 Corrects the small birds' northwest return animation. The four leftward-return shape slots now use horizontally reflected copies of the supplied right-facing frames. Their original animation phases, movement paths and positioning rules are retained. The rightward sequence and every other sprite pose are unchanged.
 

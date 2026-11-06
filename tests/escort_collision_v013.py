@@ -15,8 +15,8 @@ def fixture(positions=((80, 144), (144, 144))):
     m[S['boss_entrance_shown']] = 0
     m[S['boss_scroll']] = 248
     m[S['boss_body']:S['boss_body']+234] = bytes(234)
-    m[S['enemy_on']:S['enemy_on']+16] = bytes([1, 1] + [0]*14)
-    m[S['aliens_left']] = 2
+    m[S['enemy_on']:S['enemy_on']+16] = bytes([1]*len(positions) + [0]*(16-len(positions)))
+    m[S['aliens_left']] = len(positions)
     m[S['invuln']] = 0
     for i, (x, y) in enumerate(positions):
         m[S['raw_enemy_x']+i] = x
@@ -90,10 +90,16 @@ while not m[S['aliens_left']] and ticks < 100:
     t.call('boss_play')
     t.call('score_service')
     ticks += 1
-assert m[S['aliens_left']] == 4 and ticks >= 20
+assert m[S['aliens_left']] == S['escort_population'] and ticks >= 20
 assert int(''.join(str(v) for v in m[S['score_digits']:S['score_digits']+6])) == 40
 assert m[S['wave']] == 5 and m[S['boss_status']] == 2
-checks.append('both hit animations and awards finish before four escorts replenish')
+checks.append('both hit animations and awards finish before five escorts replenish')
+
+t, m = fixture(tuple((16+i*32,144) for i in range(5)))
+shoot(t,m,144,144)
+assert m[S['enemy_on']+4] == 0 and m[S['aliens_left']] == 4
+assert list(m[S['enemy_on']:S['enemy_on']+4]) == [1]*4
+checks.append('the added fifth escort is hittable and leaves the other four alive')
 
 report = dict(car_sha256=hashlib.sha256((R/'build/Phoenix-First-Flight.car').read_bytes()).hexdigest(),
               method=__doc__, checks=checks, replenishment_wait_ticks=ticks)

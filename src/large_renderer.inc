@@ -751,24 +751,38 @@ large_clear_bird:
  .endr
  jmp large_clear_next
 large_clear_edge:
+ # Clip the column interval once, instead of testing both screen edges
+ # for every cell of every old sprite row.
+ lda draw_col
+ cmp #33
+ bcc 5f
+ jmp large_clear_next
+5: lda #0
+ ldx draw_col
+ cpx #7
+ bcs 6f
+ lda #7
+ sec
+ sbc draw_col
+6: sta lg_left
+ lda #33
+ sec
+ sbc draw_col
+ cmp #8
+ bcc 7f
+ lda #8
+7: sta lg_right
  lda #3
  sta lg_row
 1: lda draw_row
  cmp #25
  bcs 4f
  jsr row_pointer
- ldy #0
-2: tya
- clc
- adc draw_col
- cmp #7
- bcc 3f
- cmp #33
- bcs 3f
+ ldy lg_left
  lda #0
- sta (map_ptr),y
-3: iny
- cpy #8
+2: sta (map_ptr),y
+ iny
+ cpy lg_right
  bcc 2b
 4: inc draw_row
  lda draw_row
@@ -824,6 +838,36 @@ lg_cache_bases: .byte 0,64,128
 .set supplied_palette_current,0x78d
 .section .expanded_code,"ax",@progbits
 supplied_palette_build:
+ # Adult birds share one palette. Reuse the matching buffer's complete
+ # display/raster schedule until an egg, shield or death changes its colors.
+ # Egg schedules still rebuild at their exact moving scanline boundaries.
+ ldx #7
+supplied_palette_check_eggs:
+ lda enemy_on,x
+ beq 1f
+ lda large_pose,x
+ cmp #16
+ bcc supplied_palette_uncached
+1: dex
+ bpl supplied_palette_check_eggs
+ ldy #1
+ lda state
+ cmp #3
+ beq 2f
+ lda shield_pose
+ cmp #255
+ beq 3f
+2: iny
+3: ldx back_buffer
+ tya
+ cmp supplied_palette_cached,x
+ bne supplied_palette_store
+ rts
+supplied_palette_uncached:
+ lda #0
+ ldx back_buffer
+supplied_palette_store:
+ sta supplied_palette_cached,x
  lda back_buffer
  asl
  asl
