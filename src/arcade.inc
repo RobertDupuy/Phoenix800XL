@@ -54,6 +54,9 @@ arcade_reset:
 arcade_resume:
  lda aliens_left
  sta respawn_population
+ # The initializer is in a different ROM section; an explicit jump is
+ # required. Falling through here reaches player_update, skipping the reset.
+ jmp arcade_population_init
 .section .expanded_code,"ax",@progbits
 arcade_population_init:
  lda #0
@@ -160,7 +163,7 @@ shot_try_fire:
  clc
  adc #4
  sta raw_shot_x
- lda #208
+ lda #player_shot_y
  sta raw_shot_y
  lda #1
  sta audio_shot_pending
@@ -209,6 +212,12 @@ empty_wave_tick_done:
 aliens_still_active:
  cmp #5
  bcs normal_alien_rate
+ ldy large_mode
+ cpy #3
+ bne 8f
+ cmp #escort_fast_threshold
+ bcs normal_alien_rate
+8:
  lda atmp
  bne check_fast
  lda #1
@@ -296,10 +305,19 @@ alien_move_loop:
  jsr pattern_byte
  asl
  tay
+ lda raw_enemy_y,x
+ sta axcmp
  lda raw_enemy_x,x
+ sta aycmp
  clc
  adc alien_direction_vectors,y
  sta raw_enemy_x,x
+ lda raw_enemy_y,x
+ clc
+ adc alien_direction_vectors+1,y
+ sta raw_enemy_y,x
+ jsr safe_small_entry
+ lda raw_enemy_x,x
  and #248
  sta collision_cell_x,x
  cmp shot_bounds_left
@@ -311,9 +329,6 @@ alien_move_loop:
  sta shot_bounds_right
 7:
  lda raw_enemy_y,x
- clc
- adc alien_direction_vectors+1,y
- sta raw_enemy_y,x
  and #248
  sta collision_cell_y,x
  cmp shot_bounds_min
@@ -866,9 +881,9 @@ bomb_collision_loop:
  lda bomb_on,x
  beq bomb_collision_next
  lda raw_bomb_y,x
- cmp #220
+ cmp #player_bomb_min_y
  bcc bomb_collision_next
- cmp #233
+ cmp #player_bomb_max_y
  bcs bomb_collision_next
  lda raw_bomb_x,x
  cmp ship_left
@@ -899,9 +914,9 @@ body_loop:
  lda enemy_on,x
  beq body_next
  lda raw_enemy_y,x
- cmp #210
+ cmp #player_body_min_y
  bcc body_next
- cmp #231
+ cmp #player_body_max_y
  bcs body_next
  lda ship_left
  sec
@@ -1192,6 +1207,8 @@ bonus_second:
 bonus_award:
  inc bonus_stage
  inc lives
+ lda #255
+ sta audio_bonus_count
  lda #3
  sta life_dirty
 score_done:

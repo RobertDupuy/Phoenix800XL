@@ -4,7 +4,7 @@ there are no memory writes, invulnerability, stage skips, or loaded states.
 The player decides at eight-frame intervals, with ordinary fire edges and shield.
 """
 from pathlib import Path
-import os,sys,json,subprocess,select,re,time,shutil,random,argparse,hashlib
+import os,sys,json,subprocess,select,re,time,shutil,random,argparse,hashlib,socket
 sys.path.insert(0,os.environ['ALTIRRA_BRIDGE_SDK'])
 from altirra_bridge import AltirraBridge
 R=Path(__file__).resolve().parents[1]
@@ -17,9 +17,23 @@ class Frontend:
   ir,iw=os.pipe();orr,ow=os.pipe()
   env=dict(os.environ,XDG_CONFIG_HOME=str(out/'config'),ALTIRRA_TESTMODE_IN_FD=str(ir),ALTIRRA_TESTMODE_OUT_FD=str(ow))
   for k in ['ALTIRRA_TESTMODE_SCRIPT','ALTIRRA_TESTMODE_OUTPUT','LD_PRELOAD']:env.pop(k,None)
+  if os.environ.get('ALTIRRA_FRONTEND_SHIM'):env['LD_PRELOAD']=os.environ['ALTIRRA_FRONTEND_SHIM']
   self.log=(out/'frontend.log').open('w')
   self.proc=subprocess.Popen([str(exe),'--headless','--test-mode','--renderer','sdlrenderer','--bridge=tcp:127.0.0.1:0','--hardware','5200','--memsize','16k','--kernelref','Original Atari 5200 four-port BIOS','--ntsc','--cart',str(R/'build/Phoenix-First-Flight.car')],env=env,stdout=self.log,stderr=self.log,pass_fds=(ir,ow))
-  os.close(ir);os.close(ow);self.uw=os.fdopen(iw,'wb',buffering=0);self.ur=os.fdopen(orr,'rb',buffering=0)
+  os.close(ir);os.close(ow)
+  if os.environ.get('ALTIRRA_FRONTEND_SHIM'):
+   os.close(iw);os.close(orr)
+   for _ in range(300):
+    text=(out/'frontend.log').read_text();port=re.search(r'loopback-port: ([0-9]+)',text)
+    if port:break
+    if self.proc.poll() is not None:raise RuntimeError('frontend startup failed')
+    time.sleep(.02)
+   else:raise RuntimeError('frontend startup timeout')
+   self.sock=socket.create_connection(('127.0.0.1',int(port[1])),timeout=40)
+   self.sock.setsockopt(socket.IPPROTO_TCP,socket.TCP_NODELAY,1)
+   self.uw=self.sock.makefile('wb',buffering=0);self.ur=self.sock.makefile('rb',buffering=0)
+  else:
+   self.uw=os.fdopen(iw,'wb',buffering=0);self.ur=os.fdopen(orr,'rb',buffering=0)
   self.ui('pause');self.ui('set_speed 800');self.ui('set_window_size 336 256');self.ui('wait_frames 2')
   log=(out/'frontend.log').read_text();self.a=AltirraBridge();self.a.connect(re.search(r'listening on (tcp:\S+)',log)[1]);self.a.hello(re.search(r'\[Bridge\] token: (\S+)',log)[1]);self.a.pause()
   if record:self.start_recording()
@@ -46,7 +60,8 @@ class Frontend:
     if (action^self.previous)&bit:self.ui(f'physical_key {"down" if action&bit else "up"} {key}')
    self.ui('wait_frames 1');self.a.pause()
   self.actions.append([self.frames,n,action]);self.previous=action
-  self.a.frame(n-int(changed));self.a.ping();self.frames+=n
+  if n-int(changed):self.a.frame(n-int(changed))
+  self.a.ping();self.frames+=n
   return self.a.memdump(0,16384)
  def close(self):
   if self.record:
@@ -65,22 +80,22 @@ class Player:
     x=m[0x3810+i];y=m[0x3870+i]
     if x>224:x-=256
     centre=x+28
-    if 24<y<218:
+    if 24<y<210:
      vx=0 if self.prev is None else max(-1.5,min(1.5,((m[0x3810+i]-self.prev[0x3810+i]+128)%256-128)/8))
-     aim=centre+vx*(220-y)/8-4
+     aim=centre+vx*(212-y)/8-4
      targets.append((abs(aim-sx)*.65+(200-y)*.15,aim))
-     if y>168:threats.append((centre,max(0,(218-y)/1.0),24))
+     if y>168:threats.append((centre,max(0,(210-y)/1.0),24))
   else:
    for i in range(16):
     if not m[0x400+i]:continue
     x=m[0x430+i];y=m[0x440+i]
-    if 24<y<220:
+    if 24<y<212:
      aim=x+4;targets.append((abs(aim-sx)*.8+(200-y)*.12,aim))
-     if y>180:threats.append((x+8,(224-y)/2,12))
+     if y>180:threats.append((x+8,(216-y)/2,12))
   aim=100 if m[0x33c]==3 else (min(targets)[1] if targets else 100)
   aim=max(14,min(190,aim))
   for i in range(5):
-   if m[0x480+i] and m[0x4b8+i]>140:threats.append((m[0x4b0+i],(224-m[0x4b8+i])/2,7))
+   if m[0x480+i] and m[0x4b8+i]>140:threats.append((m[0x4b0+i],(216-m[0x4b8+i])/2,7))
   options=[]
   for d in [-1,0,1]:
    x=max(12,min(192,sx+d*14));cost=abs(x-aim)*.055+abs(d)*.02
@@ -91,15 +106,23 @@ class Player:
   self.prev=m
   return (1 if d>0 else 2 if d<0 else 0)|fire|shield
 if __name__=='__main__':
- p=argparse.ArgumentParser();p.add_argument('--out',type=Path,required=True);p.add_argument('--exe',type=Path,required=True);p.add_argument('--frames',type=int,default=48000);p.add_argument('--seed',type=int,default=1);p.add_argument('--record',action='store_true');p.add_argument('--goal-wave',type=int,default=6);args=p.parse_args()
- out=args.out.resolve();e=Frontend(out,args.exe.resolve(),args.record);player=Player(args.seed);trace=[];events=[];escort_shot_hits=[];last=None;m=e.a.memdump(0,16384);won=False;wall=time.monotonic()
+ p=argparse.ArgumentParser();p.add_argument('--out',type=Path,required=True);p.add_argument('--exe',type=Path,required=True);p.add_argument('--frames',type=int,default=48000);p.add_argument('--opening-delay',type=int,default=0);p.add_argument('--seed',type=int,default=1);p.add_argument('--record',action='store_true');p.add_argument('--goal-wave',type=int,default=6);args=p.parse_args()
+ out=args.out.resolve();e=Frontend(out,args.exe.resolve(),args.record);player=Player(args.seed);trace=[];events=[];escort_shot_hits=[];last=None;four_seen=False;safe_entries=[];first_live=None;m=e.a.memdump(0,16384);won=False;wall=time.monotonic()
  try:
   for f in range(0,args.frames,8):
    previous=m
-   m=e.step(player.action(m));key=(m[0x83],m[0x80],m[0x82],m[0x7a3])
+   a=player.action(m)
+   if m[0x80]==1 and first_live is None:first_live=e.frames
+   if first_live is not None and e.frames<first_live+args.opening_delay:a&=~4
+   m=e.step(a)
+   if m[0x7eb:0x7ed]!=previous[0x7eb:0x7ed]:
+    safe_entries.append(dict(frame=e.frames,wave=m[0x83],ship_x=m[0x730],counter=int.from_bytes(m[0x7eb:0x7ed],'little'),state=m[0x80]))
+   if not four_seen and m[0x33c]==3 and m[0x7a3]==2 and all(m[0x4d0+i] and m[0x410+i]<208 and 32<=m[0x420+i]<232 for i in range(4)):
+    e.a.screenshot(path=str(out/'four-escorts.png'));four_seen=True
+   key=(m[0x83],m[0x80],m[0x82],m[0x7a3])
    if previous[0x33c]==m[0x33c]==3 and previous[0x7a3]==m[0x7a3]==2 and previous[0x80]==m[0x80]==1:
-    for slot in range(2):
-     # The shield/body collision region begins at Y=202. A disappearing bird
+    for slot in range(4):
+     # The shield/body collision region begins at Y=194. A disappearing bird
      # well above it during live boss combat is an observed shot kill.
      if previous[0x400+slot] and not m[0x400+slot] and 32<previous[0x440+slot]<176 and 32<m[0x440+slot]<176:
       hit=dict(frame=e.frames,slot=slot,x=previous[0x430+slot],y=previous[0x440+slot],shot_before=list(previous[0xa6:0xa8]))
@@ -115,4 +138,4 @@ if __name__=='__main__':
     break
   print('complete',won,'wall seconds',time.monotonic()-wall,flush=True)
  finally:
-  e.close();report=dict(completed_first_cycle=any(v['wave']>=6 for v in events),completed_requested_route=won,goal_wave=args.goal_wave,requested_step_frames=e.frames,video_frames=int.from_bytes(m[0x300:0x304],'little'),events=events,escort_shot_hits=escort_shot_hits,telemetry=trace,car_sha256=e.car_sha256,method=__doc__,final_counters=list(m[0x300:0x330]));(out/'playthrough.json').write_text(json.dumps(report,indent=2))
+  e.close();report=dict(completed_first_cycle=any(v['wave']>=6 for v in events),completed_requested_route=won,goal_wave=args.goal_wave,requested_step_frames=e.frames,video_frames=int.from_bytes(m[0x300:0x304],'little'),events=events,escort_shot_hits=escort_shot_hits,four_escorts_visible=four_seen,safe_return_events=safe_entries,telemetry=trace,car_sha256=e.car_sha256,method=__doc__,final_counters=list(m[0x300:0x330]));(out/'playthrough.json').write_text(json.dumps(report,indent=2))

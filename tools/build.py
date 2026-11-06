@@ -9,6 +9,7 @@ from prepare_campaign import prepare as prepare_campaign
 from prepare_intro import prepare as prepare_intro
 from prepare_art import prepare
 from prepare_formation import prepare as prepare_formation
+from prepare_victory import prepare as prepare_victory
 R=Path(__file__).resolve().parents[1]
 B=R/'build'; B.mkdir(exist_ok=True)
 MOS=Path(os.environ['LLVM_MOS'])/'bin' if os.environ.get('LLVM_MOS') else Path(shutil.which('mos-common-clang') or '/missing/mos-common-clang').parent
@@ -21,6 +22,7 @@ prepare_large()
 prepare_flight_art()
 prepare_campaign()
 prepare_intro()
+prepare_victory()
 (B/'intro-size.inc').write_text(".set intro_fonts_end,"+str(0xa400+len((B/'intro-fonts-packed.bin').read_bytes()))+"\n")
 screen=bytearray(b' '*960)
 screen[10:16]=b'SCORE1'
@@ -58,9 +60,15 @@ cs={m[3]:int(m[1],16) for line in cnm.splitlines() if (m:=re.match(r'^([0-9A-Fa-
 assert cs['boss_code_end']<=0xa000,hex(cs['boss_code_end'])
 assert cs['boss_data_end']<=0xbfc0,hex(cs['boss_data_end'])
 (B/'campaign-symbols.json').write_text(json.dumps(cs,indent=2))
+subprocess.run([str(MOS/'mos-common-clang'),'-c','src/victory.S','-o','build/victory.o'],cwd=R,check=True)
+subprocess.run([str(MOS/'ld.lld'),'-T','src/victory.ld','build/victory.o','-o','build/victory.elf'],cwd=R,check=True)
+subprocess.run([str(MOS/'llvm-objcopy'),'-O','binary','build/victory.elf','build/victory.bin'],cwd=R,check=True)
 # Every bank keeps the lower 16 KiB and vectors identical.
 base=rom
 banks=[bytearray(base) for _ in range(8)]
+victory=(B/'victory.bin').read_bytes()
+assert len(victory)<=0x3fc0,len(victory)
+banks[6][0x4000:0x4000+len(victory)]=victory
 banks[4][0x4000:0x5000]=(B/'boss-atlases.bin').read_bytes()
 overlay=(B/'campaign.bin').read_bytes()
 banks[1][0x4000:0x4000+len(overlay)]=overlay

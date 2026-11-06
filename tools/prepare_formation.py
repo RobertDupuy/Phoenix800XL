@@ -33,7 +33,7 @@ def prepare():
  # Preserve the existing star locations, offset into a forty-column playfield.
  stars=[row*40+col for row,col in json.loads((A/'stars-irregular.json').read_text())['cells']]
  (B/'star-offsets.inc').write_text('star_lo: .byte '+','.join(str(v&255) for v in stars)+'\nstar_hi: .byte '+','.join(str(v>>8) for v in stars)+'\n.set STAR_COUNT,'+str(len(stars))+'\n')
- (B/'star-draw.inc').write_text('seed_stars_static:\n lda back_buffer\n beq seed_stars_zero\n jmp seed_stars_one\nseed_stars_zero:\n lda #1\n'+''.join(f' sta {0x2800+(v//40)*32+v%40-4}\n' for v in stars)+' rts\nseed_stars_one:\n lda #1\n'+''.join(f' sta {0x2c00+(v//40)*32+v%40-4}\n' for v in stars)+' rts\n')
+ (B/'star-draw.inc').write_text('seed_stars_static:\n lda back_buffer\n beq seed_stars_zero\n jmp seed_stars_one\nseed_stars_zero:\n lda #129\n'+''.join(f' sta {0x2800+(v//40)*32+v%40-4}\n' for v in stars)+' rts\nseed_stars_one:\n lda #129\n'+''.join(f' sta {0x2c00+(v//40)*32+v%40-4}\n' for v in stars)+' rts\n')
 
  scroll=[((v//40)*8+3,v%40) for v in stars]
  scroll += [(y+192,x) for y,x in scroll if y<63]

@@ -1,0 +1,62 @@
+PHOENIX 5200 — MUSIC CHECK AND EXPLOSION FADE, v0.23
+2026-11-06 UTC
+
+Music clarification
+The arcade shield DOES stop the opening music. The original shield sound
+routine at $3B28 writes a low-valued SoundControlB byte, clearing its tune
+selection bits. The recorded MAME shield-input trace confirms it: frame 720
+has tune 3; frame 721 has tune 0, shield count 63 and hit count 0. Entering
+wave one itself does not stop the music. Bird-body hit sounds also clear the
+tune bits, and the original phase timeout at $3A82 remains in place.
+
+The tentative change that forced uninterrupted opening music was incorrect
+and was reverted before publication. v0.23 retains v0.22's arcade music
+cancellation behavior. Tests explicitly check shooting (music continues),
+bird hits, shield activation and the phase timeout (music stops).
+
+Explosion comparison and change
+The ship/mothership death-noise envelope was rounded to six bits at every
+update. Its low-level decay became a sequence of forced one-unit drops,
+ending the audible tail too early. v0.23 keeps eight-bit capacitor precision
+and converts to POKEY volume only at output. The attack/release constants
+remain 0.009044 and 0.3196 seconds, derived from the reference circuit.
+The low noise frequency and maximum volume are unchanged.
+
+The same 64-tick explosion command was compared in the checked-in MAME-derived
+circuit model and in actual Altirra POKEY recordings of v0.22 and v0.23.
+At 1.8 seconds after onset, normalized RMS over 100 ms was about:
+  Arcade model: 0.079
+  v0.22:        0.000
+  v0.23:        0.111
+This shows the restored late tail; it is not a claim of identical timbre.
+The four-bit volume steps and POKEY noise remain approximations of the arcade.
+No EQ or normalization was applied to the distributed WAV files; normalization
+was used only for the stated comparison metric. Bird-hit tones were inspected
+but are unchanged by this narrow revision.
+
+Validation
+A 39.52-second controller-driven Altirra run included firing, hits, shield,
+ship explosion, respawn and entry into wave two. It had zero missed sound
+updates, zero active-play queue underruns, no late VBI and no graphics
+allocation faults. The native recording duration matched emulated time.
+The existing 4,200 music-tick, 1,744 pitch, 8,192 large-bird cadence and 2,048
+quiet-formation checks also passed, plus the explicit music-cancellation tests.
+This is not a new full-game completion or physical-console test.
+
+Evidence
+Source archive evidence/current/explosion/ contains unprocessed before,
+after and reference explosion WAVs. evidence/current/live/ contains the
+controller-driven recording, inputs, register trace and screenshots.
+Previous v0.22 evidence is preserved under evidence/v022/.
+
+Primary references
+https://computerarcheology.com/Arcade/Phoenix/Code.html
+  Original ROM routines $3B28, $3A2C, $3A82 and $27BD.
+https://github.com/mamedev/mame/blob/master/src/mame/phoenix/phoenix_a.cpp
+  C25 attack/release network, noise path and control_b_w tune selection.
+https://github.com/mamedev/mame/blob/master/src/devices/sound/tms36xx.cpp
+  Tune selection and tune-zero handling.
+
+The cartridge remains CAR type 73 with a 256 KiB payload and four escorts.
+CAR SHA256:
+5e1fbb390a979d4871b75d68aefe28b66ea5141857774b121c996cf204d86065

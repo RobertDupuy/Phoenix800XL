@@ -12,6 +12,7 @@ def fixture(positions=((80, 144), (144, 144))):
     t.call('wave_reset')
     m[S['state']] = 1
     m[S['boss_status']] = 2
+    m[S['boss_entrance_shown']] = 0
     m[S['boss_scroll']] = 248
     m[S['boss_body']:S['boss_body']+234] = bytes(234)
     m[S['enemy_on']:S['enemy_on']+16] = bytes([1, 1] + [0]*14)
@@ -89,10 +90,10 @@ while not m[S['aliens_left']] and ticks < 100:
     t.call('boss_play')
     t.call('score_service')
     ticks += 1
-assert m[S['aliens_left']] == 2 and ticks >= 20
+assert m[S['aliens_left']] == 4 and ticks >= 20
 assert int(''.join(str(v) for v in m[S['score_digits']:S['score_digits']+6])) == 40
 assert m[S['wave']] == 5 and m[S['boss_status']] == 2
-checks.append('both hit animations and awards finish before two escorts replenish')
+checks.append('both hit animations and awards finish before four escorts replenish')
 
 report = dict(car_sha256=hashlib.sha256((R/'build/Phoenix-First-Flight.car').read_bytes()).hexdigest(),
               method=__doc__, checks=checks, replenishment_wait_ticks=ticks)

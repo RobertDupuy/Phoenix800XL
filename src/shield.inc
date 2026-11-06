@@ -10,7 +10,7 @@
 .set shield_old_col,0x6f5
 .section .text,"ax",@progbits
 .global shield_reset,shield_input,shield_update,shield_bomb_cell,shield_body_collision
-.global clear_shield,draw_shield,shield_players,shield_audio
+.global clear_shield,draw_shield,shield_players
 shield_reset:
  jsr shield_font_init
  lda #0
@@ -53,6 +53,8 @@ shield_try:
  sta shield_locked
  lda #254
  sta shield_count
+ lda #64
+ sta audio_shield_count
 shield_free:
  clc
  rts
@@ -100,7 +102,7 @@ shield_bomb_cell:
  sta atmp
  lda raw_bomb_y,x
  sec
- sbc #212
+ sbc #player_shield_bomb_y
  cmp #32
  bcs shield_bomb_done
  lsr
@@ -122,7 +124,7 @@ shield_bomb_cell:
  sta bomb_on,x
 shield_bomb_done:
  rts
-# Original shield body window: X in [ship-14,ship+31), Y in [202,239).
+# Shield body window follows the raised ship; X is still [ship-14,ship+31).
 # Character-map collision gating is deferred; this preserves the passing bounded object path.
 shield_body_collision:
  lda raw_ship_x
@@ -137,9 +139,9 @@ shield_body_loop:
  lda enemy_on,x
  beq shield_body_next
  lda raw_enemy_y,x
- cmp #202
+ cmp #player_shield_body_min_y
  bcc shield_body_next
- cmp #239
+ cmp #player_shield_body_max_y
  bcs shield_body_next
  lda raw_enemy_x,x
  cmp axcmp
@@ -164,11 +166,11 @@ clear_shield:
  sta draw_col
  lda #0
  sta shield_old_col,x
- lda #22
+ lda #player_shield_row
  sta draw_row
  jsr row_pointer
  lda #0
- .irp off,0,1,2,3,32,33,34,35,64,65,66,67
+ .irp off,0,1,2,3,32,33,34,35,64,65,66,67,96,97,98,99
  ldy #\off
  sta (map_ptr),y
  .endr
@@ -206,31 +208,43 @@ draw_shield:
  sta draw_col
  ldx back_buffer
  sta shield_old_col,x
- lda #22
+ lda #player_shield_row
  sta draw_row
  jsr row_pointer
  ldx shield_pose
  lda shield_map_offsets,x
  tax
- .set cell,0
- .irp off,0,32,64,1,33,65,2,34,66,3,35,67
- lda shield_maps+cell,x
- ldy #\off
- sta (map_ptr),y
+ stx effect_cursor
+ lda #0
+ sta effect_cell
+shield_draw_cell:
+ ldx effect_cell
+ ldy shield_cell_offsets,x
+ ldx effect_cursor
+ lda shield_maps,x
+ pha
+ lda large_mode
+ bne 8f
+ pla
+ and #127
+ jmp 9f
+8: pla
+9: sta (map_ptr),y
  and #127
  tay
  lda (src_mask),y
  bne 1f
  tya
- stx effect_cursor
  jsr shield_restore_glyph
- ldx effect_cursor
 1:
- .set cell,cell+1
- .endr
+ inc effect_cursor
+ inc effect_cell
+ lda effect_cell
+ cmp #16
+ bcc shield_draw_cell
 shield_draw_done:
  rts
-# PM0/1 carry the green shield halves while the original ship is hidden.
+# PM0/1 carry the green ring; PM2 carries the ship red inside it.
 # Restore every ship byte and force its pose refresh when the shield ends.
 shield_players:
  lda state
@@ -247,15 +261,25 @@ shield_players:
  bne 1f
  jmp shield_player_position
 1:
+ pha
+ lda shield_pmg_pose
+ cmp #255
+ bne 2f
+ ldx #15
+1: lda ship_red,x
+ sta 0x1600+player_pm_y,x
+ dex
+ bpl 1b
+2: pla
  sta shield_pmg_pose
  tax
  lda shield_green_offsets,x
  tax
- .irp row,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23
+ .irp row,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31
  lda shield_green+\row,x
- sta SHIP+216+\row
- lda shield_green+24+\row,x
- sta SHIP_RED+216+\row
+ sta SHIP+player_shield_pm_y+\row
+ lda shield_green+32+\row,x
+ sta SHIP_RED+player_shield_pm_y+\row
  .endr
 shield_player_position:
  lda shield_pose
@@ -273,6 +297,11 @@ shield_player_position:
  clc
  adc #8
  sta 0xc001
+ sec
+ sbc #4
+ sta 0xc002
+ lda #0x46
+ sta 0xc014
  lda #0
  sta ship_hpos
  sec
@@ -291,50 +320,36 @@ shield_restore:
  ldx #7
  lda #0
 shield_clear_pm_top:
- sta SHIP+216,x
- sta SHIP_RED+216,x
+ sta SHIP+player_shield_pm_y,x
+ sta SHIP_RED+player_shield_pm_y,x
+ sta SHIP+player_pm_y+16,x
+ sta SHIP_RED+player_pm_y+16,x
  dex
  bpl shield_clear_pm_top
  ldx #15
 shield_restore_ship:
  lda ship_white,x
- sta SHIP+224,x
+ sta SHIP+player_pm_y,x
  lda ship_red,x
- sta SHIP_RED+224,x
+ sta SHIP_RED+player_pm_y,x
+ lda ship_yellow,x
+ sta 0x1600+player_pm_y,x
  dex
  bpl shield_restore_ship
 shield_players_done:
  clc
  rts
-# Bounded POKEY channel 4 approximation; music keeps channels 1 and 2.
-.section .shield_code,"ax",@progbits
-shield_audio:
- lda state
- cmp #1
- bne shield_silent
- lda shield_count
- cmp #193
- bcc shield_silent
- lsr
- sta 0xe806
- lda #0x86
- sta 0xe807
- rts
-shield_silent:
- lda #0
- sta 0xe807
- rts
 .section .effects,"a",@progbits
-shield_map_offsets: .byte 0,12,24,36
-shield_green_offsets: .byte 0,48,96,144
+shield_map_offsets: .byte 0,16,32,48
+shield_green_offsets: .byte 0,64,128,192
+shield_cell_offsets: .byte 0,32,64,96,1,33,65,97,2,34,66,98,3,35,67,99
 shield_unique: .incbin "build/shield-unique.bin"
-shield_spare: .incbin "build/shield-spare.bin"
 shield_maps: .incbin "build/shield-maps.bin"
 shield_green: .incbin "build/shield-green.bin"
 shield_codes: .incbin "build/shield-codes.bin"
 
 .section .shield_code,"ax",@progbits
-.global shield_font_init,shield_allocate,shield_restore_glyph
+.global shield_font_init,shield_restore_glyph
 # Wave/reset occurs with no surviving large font allocation on the visible page.
 shield_font_init:
  jsr invalidate_shield_cache
@@ -354,7 +369,7 @@ shield_init_buffer:
  lda #1
  ldy #0
  sta (src_mask),y
- ldx #102
+ ldx #100
 shield_init_glyph:
  txa
  tay
@@ -383,38 +398,6 @@ shield_init_done:
  pla
  sta font_hi
  rts
-# Logical dynamic allocation 102..115 uses free resident slots while shielding.
-# Ordinary frames/deaths may reuse the whole font; writes mark slots dirty.
-shield_allocate:
- sta plot_tmp
- lda state
- cmp #1
- bne shield_alloc_mark
- lda shield_pose
- cmp #255
- beq shield_alloc_mark
- asl
- asl
- asl
- asl
- clc
- adc plot_tmp
- sec
- sbc #102
- tax
- lda shield_spare,x
- sta plot_tmp
-shield_alloc_mark:
- lda back_buffer
- beq 1f
- lda #128
-1:
- ora plot_tmp
- tax
- lda #0
- sta 0x3b00,x
- lda plot_tmp
- rts
 shield_restore_glyph:
  sta plot_tmp
  tay
@@ -424,7 +407,7 @@ shield_restore_glyph:
  jsr glyph_pointer
  lda plot_tmp
  sec
- sbc #102
+ sbc #100
  asl
  asl
  asl
@@ -438,8 +421,13 @@ shield_restore_glyph:
 
 .section .shield_code,"ax",@progbits
 invalidate_shield_cache:
- ldx #102
+ ldx #100
 invalidate_shield_next:
+ # These bytes are also mothership cache metadata. A nonzero byte after
+ # a stage change/restart does not prove that a shield glyph is resident.
+ lda #0
+ sta 0x3b00,x
+ sta 0x3b80,x
  ldy 0x3800,x
  beq 1f
  lda #0

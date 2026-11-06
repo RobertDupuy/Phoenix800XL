@@ -1,13 +1,14 @@
-Phoenix v0.14 — native gameplay-sprite title
-Atari 5200 NTSC, 256 KiB, CAR type 73
+Phoenix5200 v0.30 — separate left/right return animations
 
-Tall P, close H spacing, mixed wing poses, pink wings and green centers.
-Centered large gameplay bird uses its original flat 32-by-16 frame.
-No enlarged or higher-resolution replacement bird artwork is used.
+The four small-bird leftward-return poses now face left. They are horizontal
+reflections of the supplied right-facing frames, with their existing phases
+and drawing anchors retained. Rightward returns and every other sprite pose
+are unchanged. This fixes northwest movement displaying a northeast pose.
 
-Mothership bird collision, scoring, text and campaign fixes are retained.
-Four Altirra title/score captures passed all 245,760 pixel checks; startup
-entered gameplay normally. Gameplay code is unchanged from v0.13.
+No changes to movement, bird counts, difficulty, collision rules, sound or
+display interrupts. The v0.29 large-bird scanline corrections are retained.
 
-CAR SHA-256
-60823b46d0b1f5e9bb02e3502e80ec6fa7b57c44f3b98ab86e0b05c3811b45d7
+NTSC Atari 5200; CAR type 73; 256 KiB payload; six large birds;
+four mothership escorts.
+
+Artwork credit: T1X (hand-drawn Atari 5200 artwork).

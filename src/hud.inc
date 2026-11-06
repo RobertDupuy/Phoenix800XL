@@ -197,12 +197,23 @@ render_banner:
  ldx back_buffer
  lda state
  cmp #2
- beq banner_state_ready
+ bne banner_not_over
+ lda gameover_timer
+ and #16
+ beq banner_on
+ lda #3
+ bne banner_state_ready
+banner_on:
+ lda #2
+ bne banner_state_ready
+banner_not_over:
  lda #0
 banner_state_ready:
  cmp banner_states,x
  beq banner_done
  sta banner_states,x
+ cmp #3
+ beq banner_blank
  cmp #2
  beq banner_over
  lda #<hud_credit
@@ -230,6 +241,21 @@ banner_copy:
  dey
  bpl banner_copy
 banner_done:
+ rts
+banner_blank:
+ lda #0xe8
+ sta hud_dst
+ lda back_buffer
+ asl
+ asl
+ clc
+ adc #0x0a
+ sta hud_dst+1
+ lda #0
+ ldy #111
+1: sta (hud_dst),y
+ dey
+ bpl 1b
  rts
 .section .rodata,"a",@progbits
 hud_bits: .byte 1,2

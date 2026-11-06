@@ -45,6 +45,7 @@ campaign_select:
  sta level_round
  lda #0
  sta boss_status
+ sta boss_entrance_shown
  sta campaign_advance
  rts
 campaign_positions:
@@ -67,14 +68,14 @@ campaign_positions:
  lda cycle_stage
  cmp #4
  bne 3f
- lda #2
+ lda #escort_population
  sta aliens_left
  lda #0
  ldx #15
 2: sta enemy_on,x
  sta display_enemy_on,x
  dex
- cpx #1
+ cpx #escort_population-1
  bne 2b
 3: rts
 boss_init:
@@ -99,6 +100,7 @@ boss_init:
  sta large_mode
  lda #1
  sta boss_status
+ sta boss_entrance_shown
  lda #120
  sta boss_timer
  lda #113
@@ -207,6 +209,11 @@ boss_entry_tick:
 .Lfar5:
  lda #2
  sta boss_status
+ lda #100
+ sta raw_ship_x
+ sta video_ship_x
+ lda #126
+ sta ship_x
  rts
 boss_rotate:
  lda #1
@@ -292,7 +299,7 @@ boss_end_tick:
  sta bird_elapsed
  rts
 boss_award_tick:
- lda phase
+ lda boss_timer
  and #1
  beq 1f
  dec boss_scroll
@@ -397,8 +404,8 @@ boss_hit_armor:
 boss_consume:
  lda #0
  sta shot_on
- lda #1
- sta audio_hit_pending
+ lda #5
+ sta audio_impact_count
  inc boss_hits
  bne 1f
  inc boss_hits+1
@@ -458,7 +465,14 @@ boss_core_gate:
  lda boss_scroll
  and #248
  sta boss_scroll
- lda #1
+ lda #32
+ sec
+ sbc boss_scroll
+ lsr
+ lsr
+ lsr
+ sta boss_award_row
+ lda #64
  sta audio_death_pending
  inc boss_victories
  bne 1f
@@ -474,6 +488,8 @@ boss_core_gate:
  sta bomb_on+2
  sta bomb_on+3
  sta bomb_on+4
+ sta shot_on
+ sta second_on
  rts
 # A full-screen background is rebuilt with shared immutable glyphs per region.
 # A pair cache handles exact one-pixel scroll without allocating per-cell art.
@@ -573,6 +589,12 @@ atlas_zero:
  lda #0
  sta draw_row
  sta draw_palette
+ lda boss_status
+ cmp #4
+ bcc 8f
+ jsr boss_award_stars
+ rts
+8:
  jsr boss_seed_stars
  lda boss_status
  cmp #4
@@ -1045,6 +1067,59 @@ wipe_next:
  rts
 boss_death_picture:
  rts
+boss_award_stars:
+ lda #65
+ sec
+ sbc boss_timer
+ lsr
+ sta boss_t0
+ clc
+ adc #3
+ and #7
+ clc
+ adc #8
+ sta boss_t1
+ ldx #2
+1: lda lg_font_bases,x
+ sta dst_ptr+1
+ lda back_buffer
+ asl
+ asl
+ clc
+ adc dst_ptr+1
+ sta dst_ptr+1
+ lda #0
+ sta dst_ptr
+ ldy #11
+ sta (dst_ptr),y
+ ldy boss_t1
+ lda #192
+ sta (dst_ptr),y
+ dex
+ bpl 1b
+ lda #0
+ sta boss_t2
+2: ldx boss_t2
+ lda boss_star_y,x
+ clc
+ adc boss_t0
+ cmp #200
+ bcs 3f
+ lsr
+ lsr
+ lsr
+ sta draw_row
+ lda boss_star_x,x
+ sta draw_col
+ jsr row_pointer
+ lda #129
+ ldy #0
+ sta (map_ptr),y
+3: inc boss_t2
+ lda boss_t2
+ cmp #BOSS_STARS
+ bcc 2b
+ rts
 large_bomb_spawn:
  lda bird_frame
  and #2
@@ -1143,6 +1218,7 @@ campaign_bomb_allocate:
 .section .boss_data,"a",@progbits
 .balign 256
 boss_gfx: .incbin "build/boss-glyphs.bin"
+.include "build/award-stars.inc"
 boss_dive_candidates: .incbin "build/bird_dive_spawn_positions.bin"
 boss_initial: .incbin "build/boss-body.bin"
 boss_pilot_shapes: .incbin "build/alien_wave_animation_shapes.bin"

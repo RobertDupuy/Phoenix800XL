@@ -81,6 +81,8 @@ entrance_finish:
  sta shield_edge
  jmp latch_aliens
 player_shots:
+ jsr boss_intro_pending
+ bne entrance_return
  jsr shot_update
  lda large_mode
  beq small_player_collision
@@ -161,7 +163,7 @@ draw_second_shot:
  sta 0x6fe
 second_return:
  rts
-.global seed_stars,scroll_stars,merge_scroll_tile
+.global seed_stars,scroll_stars
 seed_stars:
  ldx back_buffer
  lda star_previous,x
@@ -206,7 +208,7 @@ scroll_glyph_clear:
  and #7
  sta star_phase
  tay
- lda #4
+ lda #12
  sta (dst_ptr),y
  lda entrance_timer
  bne 2f
@@ -229,7 +231,7 @@ scroll_next:
  lda scroll_star_x,x
  sta draw_col
  jsr row_pointer
- lda #1
+ lda #129
  ldy #0
  sta (map_ptr),y
 scroll_skip:
@@ -237,45 +239,6 @@ scroll_skip:
  lda star_index
  cmp #SCROLL_STARS
  bcc scroll_next
- rts
-merge_scroll_tile:
- jsr allocate_glyph
- ldx draw_template
- ldy #0
-scroll_copy_tile:
- # Row-major ROM data pointer allows the changing star row during entrance.
- lda #<native_tiles
- clc
- adc draw_template
- sta src_data
- lda #>native_tiles
- adc #0
- sta src_data+1
- ldy #0
-scroll_copy_row:
- lda (src_data),y
- cpy star_phase
- bne scroll_write_row
- pha
- and #12
- bne scroll_opaque
- pla
- ora #4
- jmp scroll_write_row
-scroll_opaque:
- pla
-scroll_write_row:
- sta (dst_ptr),y
- clc
- lda src_data
- adc #<(TEMPLATE_COUNT-1)
- sta src_data
- lda src_data+1
- adc #>(TEMPLATE_COUNT-1)
- sta src_data+1
- iny
- cpy #8
- bcc scroll_copy_row
  rts
 .section .tables,"a",@progbits
 fade_shapes: .byte 244,243,242,241,240,240
@@ -301,6 +264,8 @@ video_player_update:
  bcc video_player_tick
  jsr video_player_tick
 video_player_tick:
+ jsr boss_intro_pending
+ bne video_player_done
  lda state
  cmp #1
  bne video_player_done
@@ -326,6 +291,8 @@ video_player_right:
 video_player_done:
  rts
 render_live_ship:
+ jsr boss_intro_pending
+ bne video_player_done
  lda display_active
  beq video_player_done
  lda state
@@ -351,6 +318,7 @@ render_live_ship:
  sta ship_hpos
  sta 0xc000
  sta 0xc001
+ sta 0xc002
  rts
 
 .set shot_bounds_min,0x734

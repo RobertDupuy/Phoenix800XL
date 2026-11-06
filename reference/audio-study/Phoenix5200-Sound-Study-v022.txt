@@ -1,0 +1,94 @@
+PHOENIX 5200 — SOUND CORRECTIONS, v0.22
+2026-11-06 UTC
+
+The v0.21 sound study missed real gameplay errors. Its isolated circuit tests
+could pass while the gameplay dispatcher supplied the wrong control values.
+This update fixes those errors and checks the running game with native audio.
+
+CORRECTIONS
+
+Large-bird pulse: the old 6502 translation tested the zero flag after INC.
+The arcade routine $3AD0 tests the previous counter value. The pulse therefore
+never triggered in v0.21. Correcting that test restores the alternating
+control stages and capacitor pulse. All 32 height-dependent cadence entries
+were checked against the recovered dispatcher over 8,192 control ticks.
+
+Wrong diving sound: the arcade $3A98 checks the animation shape byte against
+$28. The port mistakenly checked Y instead. Formation shapes $20..$27 now
+remain quiet at every height; active diving shapes provide the effect.
+
+Wave-clear hang: large-bird sound continued unconditionally after the last
+bird. Background bird controls now stop on clear waits, wipes and entrances;
+finishing hit/noise tails still decay. Stage changes get six buffered frames.
+The old live run missed four audio updates at stage changes. The new run
+missed none. A fixed-bank interrupt fallback also fades the last volumes if
+the foreground ever fails to refill, rather than holding a tone forever.
+
+Cutoffs while firing: gun/death noise previously replaced the entire B
+oscillator voice. It now borrows an idle musical/effect channel. This keeps
+the large-bird pulse audible during firing. POKEY still has four channels;
+when all voices are busy, priority remains necessary.
+
+Mothership arrival: the small-bird clock does not advance during descent.
+The arrival modulation now uses the descent countdown and stops at combat.
+Its square-wave voice is reduced to volume 3/15 and transposed two octaves
+lower (tested peak fundamental about 1.60 kHz). The quieter/lower entry is
+an intentional adjustment for POKEY, not a claim of identical analog timbre.
+
+Shield: reset invalidates the reused metadata and restores both buffers'
+shield glyphs. A stale nonzero mothership cache byte can no longer be treated
+as proof that shield artwork is loaded. The original four silhouettes and
+32-row height are preserved. The initial v0.21 activation tested round; its
+intermittent square appearance was not reproduced in that initial capture.
+The new reset invariant is tested with overwritten glyphs and stale cache
+values, and the new build's four poses were verified on the emulator screen.
+
+ACTUAL PLAYBACK CHECK
+
+AltirraSDL, NTSC Atari 5200, original BIOS, normal emulated hardware timing.
+Controller events only; no stage injection, invulnerability or loaded states.
+The native WAV duration matched the emulated clock duration.
+
+                             v0.21 before       v0.22 after
+Recorded gameplay               237.91 s           238.54 s
+Missing sound updates                  4                  0
+Large-bird background controls        32        32/36/48/52
+Late video interrupts                  0                  0
+Graphics allocation faults             0                  0
+
+The after run observed 407 quiet formation samples and 50 cleared-wave
+samples with bird sound off. There were no queue underruns after active play
+started. One empty queue at initial silent startup used the silent fallback.
+
+Both runs played the first five stages. The before run eventually completed
+a cycle; the after run lost its remaining lives during mothership combat,
+restarted and reached wave three. It is not a successful v0.22 completion test.
+
+Additional executable-ROM checks: 4,200 music ticks, 1,744 pitch cases,
+8,192 large-bird control ticks, 2,048 quiet formation cases, simultaneous
+noise/bird output, all ring slots, fallback operation in all eight banks,
+and 168 glyph-reset checks. The unchanged entrance/player gate and palettes
+also passed. The shield compositor passed 160 crowded scenes; all four
+controller-driven shield captures matched the original occupied silhouette
+with zero pixel errors in the clean capture test.
+
+FILES AND LIMITS
+
+Source package evidence/current/ contains reports, controller inputs, POKEY
+register traces, actual screenshots, and unprocessed native WAV excerpts:
+large-bird-wave.wav and mothership-entry.wav in before/ and after/.
+The after folder also includes large-wave-clear.wav. No EQ, normalization
+or replacement audio was applied. The full recordings were used for analysis;
+compact excerpts are distributed to avoid inflating the source package.
+
+The recovered arcade dispatcher/reference circuit source is checked in under
+reference/c/. Primary MAME sound implementation:
+https://github.com/mamedev/mame/blob/master/src/mame/phoenix/phoenix_a.cpp
+https://github.com/mamedev/mame/blob/master/src/devices/sound/tms36xx.cpp
+
+This is still a POKEY approximation of separate arcade analog circuits and
+music hardware. No physical Atari 5200 test was performed. Four escorts and
+the existing 256 KiB cartridge format are unchanged.
+
+CAR SHA256:
+cf3d74dbb1dbbf6491a270fc1d006ebadf238ef3f7ff62a1d6b7712107c959d4

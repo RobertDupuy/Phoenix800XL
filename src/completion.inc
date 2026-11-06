@@ -19,9 +19,9 @@ bomb_collision_one:
  lda invuln
  bne bomb_one_done
  lda raw_bomb_y,x
- cmp #220
+ cmp #player_bomb_min_y
  bcc bomb_one_done
- cmp #233
+ cmp #player_bomb_max_y
  bcs bomb_one_done
  lda raw_bomb_x,x
  cmp ship_left

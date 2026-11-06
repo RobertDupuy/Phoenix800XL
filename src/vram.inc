@@ -331,7 +331,7 @@ vram_players:
  tay
  lda alien_shape_offset_page,y
  sta vr_shape
- lda #216
+ lda #player_raw_y
  sta vr_y
  ldx #16
  jsr vram_object
@@ -396,13 +396,13 @@ vram_body_gate:
  sta vr_width
  sta vr_height
  lda raw_ship_x
- ldy #216
+ ldy #player_raw_y
  ldx shield_count
  cpx #192
  bcc 1f
  clc
  adc #8
- ldy #208
+ ldy #player_shield_raw_y
  ldx #4
  stx vr_width
  stx vr_height
@@ -621,7 +621,7 @@ vram_shield_rect:
  lda raw_ship_x
  sec
  sbc #8
- ldy #208
+ ldy #player_shield_raw_y
  jsr vram_pointer
  lda shield_pose
  and #3

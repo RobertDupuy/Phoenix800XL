@@ -1,0 +1,25 @@
+PHOENIX 5200 — PLAYER-SHIP EXPLOSION DURATION, v0.24
+2026-11-06 UTC
+
+The primary error was event duration. The player-ship explosion used the mothership's 64-tick sound pulse. Original ROM routine $0CD0 starts the player's pulse at 16; $27E2 clamps the mothership's separate trigger to 64.
+
+Three actual MAME 0.264 gameplay deaths produced 16 explosion-control writes each, held for 0.262161091, 0.262158182 and 0.262160728 seconds. All 14 original ROM/PROM SHA-1 values matched MAME. Inputs used only coin, start, movement, fire and shield; the trace observer did not modify CPU memory. Raw, unprocessed stereo crops, sound-write timestamps, input script and ROM hashes are in evidence/current/arcade.
+
+The released change assigns 16 ticks at damage_player and 64 at the existing mothership collision entry. The dispatcher consumes that event-specific duration. Noise modes, pitch, maximum volume, fade tables and music remain unchanged. Experimental overlap mixing is not in this release.
+
+A 24-candidate native Altirra POKEY sweep compared four noise modes and six dividers against the three recorded arcade deaths. The existing $80 noise mode with divider 159 had the closest frequency-band match among the sweep candidates. A silent candidate was rejected. This is a statistical comparison of independent noise realizations, not waveform identity.
+
+With the correct duration, normalized 50 ms envelope RMSE over 1.5 seconds fell from 0.585 to 0.051. These are envelope-error metrics, not percentages of perceived fidelity. The four-bit POKEY volume still has steps and its quietest tail ends earlier than the arcade. Gameplay can include a shot overlapping the explosion tail; that existing mixing behavior is unchanged here.
+
+Verification of this exact CAR:
+- Real ship-damage entry: 16 ticks on all five waves.
+- Real exposed-mothership-core collision: 64 ticks.
+- 4,200 tune ticks; 1,744 pitch cases; 8,192 large-bird cadence ticks; 2,048 quiet-formation cases; channel coexistence and ring-buffer checks.
+- 411 campaign checks including armor, entry, victory and next-cycle transition.
+- 39.52 seconds of original-BIOS Altirra controller play, including ship death, respawn and wave two. No missed sound updates, active-play underruns, late VBI or allocation faults. One startup empty-queue event precedes active play. This is not a physical-console test or new full-game completion.
+
+CAR SHA-256: 7092ed5fd38b35ef0abbd3d65eea67e8a0db88b09457e63af318b65d358b7df3
+CAR type 73, 256 KiB payload, four escorts.
+
+Primary reference: https://computerarcheology.com/Arcade/Phoenix/Code.html ($0CD0, $27BD–$27EE)
+MAME command-line audio capture: https://docs.mamedev.org/commandline/commandline-all.html#recording-options

@@ -54,3 +54,10 @@ removed. PHOENIX is formed from 69 unscaled copies of gameplay flying pose 80.
 The score icons use gameplay poses 36, 220, 204, large-bird draw state 40 and
 the mothership pilot glyphs. Each presentation page keeps one character font
 for the entire visible frame; only palettes change across blank scanlines.
+
+Version 0.21 sound study:
+prepare_native.py derives capacitor envelopes from the MAME Phoenix C24/C25
+component values and filter gain from the original R19/R20/C5 network. These
+are POKEY approximations, not an analog hardware emulation in the cartridge.
+The current source snapshots used for comparison are in reference/audio-study;
+the existing MAME BSD notices remain applicable. All runtime game code is 6502.

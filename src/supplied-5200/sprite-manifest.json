@@ -1,0 +1,3408 @@
+{
+  "format_version": 1,
+  "selection": "Right member of every comparison pair is Atari 5200; left member is Atari 7800.",
+  "pixel_policy": "Exact RGB crops. No drawing, color reduction, smoothing, interpolation, outline change, or sprite scaling.",
+  "native_encoding": {
+    "source_block_width": 4,
+    "source_block_height": 2,
+    "bpp": 2,
+    "bit_order": "Leftmost pixel is bits 7..6.",
+    "background_index": 0,
+    "rowmajor": "Rows top to bottom; bytes left to right.",
+    "tiles": "4x8 native pixels per tile; tiles across, then down; each tile has eight row bytes."
+  },
+  "sources": {
+    "big-bird-32.gif": {
+      "sha256": "ba2bb8be263ccded9a194d4a55ebbb7e5d3bb6d0700f112b379cc20476c894e3",
+      "size": [
+        192,
+        32
+      ],
+      "frame_count": 23,
+      "frame_durations_ms": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "loop": 0,
+      "composited_frames": true
+    },
+    "various3.gif": {
+      "sha256": "8d35412eeefd59e99693c5267d44aa3bcbb8dc4eda0ee453e6d7d2443e69c0b8",
+      "size": [
+        224,
+        224
+      ],
+      "frame_count": 4,
+      "frame_durations_ms": [
+        200,
+        200,
+        200,
+        200
+      ],
+      "loop": 0,
+      "composited_frames": true
+    }
+  },
+  "assets": [
+    {
+      "id": "large-bird/frame-000",
+      "source": "big-bird-32.gif",
+      "source_frame": 0,
+      "duration_ms": 100,
+      "source_crop_xyxy": [
+        96,
+        0,
+        192,
+        32
+      ],
+      "capture_size": [
+        96,
+        32
+      ],
+      "native_grid_size": [
+        24,
+        16
+      ],
+      "palette_rgb": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          9,
+          7,
+          189
+        ]
+      ],
+      "rgba_background_policy": "Original opaque black retained.",
+      "png": "frames-5200/large-bird/frame-000.png",
+      "pixel_sha256": "48a7542dd568f9a9956dd27bcd2104ff884e3cd9734cc14f16c06ea97b3a34a3",
+      "row2bpp": "packed-5200/large-bird/frame-000.row2bpp",
+      "tiles2bpp": "packed-5200/large-bird/frame-000.tiles2bpp",
+      "atlas_xywh": [
+        0,
+        0,
+        96,
+        32
+      ],
+      "roundtrip_pixel_difference_count": 0
+    },
+    {
+      "id": "large-bird/frame-001",
+      "source": "big-bird-32.gif",
+      "source_frame": 1,
+      "duration_ms": 100,
+      "source_crop_xyxy": [
+        96,
+        0,
+        192,
+        32
+      ],
+      "capture_size": [
+        96,
+        32
+      ],
+      "native_grid_size": [
+        24,
+        16
+      ],
+      "palette_rgb": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          9,
+          7,
+          189
+        ]
+      ],
+      "rgba_background_policy": "Original opaque black retained.",
+      "png": "frames-5200/large-bird/frame-001.png",
+      "pixel_sha256": "c9befc21b097e2f4d2c7501af8d9ccca892fb4d8d3938c879130c3fd69c88158",
+      "row2bpp": "packed-5200/large-bird/frame-001.row2bpp",
+      "tiles2bpp": "packed-5200/large-bird/frame-001.tiles2bpp",
+      "atlas_xywh": [
+        96,
+        0,
+        96,
+        32
+      ],
+      "roundtrip_pixel_difference_count": 0
+    },
+    {
+      "id": "large-bird/frame-002",
+      "source": "big-bird-32.gif",
+      "source_frame": 2,
+      "duration_ms": 100,
+      "source_crop_xyxy": [
+        96,
+        0,
+        192,
+        32
+      ],
+      "capture_size": [
+        96,
+        32
+      ],
+      "native_grid_size": [
+        24,
+        16
+      ],
+      "palette_rgb": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          9,
+          7,
+          189
+        ],
+        [
+          213,
+          251,
+          249
+        ]
+      ],
+      "rgba_background_policy": "Original opaque black retained.",
+      "png": "frames-5200/large-bird/frame-002.png",
+      "pixel_sha256": "af026e9fdb62d78d9ba26d337f2bdf3b378e7737b310405737b3c024bd051db5",
+      "row2bpp": "packed-5200/large-bird/frame-002.row2bpp",
+      "tiles2bpp": "packed-5200/large-bird/frame-002.tiles2bpp",
+      "atlas_xywh": [
+        192,
+        0,
+        96,
+        32
+      ],
+      "roundtrip_pixel_difference_count": 0
+    },
+    {
+      "id": "large-bird/frame-003",
+      "source": "big-bird-32.gif",
+      "source_frame": 3,
+      "duration_ms": 100,
+      "source_crop_xyxy": [
+        96,
+        0,
+        192,
+        32
+      ],
+      "capture_size": [
+        96,
+        32
+      ],
+      "native_grid_size": [
+        24,
+        16
+      ],
+      "palette_rgb": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          9,
+          7,
+          189
+        ],
+        [
+          213,
+          251,
+          249
+        ]
+      ],
+      "rgba_background_policy": "Original opaque black retained.",
+      "png": "frames-5200/large-bird/frame-003.png",
+      "pixel_sha256": "a0719167b06a5d1fd49f1c500c6db9b627dabc8bc95dce495a2bfad4056f673f",
+      "row2bpp": "packed-5200/large-bird/frame-003.row2bpp",
+      "tiles2bpp": "packed-5200/large-bird/frame-003.tiles2bpp",
+      "atlas_xywh": [
+        288,
+        0,
+        96,
+        32
+      ],
+      "roundtrip_pixel_difference_count": 0
+    },
+    {
+      "id": "large-bird/frame-004",
+      "source": "big-bird-32.gif",
+      "source_frame": 4,
+      "duration_ms": 100,
+      "source_crop_xyxy": [
+        96,
+        0,
+        192,
+        32
+      ],
+      "capture_size": [
+        96,
+        32
+      ],
+      "native_grid_size": [
+        24,
+        16
+      ],
+      "palette_rgb": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          246,
+          246,
+          67
+        ]
+      ],
+      "rgba_background_policy": "Original opaque black retained.",
+      "png": "frames-5200/large-bird/frame-004.png",
+      "pixel_sha256": "5ebc4edf0da9f4237875a4d362fc71e587bff91ed37bcdf86ecb3b1f03a03d46",
+      "row2bpp": "packed-5200/large-bird/frame-004.row2bpp",
+      "tiles2bpp": "packed-5200/large-bird/frame-004.tiles2bpp",
+      "atlas_xywh": [
+        0,
+        32,
+        96,
+        32
+      ],
+      "roundtrip_pixel_difference_count": 0
+    },
+    {
+      "id": "large-bird/frame-005",
+      "source": "big-bird-32.gif",
+      "source_frame": 5,
+      "duration_ms": 100,
+      "source_crop_xyxy": [
+        96,
+        0,
+        192,
+        32
+      ],
+      "capture_size": [
+        96,
+        32
+      ],
+      "native_grid_size": [
+        24,
+        16
+      ],
+      "palette_rgb": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          9,
+          7,
+          189
+        ],
+        [
+          213,
+          251,
+          249
+        ],
+        [
+          246,
+          246,
+          67
+        ]
+      ],
+      "rgba_background_policy": "Original opaque black retained.",
+      "png": "frames-5200/large-bird/frame-005.png",
+      "pixel_sha256": "f46301f8b9d903fab7f8c754ff7f46fc1beb2b71c3c23d0cdeaa3ef7a33f99a5",
+      "row2bpp": "packed-5200/large-bird/frame-005.row2bpp",
+      "tiles2bpp": "packed-5200/large-bird/frame-005.tiles2bpp",
+      "atlas_xywh": [
+        96,
+        32,
+        96,
+        32
+      ],
+      "roundtrip_pixel_difference_count": 0
+    },
+    {
+      "id": "large-bird/frame-006",
+      "source": "big-bird-32.gif",
+      "source_frame": 6,
+      "duration_ms": 100,
+      "source_crop_xyxy": [
+        96,
+        0,
+        192,
+        32
+      ],
+      "capture_size": [
+        96,
+        32
+      ],
+      "native_grid_size": [
+        24,
+        16
+      ],
+      "palette_rgb": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          9,
+          7,
+          189
+        ],
+        [
+          213,
+          251,
+          249
+        ],
+        [
+          246,
+          246,
+          67
+        ]
+      ],
+      "rgba_background_policy": "Original opaque black retained.",
+      "png": "frames-5200/large-bird/frame-006.png",
+      "pixel_sha256": "1e98ac083e6c14906b43c53b5d7533b413e8e909df6bcb75d2411d159df63c2a",
+      "row2bpp": "packed-5200/large-bird/frame-006.row2bpp",
+      "tiles2bpp": "packed-5200/large-bird/frame-006.tiles2bpp",
+      "atlas_xywh": [
+        192,
+        32,
+        96,
+        32
+      ],
+      "roundtrip_pixel_difference_count": 0
+    },
+    {
+      "id": "large-bird/frame-007",
+      "source": "big-bird-32.gif",
+      "source_frame": 7,
+      "duration_ms": 100,
+      "source_crop_xyxy": [
+        96,
+        0,
+        192,
+        32
+      ],
+      "capture_size": [
+        96,
+        32
+      ],
+      "native_grid_size": [
+        24,
+        16
+      ],
+      "palette_rgb": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          45,
+          183,
+          224
+        ],
+        [
+          205,
+          240,
+          63
+        ],
+        [
+          209,
+          29,
+          170
+        ]
+      ],
+      "rgba_background_policy": "Original opaque black retained.",
+      "png": "frames-5200/large-bird/frame-007.png",
+      "pixel_sha256": "b147dd1d19863cadab7163b37e1c00b139c2346ab9514b8e5a8ad8100adb3d46",
+      "row2bpp": "packed-5200/large-bird/frame-007.row2bpp",
+      "tiles2bpp": "packed-5200/large-bird/frame-007.tiles2bpp",
+      "atlas_xywh": [
+        288,
+        32,
+        96,
+        32
+      ],
+      "roundtrip_pixel_difference_count": 0
+    },
+    {
+      "id": "large-bird/frame-008",
+      "source": "big-bird-32.gif",
+      "source_frame": 8,
+      "duration_ms": 100,
+      "source_crop_xyxy": [
+        96,
+        0,
+        192,
+        32
+      ],
+      "capture_size": [
+        96,
+        32
+      ],
+      "native_grid_size": [
+        24,
+        16
+      ],
+      "palette_rgb": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          45,
+          183,
+          224
+        ],
+        [
+          205,
+          240,
+          63
+        ],
+        [
+          209,
+          29,
+          170
+        ]
+      ],
+      "rgba_background_policy": "Original opaque black retained.",
+      "png": "frames-5200/large-bird/frame-008.png",
+      "pixel_sha256": "c7ab40b14173c306439fe439fe46e959eccdd1601fef8a6f648f66c454ea97b7",
+      "row2bpp": "packed-5200/large-bird/frame-008.row2bpp",
+      "tiles2bpp": "packed-5200/large-bird/frame-008.tiles2bpp",
+      "atlas_xywh": [
+        0,
+        64,
+        96,
+        32
+      ],
+      "roundtrip_pixel_difference_count": 0
+    },
+    {
+      "id": "large-bird/frame-009",
+      "source": "big-bird-32.gif",
+      "source_frame": 9,
+      "duration_ms": 100,
+      "source_crop_xyxy": [
+        96,
+        0,
+        192,
+        32
+      ],
+      "capture_size": [
+        96,
+        32
+      ],
+      "native_grid_size": [
+        24,
+        16
+      ],
+      "palette_rgb": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          45,
+          183,
+          224
+        ],
+        [
+          205,
+          240,
+          63
+        ],
+        [
+          209,
+          29,
+          170
+        ]
+      ],
+      "rgba_background_policy": "Original opaque black retained.",
+      "png": "frames-5200/large-bird/frame-009.png",
+      "pixel_sha256": "f124650c3205a4d1021ca04a580f1dd21db9ba5bbfa420505ff86e214622c37b",
+      "row2bpp": "packed-5200/large-bird/frame-009.row2bpp",
+      "tiles2bpp": "packed-5200/large-bird/frame-009.tiles2bpp",
+      "atlas_xywh": [
+        96,
+        64,
+        96,
+        32
+      ],
+      "roundtrip_pixel_difference_count": 0
+    },
+    {
+      "id": "large-bird/frame-010",
+      "source": "big-bird-32.gif",
+      "source_frame": 10,
+      "duration_ms": 100,
+      "source_crop_xyxy": [
+        96,
+        0,
+        192,
+        32
+      ],
+      "capture_size": [
+        96,
+        32
+      ],
+      "native_grid_size": [
+        24,
+        16
+      ],
+      "palette_rgb": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          45,
+          183,
+          224
+        ],
+        [
+          205,
+          240,
+          63
+        ],
+        [
+          209,
+          29,
+          170
+        ]
+      ],
+      "rgba_background_policy": "Original opaque black retained.",
+      "png": "frames-5200/large-bird/frame-010.png",
+      "pixel_sha256": "a86290e351b5f8ea3d10722700e95d98faf3b0574038348edd02d97c125fb32c",
+      "row2bpp": "packed-5200/large-bird/frame-010.row2bpp",
+      "tiles2bpp": "packed-5200/large-bird/frame-010.tiles2bpp",
+      "atlas_xywh": [
+        192,
+        64,
+        96,
+        32
+      ],
+      "roundtrip_pixel_difference_count": 0
+    },
+    {
+      "id": "large-bird/frame-011",
+      "source": "big-bird-32.gif",
+      "source_frame": 11,
+      "duration_ms": 100,
+      "source_crop_xyxy": [
+        96,
+        0,
+        192,
+        32
+      ],
+      "capture_size": [
+        96,
+        32
+      ],
+      "native_grid_size": [
+        24,
+        16
+      ],
+      "palette_rgb": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          45,
+          183,
+          224
+        ],
+        [
+          205,
+          240,
+          63
+        ],
+        [
+          209,
+          29,
+          170
+        ]
+      ],
+      "rgba_background_policy": "Original opaque black retained.",
+      "png": "frames-5200/large-bird/frame-011.png",
+      "pixel_sha256": "8852c243cb2e9115647aa749ae1c83b611823f3489f3558693f4d42dccec5ebe",
+      "row2bpp": "packed-5200/large-bird/frame-011.row2bpp",
+      "tiles2bpp": "packed-5200/large-bird/frame-011.tiles2bpp",
+      "atlas_xywh": [
+        288,
+        64,
+        96,
+        32
+      ],
+      "roundtrip_pixel_difference_count": 0
+    },
+    {
+      "id": "large-bird/frame-012",
+      "source": "big-bird-32.gif",
+      "source_frame": 12,
+      "duration_ms": 100,
+      "source_crop_xyxy": [
+        96,
+        0,
+        192,
+        32
+      ],
+      "capture_size": [
+        96,
+        32
+      ],
+      "native_grid_size": [
+        24,
+        16
+      ],
+      "palette_rgb": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          45,
+          183,
+          224
+        ],
+        [
+          205,
+          240,
+          63
+        ],
+        [
+          209,
+          29,
+          170
+        ]
+      ],
+      "rgba_background_policy": "Original opaque black retained.",
+      "png": "frames-5200/large-bird/frame-012.png",
+      "pixel_sha256": "625cd390d40f6d5c19f2cd910c81aa7e1bffaec1e95e2ccd42ef3c6759b8d80c",
+      "row2bpp": "packed-5200/large-bird/frame-012.row2bpp",
+      "tiles2bpp": "packed-5200/large-bird/frame-012.tiles2bpp",
+      "atlas_xywh": [
+        0,
+        96,
+        96,
+        32
+      ],
+      "roundtrip_pixel_difference_count": 0
+    },
+    {
+      "id": "large-bird/frame-013",
+      "source": "big-bird-32.gif",
+      "source_frame": 13,
+      "duration_ms": 100,
+      "source_crop_xyxy": [
+        96,
+        0,
+        192,
+        32
+      ],
+      "capture_size": [
+        96,
+        32
+      ],
+      "native_grid_size": [
+        24,
+        16
+      ],
+      "palette_rgb": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          45,
+          183,
+          224
+        ],
+        [
+          205,
+          240,
+          63
+        ],
+        [
+          209,
+          29,
+          170
+        ]
+      ],
+      "rgba_background_policy": "Original opaque black retained.",
+      "png": "frames-5200/large-bird/frame-013.png",
+      "pixel_sha256": "47ad915f3566552517790af52bf9854571637b3afd7da4f350615901c0ea1a8d",
+      "row2bpp": "packed-5200/large-bird/frame-013.row2bpp",
+      "tiles2bpp": "packed-5200/large-bird/frame-013.tiles2bpp",
+      "atlas_xywh": [
+        96,
+        96,
+        96,
+        32
+      ],
+      "roundtrip_pixel_difference_count": 0
+    },
+    {
+      "id": "large-bird/frame-014",
+      "source": "big-bird-32.gif",
+      "source_frame": 14,
+      "duration_ms": 100,
+      "source_crop_xyxy": [
+        96,
+        0,
+        192,
+        32
+      ],
+      "capture_size": [
+        96,
+        32
+      ],
+      "native_grid_size": [
+        24,
+        16
+      ],
+      "palette_rgb": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          45,
+          183,
+          224
+        ],
+        [
+          205,
+          240,
+          63
+        ],
+        [
+          209,
+          29,
+          170
+        ]
+      ],
+      "rgba_background_policy": "Original opaque black retained.",
+      "png": "frames-5200/large-bird/frame-014.png",
+      "pixel_sha256": "8bd129472058244af2df00f2b86098e2def3188eea22def091a90c7fa8b5e920",
+      "row2bpp": "packed-5200/large-bird/frame-014.row2bpp",
+      "tiles2bpp": "packed-5200/large-bird/frame-014.tiles2bpp",
+      "atlas_xywh": [
+        192,
+        96,
+        96,
+        32
+      ],
+      "roundtrip_pixel_difference_count": 0
+    },
+    {
+      "id": "large-bird/frame-015",
+      "source": "big-bird-32.gif",
+      "source_frame": 15,
+      "duration_ms": 100,
+      "source_crop_xyxy": [
+        96,
+        0,
+        192,
+        32
+      ],
+      "capture_size": [
+        96,
+        32
+      ],
+      "native_grid_size": [
+        24,
+        16
+      ],
+      "palette_rgb": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          45,
+          183,
+          224
+        ],
+        [
+          205,
+          240,
+          63
+        ],
+        [
+          209,
+          29,
+          170
+        ]
+      ],
+      "rgba_background_policy": "Original opaque black retained.",
+      "png": "frames-5200/large-bird/frame-015.png",
+      "pixel_sha256": "636e7feeb2b5bc348ee6a8c1659e9f44d4fc36aad6c47295d61d5b79a52d06d8",
+      "row2bpp": "packed-5200/large-bird/frame-015.row2bpp",
+      "tiles2bpp": "packed-5200/large-bird/frame-015.tiles2bpp",
+      "atlas_xywh": [
+        288,
+        96,
+        96,
+        32
+      ],
+      "roundtrip_pixel_difference_count": 0
+    },
+    {
+      "id": "large-bird/frame-016",
+      "source": "big-bird-32.gif",
+      "source_frame": 16,
+      "duration_ms": 100,
+      "source_crop_xyxy": [
+        96,
+        0,
+        192,
+        32
+      ],
+      "capture_size": [
+        96,
+        32
+      ],
+      "native_grid_size": [
+        24,
+        16
+      ],
+      "palette_rgb": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          45,
+          183,
+          224
+        ],
+        [
+          205,
+          240,
+          63
+        ],
+        [
+          209,
+          29,
+          170
+        ]
+      ],
+      "rgba_background_policy": "Original opaque black retained.",
+      "png": "frames-5200/large-bird/frame-016.png",
+      "pixel_sha256": "e903574f546019671aca912b110f571e9430bdd8ec2db9489db80443ac76a482",
+      "row2bpp": "packed-5200/large-bird/frame-016.row2bpp",
+      "tiles2bpp": "packed-5200/large-bird/frame-016.tiles2bpp",
+      "atlas_xywh": [
+        0,
+        128,
+        96,
+        32
+      ],
+      "roundtrip_pixel_difference_count": 0
+    },
+    {
+      "id": "large-bird/frame-017",
+      "source": "big-bird-32.gif",
+      "source_frame": 17,
+      "duration_ms": 100,
+      "source_crop_xyxy": [
+        96,
+        0,
+        192,
+        32
+      ],
+      "capture_size": [
+        96,
+        32
+      ],
+      "native_grid_size": [
+        24,
+        16
+      ],
+      "palette_rgb": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          45,
+          183,
+          224
+        ],
+        [
+          205,
+          240,
+          63
+        ],
+        [
+          209,
+          29,
+          170
+        ]
+      ],
+      "rgba_background_policy": "Original opaque black retained.",
+      "png": "frames-5200/large-bird/frame-017.png",
+      "pixel_sha256": "a87e55a27afcd82633a88039eda194f1f38b1e9b1163df4ca256b56b41808afa",
+      "row2bpp": "packed-5200/large-bird/frame-017.row2bpp",
+      "tiles2bpp": "packed-5200/large-bird/frame-017.tiles2bpp",
+      "atlas_xywh": [
+        96,
+        128,
+        96,
+        32
+      ],
+      "roundtrip_pixel_difference_count": 0
+    },
+    {
+      "id": "large-bird/frame-018",
+      "source": "big-bird-32.gif",
+      "source_frame": 18,
+      "duration_ms": 100,
+      "source_crop_xyxy": [
+        96,
+        0,
+        192,
+        32
+      ],
+      "capture_size": [
+        96,
+        32
+      ],
+      "native_grid_size": [
+        24,
+        16
+      ],
+      "palette_rgb": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          45,
+          183,
+          224
+        ],
+        [
+          205,
+          240,
+          63
+        ],
+        [
+          209,
+          29,
+          170
+        ]
+      ],
+      "rgba_background_policy": "Original opaque black retained.",
+      "png": "frames-5200/large-bird/frame-018.png",
+      "pixel_sha256": "3bdb19bacfc66d0a46cc81f8f73ba453cf57ab26efb74acd086a44bffc191495",
+      "row2bpp": "packed-5200/large-bird/frame-018.row2bpp",
+      "tiles2bpp": "packed-5200/large-bird/frame-018.tiles2bpp",
+      "atlas_xywh": [
+        192,
+        128,
+        96,
+        32
+      ],
+      "roundtrip_pixel_difference_count": 0
+    },
+    {
+      "id": "large-bird/frame-019",
+      "source": "big-bird-32.gif",
+      "source_frame": 19,
+      "duration_ms": 100,
+      "source_crop_xyxy": [
+        96,
+        0,
+        192,
+        32
+      ],
+      "capture_size": [
+        96,
+        32
+      ],
+      "native_grid_size": [
+        24,
+        16
+      ],
+      "palette_rgb": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          45,
+          183,
+          224
+        ],
+        [
+          205,
+          240,
+          63
+        ],
+        [
+          209,
+          29,
+          170
+        ]
+      ],
+      "rgba_background_policy": "Original opaque black retained.",
+      "png": "frames-5200/large-bird/frame-019.png",
+      "pixel_sha256": "9dd31c71fbfde4458e7c7b664a1e297946d301c9106ed2373c2f3460f2d1bb99",
+      "row2bpp": "packed-5200/large-bird/frame-019.row2bpp",
+      "tiles2bpp": "packed-5200/large-bird/frame-019.tiles2bpp",
+      "atlas_xywh": [
+        288,
+        128,
+        96,
+        32
+      ],
+      "roundtrip_pixel_difference_count": 0
+    },
+    {
+      "id": "large-bird/frame-020",
+      "source": "big-bird-32.gif",
+      "source_frame": 20,
+      "duration_ms": 100,
+      "source_crop_xyxy": [
+        96,
+        0,
+        192,
+        32
+      ],
+      "capture_size": [
+        96,
+        32
+      ],
+      "native_grid_size": [
+        24,
+        16
+      ],
+      "palette_rgb": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          45,
+          183,
+          224
+        ],
+        [
+          205,
+          240,
+          63
+        ],
+        [
+          209,
+          29,
+          170
+        ]
+      ],
+      "rgba_background_policy": "Original opaque black retained.",
+      "png": "frames-5200/large-bird/frame-020.png",
+      "pixel_sha256": "f5a84aeddd5352228264dad526b82046c8986b00a7afaf9cd38838e5e28147b4",
+      "row2bpp": "packed-5200/large-bird/frame-020.row2bpp",
+      "tiles2bpp": "packed-5200/large-bird/frame-020.tiles2bpp",
+      "atlas_xywh": [
+        0,
+        160,
+        96,
+        32
+      ],
+      "roundtrip_pixel_difference_count": 0
+    },
+    {
+      "id": "large-bird/frame-021",
+      "source": "big-bird-32.gif",
+      "source_frame": 21,
+      "duration_ms": 100,
+      "source_crop_xyxy": [
+        96,
+        0,
+        192,
+        32
+      ],
+      "capture_size": [
+        96,
+        32
+      ],
+      "native_grid_size": [
+        24,
+        16
+      ],
+      "palette_rgb": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          45,
+          183,
+          224
+        ],
+        [
+          205,
+          240,
+          63
+        ],
+        [
+          209,
+          29,
+          170
+        ]
+      ],
+      "rgba_background_policy": "Original opaque black retained.",
+      "png": "frames-5200/large-bird/frame-021.png",
+      "pixel_sha256": "0a79708a14ef258881aeb8a11304821eca56336c92255f6bd0e7d50067ab9dba",
+      "row2bpp": "packed-5200/large-bird/frame-021.row2bpp",
+      "tiles2bpp": "packed-5200/large-bird/frame-021.tiles2bpp",
+      "atlas_xywh": [
+        96,
+        160,
+        96,
+        32
+      ],
+      "roundtrip_pixel_difference_count": 0
+    },
+    {
+      "id": "large-bird/frame-022",
+      "source": "big-bird-32.gif",
+      "source_frame": 22,
+      "duration_ms": 100,
+      "source_crop_xyxy": [
+        96,
+        0,
+        192,
+        32
+      ],
+      "capture_size": [
+        96,
+        32
+      ],
+      "native_grid_size": [
+        24,
+        16
+      ],
+      "palette_rgb": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          45,
+          183,
+          224
+        ],
+        [
+          205,
+          240,
+          63
+        ],
+        [
+          209,
+          29,
+          170
+        ]
+      ],
+      "rgba_background_policy": "Original opaque black retained.",
+      "png": "frames-5200/large-bird/frame-022.png",
+      "pixel_sha256": "cb6588171ebe0f520461d2a61bc139c1fdfc2d2b61d77d4078262f1ee8a015e9",
+      "row2bpp": "packed-5200/large-bird/frame-022.row2bpp",
+      "tiles2bpp": "packed-5200/large-bird/frame-022.tiles2bpp",
+      "atlas_xywh": [
+        192,
+        160,
+        96,
+        32
+      ],
+      "roundtrip_pixel_difference_count": 0
+    },
+    {
+      "id": "small-pose-row-00/frame-000",
+      "source": "various3.gif",
+      "source_frame": 0,
+      "duration_ms": 200,
+      "source_crop_xyxy": [
+        32,
+        0,
+        64,
+        32
+      ],
+      "capture_size": [
+        32,
+        32
+      ],
+      "native_grid_size": [
+        8,
+        16
+      ],
+      "palette_rgb": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          211,
+          31,
+          210
+        ],
+        [
+          244,
+          205,
+          207
+        ],
+        [
+          246,
+          246,
+          67
+        ]
+      ],
+      "rgba_background_policy": "Original opaque black retained.",
+      "png": "frames-5200/small-pose-row-00/frame-000.png",
+      "pixel_sha256": "ae20b72e059ee309d9cb078fb0f814f0d3e6e361bffe14c17dea6c8c816c9dcd",
+      "row2bpp": "packed-5200/small-pose-row-00/frame-000.row2bpp",
+      "tiles2bpp": "packed-5200/small-pose-row-00/frame-000.tiles2bpp",
+      "atlas_xywh": [
+        0,
+        0,
+        32,
+        32
+      ],
+      "roundtrip_pixel_difference_count": 0
+    },
+    {
+      "id": "small-pose-row-01/frame-000",
+      "source": "various3.gif",
+      "source_frame": 0,
+      "duration_ms": 200,
+      "source_crop_xyxy": [
+        32,
+        32,
+        64,
+        64
+      ],
+      "capture_size": [
+        32,
+        32
+      ],
+      "native_grid_size": [
+        8,
+        16
+      ],
+      "palette_rgb": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          211,
+          31,
+          210
+        ],
+        [
+          246,
+          246,
+          67
+        ]
+      ],
+      "rgba_background_policy": "Original opaque black retained.",
+      "png": "frames-5200/small-pose-row-01/frame-000.png",
+      "pixel_sha256": "0dcfc1bb06eff4d5491ee7fed0b3c29290598be84b32967e9d61ba7dd76f1bb4",
+      "row2bpp": "packed-5200/small-pose-row-01/frame-000.row2bpp",
+      "tiles2bpp": "packed-5200/small-pose-row-01/frame-000.tiles2bpp",
+      "atlas_xywh": [
+        0,
+        32,
+        32,
+        32
+      ],
+      "roundtrip_pixel_difference_count": 0
+    },
+    {
+      "id": "small-pose-row-02/frame-000",
+      "source": "various3.gif",
+      "source_frame": 0,
+      "duration_ms": 200,
+      "source_crop_xyxy": [
+        32,
+        64,
+        64,
+        96
+      ],
+      "capture_size": [
+        32,
+        32
+      ],
+      "native_grid_size": [
+        8,
+        16
+      ],
+      "palette_rgb": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          211,
+          31,
+          210
+        ],
+        [
+          244,
+          205,
+          207
+        ],
+        [
+          246,
+          246,
+          67
+        ]
+      ],
+      "rgba_background_policy": "Original opaque black retained.",
+      "png": "frames-5200/small-pose-row-02/frame-000.png",
+      "pixel_sha256": "b3a6ce7393e7e9473d1b22fd745011ccfe5dd67af178e12bac69a36d8446298c",
+      "row2bpp": "packed-5200/small-pose-row-02/frame-000.row2bpp",
+      "tiles2bpp": "packed-5200/small-pose-row-02/frame-000.tiles2bpp",
+      "atlas_xywh": [
+        0,
+        64,
+        32,
+        32
+      ],
+      "roundtrip_pixel_difference_count": 0
+    },
+    {
+      "id": "small-pose-row-03/frame-000",
+      "source": "various3.gif",
+      "source_frame": 0,
+      "duration_ms": 200,
+      "source_crop_xyxy": [
+        32,
+        96,
+        64,
+        128
+      ],
+      "capture_size": [
+        32,
+        32
+      ],
+      "native_grid_size": [
+        8,
+        16
+      ],
+      "palette_rgb": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          211,
+          31,
+          210
+        ],
+        [
+          244,
+          205,
+          207
+        ],
+        [
+          246,
+          246,
+          67
+        ]
+      ],
+      "rgba_background_policy": "Original opaque black retained.",
+      "png": "frames-5200/small-pose-row-03/frame-000.png",
+      "pixel_sha256": "66ba1afe4af249b3debc98e8527c59e205675d930cfc5fc749934707ea463147",
+      "row2bpp": "packed-5200/small-pose-row-03/frame-000.row2bpp",
+      "tiles2bpp": "packed-5200/small-pose-row-03/frame-000.tiles2bpp",
+      "atlas_xywh": [
+        0,
+        96,
+        32,
+        32
+      ],
+      "roundtrip_pixel_difference_count": 0
+    },
+    {
+      "id": "small-pose-row-04/frame-000",
+      "source": "various3.gif",
+      "source_frame": 0,
+      "duration_ms": 200,
+      "source_crop_xyxy": [
+        32,
+        128,
+        64,
+        160
+      ],
+      "capture_size": [
+        32,
+        32
+      ],
+      "native_grid_size": [
+        8,
+        16
+      ],
+      "palette_rgb": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          211,
+          31,
+          210
+        ],
+        [
+          244,
+          205,
+          207
+        ],
+        [
+          246,
+          246,
+          67
+        ]
+      ],
+      "rgba_background_policy": "Original opaque black retained.",
+      "png": "frames-5200/small-pose-row-04/frame-000.png",
+      "pixel_sha256": "4b458d5e4e84c4af36b5c13d679d4eed451cb2598bc54b8f70b05ae3842efa4c",
+      "row2bpp": "packed-5200/small-pose-row-04/frame-000.row2bpp",
+      "tiles2bpp": "packed-5200/small-pose-row-04/frame-000.tiles2bpp",
+      "atlas_xywh": [
+        0,
+        128,
+        32,
+        32
+      ],
+      "roundtrip_pixel_difference_count": 0
+    },
+    {
+      "id": "small-pose-row-05/frame-000",
+      "source": "various3.gif",
+      "source_frame": 0,
+      "duration_ms": 200,
+      "source_crop_xyxy": [
+        32,
+        160,
+        64,
+        192
+      ],
+      "capture_size": [
+        32,
+        32
+      ],
+      "native_grid_size": [
+        8,
+        16
+      ],
+      "palette_rgb": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          211,
+          31,
+          210
+        ],
+        [
+          244,
+          205,
+          207
+        ],
+        [
+          246,
+          246,
+          67
+        ]
+      ],
+      "rgba_background_policy": "Original opaque black retained.",
+      "png": "frames-5200/small-pose-row-05/frame-000.png",
+      "pixel_sha256": "76758fb81c38b595e7fe5ad95777d91fc2c2d242c3b2b8e57b7bbda83d711bbb",
+      "row2bpp": "packed-5200/small-pose-row-05/frame-000.row2bpp",
+      "tiles2bpp": "packed-5200/small-pose-row-05/frame-000.tiles2bpp",
+      "atlas_xywh": [
+        0,
+        160,
+        32,
+        32
+      ],
+      "roundtrip_pixel_difference_count": 0
+    },
+    {
+      "id": "small-pose-row-06/frame-000",
+      "source": "various3.gif",
+      "source_frame": 0,
+      "duration_ms": 200,
+      "source_crop_xyxy": [
+        32,
+        192,
+        64,
+        224
+      ],
+      "capture_size": [
+        32,
+        32
+      ],
+      "native_grid_size": [
+        8,
+        16
+      ],
+      "palette_rgb": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          41,
+          181,
+          182
+        ],
+        [
+          167,
+          27,
+          206
+        ],
+        [
+          209,
+          29,
+          170
+        ]
+      ],
+      "rgba_background_policy": "Original opaque black retained.",
+      "png": "frames-5200/small-pose-row-06/frame-000.png",
+      "pixel_sha256": "dc5a54baab0283843cf18b3de16779ef167425bdf5aa68ee600a0c3132a82305",
+      "row2bpp": "packed-5200/small-pose-row-06/frame-000.row2bpp",
+      "tiles2bpp": "packed-5200/small-pose-row-06/frame-000.tiles2bpp",
+      "atlas_xywh": [
+        0,
+        192,
+        32,
+        32
+      ],
+      "roundtrip_pixel_difference_count": 0
+    },
+    {
+      "id": "player-ship/frame-000",
+      "source": "various3.gif",
+      "source_frame": 0,
+      "duration_ms": 200,
+      "source_crop_xyxy": [
+        160,
+        0,
+        224,
+        32
+      ],
+      "capture_size": [
+        64,
+        32
+      ],
+      "native_grid_size": [
+        16,
+        16
+      ],
+      "palette_rgb": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          202,
+          21,
+          23
+        ],
+        [
+          246,
+          246,
+          67
+        ],
+        [
+          255,
+          255,
+          255
+        ]
+      ],
+      "rgba_background_policy": "Original opaque black retained.",
+      "png": "frames-5200/player-ship/frame-000.png",
+      "pixel_sha256": "24c44ba03e37113e1dfe0cb38176e35309f2e713eaeebc237de796371a38a0bf",
+      "row2bpp": "packed-5200/player-ship/frame-000.row2bpp",
+      "tiles2bpp": "packed-5200/player-ship/frame-000.tiles2bpp",
+      "atlas_xywh": [
+        0,
+        224,
+        64,
+        32
+      ],
+      "roundtrip_pixel_difference_count": 0
+    },
+    {
+      "id": "shield/frame-000",
+      "source": "various3.gif",
+      "source_frame": 0,
+      "duration_ms": 200,
+      "source_crop_xyxy": [
+        160,
+        32,
+        224,
+        96
+      ],
+      "capture_size": [
+        64,
+        64
+      ],
+      "native_grid_size": [
+        16,
+        32
+      ],
+      "palette_rgb": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          35,
+          173,
+          35
+        ],
+        [
+          165,
+          23,
+          165
+        ],
+        [
+          255,
+          255,
+          255
+        ]
+      ],
+      "rgba_background_policy": "Original opaque black retained.",
+      "png": "frames-5200/shield/frame-000.png",
+      "pixel_sha256": "4ed1e82653cccdf2342fd40e3aaf849d041f2a35bc133b5e9b8eaa3880b5631b",
+      "row2bpp": "packed-5200/shield/frame-000.row2bpp",
+      "tiles2bpp": "packed-5200/shield/frame-000.tiles2bpp",
+      "atlas_xywh": [
+        0,
+        256,
+        64,
+        64
+      ],
+      "roundtrip_pixel_difference_count": 0
+    },
+    {
+      "id": "explosion/frame-000",
+      "source": "various3.gif",
+      "source_frame": 0,
+      "duration_ms": 200,
+      "source_crop_xyxy": [
+        160,
+        96,
+        224,
+        160
+      ],
+      "capture_size": [
+        64,
+        64
+      ],
+      "native_grid_size": [
+        16,
+        32
+      ],
+      "palette_rgb": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          246,
+          246,
+          67
+        ]
+      ],
+      "rgba_background_policy": "Original opaque black retained.",
+      "png": "frames-5200/explosion/frame-000.png",
+      "pixel_sha256": "870a46c290694c2651c64b442b2c0956fb2b21197981dfb0eb4ac2883e127ad7",
+      "row2bpp": "packed-5200/explosion/frame-000.row2bpp",
+      "tiles2bpp": "packed-5200/explosion/frame-000.tiles2bpp",
+      "atlas_xywh": [
+        0,
+        320,
+        64,
+        64
+      ],
+      "roundtrip_pixel_difference_count": 0
+    },
+    {
+      "id": "small-pose-row-00/frame-001",
+      "source": "various3.gif",
+      "source_frame": 1,
+      "duration_ms": 200,
+      "source_crop_xyxy": [
+        32,
+        0,
+        64,
+        32
+      ],
+      "capture_size": [
+        32,
+        32
+      ],
+      "native_grid_size": [
+        8,
+        16
+      ],
+      "palette_rgb": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          211,
+          31,
+          210
+        ],
+        [
+          244,
+          205,
+          207
+        ],
+        [
+          246,
+          246,
+          67
+        ]
+      ],
+      "rgba_background_policy": "Original opaque black retained.",
+      "png": "frames-5200/small-pose-row-00/frame-001.png",
+      "pixel_sha256": "3a53607cc1b7e5ff58626312bf6f251a859e6af005e0282b8b037f92a3899d47",
+      "row2bpp": "packed-5200/small-pose-row-00/frame-001.row2bpp",
+      "tiles2bpp": "packed-5200/small-pose-row-00/frame-001.tiles2bpp",
+      "atlas_xywh": [
+        32,
+        0,
+        32,
+        32
+      ],
+      "roundtrip_pixel_difference_count": 0
+    },
+    {
+      "id": "small-pose-row-01/frame-001",
+      "source": "various3.gif",
+      "source_frame": 1,
+      "duration_ms": 200,
+      "source_crop_xyxy": [
+        32,
+        32,
+        64,
+        64
+      ],
+      "capture_size": [
+        32,
+        32
+      ],
+      "native_grid_size": [
+        8,
+        16
+      ],
+      "palette_rgb": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          211,
+          31,
+          210
+        ],
+        [
+          244,
+          205,
+          207
+        ],
+        [
+          246,
+          246,
+          67
+        ]
+      ],
+      "rgba_background_policy": "Original opaque black retained.",
+      "png": "frames-5200/small-pose-row-01/frame-001.png",
+      "pixel_sha256": "28ad02eef28bd216ab47632cfd7883b166406b22232086e9b62e780ff005fc41",
+      "row2bpp": "packed-5200/small-pose-row-01/frame-001.row2bpp",
+      "tiles2bpp": "packed-5200/small-pose-row-01/frame-001.tiles2bpp",
+      "atlas_xywh": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "roundtrip_pixel_difference_count": 0
+    },
+    {
+      "id": "small-pose-row-02/frame-001",
+      "source": "various3.gif",
+      "source_frame": 1,
+      "duration_ms": 200,
+      "source_crop_xyxy": [
+        32,
+        64,
+        64,
+        96
+      ],
+      "capture_size": [
+        32,
+        32
+      ],
+      "native_grid_size": [
+        8,
+        16
+      ],
+      "palette_rgb": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          211,
+          31,
+          210
+        ],
+        [
+          244,
+          205,
+          207
+        ],
+        [
+          246,
+          246,
+          67
+        ]
+      ],
+      "rgba_background_policy": "Original opaque black retained.",
+      "png": "frames-5200/small-pose-row-02/frame-001.png",
+      "pixel_sha256": "8a975841e9bf7cd7f115ec6d377df9a5a480cbf7d1604931844603e530e870ac",
+      "row2bpp": "packed-5200/small-pose-row-02/frame-001.row2bpp",
+      "tiles2bpp": "packed-5200/small-pose-row-02/frame-001.tiles2bpp",
+      "atlas_xywh": [
+        32,
+        64,
+        32,
+        32
+      ],
+      "roundtrip_pixel_difference_count": 0
+    },
+    {
+      "id": "small-pose-row-03/frame-001",
+      "source": "various3.gif",
+      "source_frame": 1,
+      "duration_ms": 200,
+      "source_crop_xyxy": [
+        32,
+        96,
+        64,
+        128
+      ],
+      "capture_size": [
+        32,
+        32
+      ],
+      "native_grid_size": [
+        8,
+        16
+      ],
+      "palette_rgb": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          211,
+          31,
+          210
+        ],
+        [
+          244,
+          205,
+          207
+        ],
+        [
+          246,
+          246,
+          67
+        ]
+      ],
+      "rgba_background_policy": "Original opaque black retained.",
+      "png": "frames-5200/small-pose-row-03/frame-001.png",
+      "pixel_sha256": "ee23e4c5b499071c5a3523e66f4733af4d36bf776edb6801fe46e0e997a351b8",
+      "row2bpp": "packed-5200/small-pose-row-03/frame-001.row2bpp",
+      "tiles2bpp": "packed-5200/small-pose-row-03/frame-001.tiles2bpp",
+      "atlas_xywh": [
+        32,
+        96,
+        32,
+        32
+      ],
+      "roundtrip_pixel_difference_count": 0
+    },
+    {
+      "id": "small-pose-row-04/frame-001",
+      "source": "various3.gif",
+      "source_frame": 1,
+      "duration_ms": 200,
+      "source_crop_xyxy": [
+        32,
+        128,
+        64,
+        160
+      ],
+      "capture_size": [
+        32,
+        32
+      ],
+      "native_grid_size": [
+        8,
+        16
+      ],
+      "palette_rgb": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          211,
+          31,
+          210
+        ],
+        [
+          244,
+          205,
+          207
+        ],
+        [
+          246,
+          246,
+          67
+        ]
+      ],
+      "rgba_background_policy": "Original opaque black retained.",
+      "png": "frames-5200/small-pose-row-04/frame-001.png",
+      "pixel_sha256": "85a77ac9b64721c3e681446d6a4323cc1eb3ea84df951546ca1658517b6b9a3f",
+      "row2bpp": "packed-5200/small-pose-row-04/frame-001.row2bpp",
+      "tiles2bpp": "packed-5200/small-pose-row-04/frame-001.tiles2bpp",
+      "atlas_xywh": [
+        32,
+        128,
+        32,
+        32
+      ],
+      "roundtrip_pixel_difference_count": 0
+    },
+    {
+      "id": "small-pose-row-05/frame-001",
+      "source": "various3.gif",
+      "source_frame": 1,
+      "duration_ms": 200,
+      "source_crop_xyxy": [
+        32,
+        160,
+        64,
+        192
+      ],
+      "capture_size": [
+        32,
+        32
+      ],
+      "native_grid_size": [
+        8,
+        16
+      ],
+      "palette_rgb": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          211,
+          31,
+          210
+        ],
+        [
+          244,
+          205,
+          207
+        ],
+        [
+          246,
+          246,
+          67
+        ]
+      ],
+      "rgba_background_policy": "Original opaque black retained.",
+      "png": "frames-5200/small-pose-row-05/frame-001.png",
+      "pixel_sha256": "8dfcbee584668a2c2b2713f87a1ad5194e348b4c953df83e0847aaa4909d3bc0",
+      "row2bpp": "packed-5200/small-pose-row-05/frame-001.row2bpp",
+      "tiles2bpp": "packed-5200/small-pose-row-05/frame-001.tiles2bpp",
+      "atlas_xywh": [
+        32,
+        160,
+        32,
+        32
+      ],
+      "roundtrip_pixel_difference_count": 0
+    },
+    {
+      "id": "small-pose-row-06/frame-001",
+      "source": "various3.gif",
+      "source_frame": 1,
+      "duration_ms": 200,
+      "source_crop_xyxy": [
+        32,
+        192,
+        64,
+        224
+      ],
+      "capture_size": [
+        32,
+        32
+      ],
+      "native_grid_size": [
+        8,
+        16
+      ],
+      "palette_rgb": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          41,
+          181,
+          182
+        ],
+        [
+          167,
+          27,
+          206
+        ],
+        [
+          209,
+          29,
+          170
+        ]
+      ],
+      "rgba_background_policy": "Original opaque black retained.",
+      "png": "frames-5200/small-pose-row-06/frame-001.png",
+      "pixel_sha256": "b2d551b769241d0b30a19ba7342d0bce1583e9d3a607395fd1cd90eef1d90d91",
+      "row2bpp": "packed-5200/small-pose-row-06/frame-001.row2bpp",
+      "tiles2bpp": "packed-5200/small-pose-row-06/frame-001.tiles2bpp",
+      "atlas_xywh": [
+        32,
+        192,
+        32,
+        32
+      ],
+      "roundtrip_pixel_difference_count": 0
+    },
+    {
+      "id": "player-ship/frame-001",
+      "source": "various3.gif",
+      "source_frame": 1,
+      "duration_ms": 200,
+      "source_crop_xyxy": [
+        160,
+        0,
+        224,
+        32
+      ],
+      "capture_size": [
+        64,
+        32
+      ],
+      "native_grid_size": [
+        16,
+        16
+      ],
+      "palette_rgb": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          202,
+          21,
+          23
+        ],
+        [
+          246,
+          246,
+          67
+        ],
+        [
+          255,
+          255,
+          255
+        ]
+      ],
+      "rgba_background_policy": "Original opaque black retained.",
+      "png": "frames-5200/player-ship/frame-001.png",
+      "pixel_sha256": "4bafe58aeb22f50d4b57c65135a3b7779237d63558fb61ef90042112f141b572",
+      "row2bpp": "packed-5200/player-ship/frame-001.row2bpp",
+      "tiles2bpp": "packed-5200/player-ship/frame-001.tiles2bpp",
+      "atlas_xywh": [
+        64,
+        224,
+        64,
+        32
+      ],
+      "roundtrip_pixel_difference_count": 0
+    },
+    {
+      "id": "shield/frame-001",
+      "source": "various3.gif",
+      "source_frame": 1,
+      "duration_ms": 200,
+      "source_crop_xyxy": [
+        160,
+        32,
+        224,
+        96
+      ],
+      "capture_size": [
+        64,
+        64
+      ],
+      "native_grid_size": [
+        16,
+        32
+      ],
+      "palette_rgb": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          35,
+          173,
+          35
+        ],
+        [
+          165,
+          23,
+          165
+        ],
+        [
+          255,
+          255,
+          255
+        ]
+      ],
+      "rgba_background_policy": "Original opaque black retained.",
+      "png": "frames-5200/shield/frame-001.png",
+      "pixel_sha256": "af3a06c84de7eff8e51df21c7fb5147280b0774675bf7c0ef77c9030b062e9a5",
+      "row2bpp": "packed-5200/shield/frame-001.row2bpp",
+      "tiles2bpp": "packed-5200/shield/frame-001.tiles2bpp",
+      "atlas_xywh": [
+        64,
+        256,
+        64,
+        64
+      ],
+      "roundtrip_pixel_difference_count": 0
+    },
+    {
+      "id": "explosion/frame-001",
+      "source": "various3.gif",
+      "source_frame": 1,
+      "duration_ms": 200,
+      "source_crop_xyxy": [
+        160,
+        96,
+        224,
+        160
+      ],
+      "capture_size": [
+        64,
+        64
+      ],
+      "native_grid_size": [
+        16,
+        32
+      ],
+      "palette_rgb": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          246,
+          246,
+          67
+        ]
+      ],
+      "rgba_background_policy": "Original opaque black retained.",
+      "png": "frames-5200/explosion/frame-001.png",
+      "pixel_sha256": "5916af6cfc978b9cb3d4bb5499582c898bb5efe5c72bcb4f3a0b306bfa07f0db",
+      "row2bpp": "packed-5200/explosion/frame-001.row2bpp",
+      "tiles2bpp": "packed-5200/explosion/frame-001.tiles2bpp",
+      "atlas_xywh": [
+        64,
+        320,
+        64,
+        64
+      ],
+      "roundtrip_pixel_difference_count": 0
+    },
+    {
+      "id": "small-pose-row-00/frame-002",
+      "source": "various3.gif",
+      "source_frame": 2,
+      "duration_ms": 200,
+      "source_crop_xyxy": [
+        32,
+        0,
+        64,
+        32
+      ],
+      "capture_size": [
+        32,
+        32
+      ],
+      "native_grid_size": [
+        8,
+        16
+      ],
+      "palette_rgb": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          211,
+          31,
+          210
+        ],
+        [
+          244,
+          205,
+          207
+        ],
+        [
+          246,
+          246,
+          67
+        ]
+      ],
+      "rgba_background_policy": "Original opaque black retained.",
+      "png": "frames-5200/small-pose-row-00/frame-002.png",
+      "pixel_sha256": "0c07f02a556f185913308860c51b16c0f86c2c706cc5690e5ff33d662748814f",
+      "row2bpp": "packed-5200/small-pose-row-00/frame-002.row2bpp",
+      "tiles2bpp": "packed-5200/small-pose-row-00/frame-002.tiles2bpp",
+      "atlas_xywh": [
+        64,
+        0,
+        32,
+        32
+      ],
+      "roundtrip_pixel_difference_count": 0
+    },
+    {
+      "id": "small-pose-row-01/frame-002",
+      "source": "various3.gif",
+      "source_frame": 2,
+      "duration_ms": 200,
+      "source_crop_xyxy": [
+        32,
+        32,
+        64,
+        64
+      ],
+      "capture_size": [
+        32,
+        32
+      ],
+      "native_grid_size": [
+        8,
+        16
+      ],
+      "palette_rgb": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          211,
+          31,
+          210
+        ],
+        [
+          246,
+          246,
+          67
+        ]
+      ],
+      "rgba_background_policy": "Original opaque black retained.",
+      "png": "frames-5200/small-pose-row-01/frame-002.png",
+      "pixel_sha256": "f39c902ff3bf7348ca16bebb275f2aa018c6e0c3abd64fcd2391a6d5c3e1c8d8",
+      "row2bpp": "packed-5200/small-pose-row-01/frame-002.row2bpp",
+      "tiles2bpp": "packed-5200/small-pose-row-01/frame-002.tiles2bpp",
+      "atlas_xywh": [
+        64,
+        32,
+        32,
+        32
+      ],
+      "roundtrip_pixel_difference_count": 0
+    },
+    {
+      "id": "small-pose-row-02/frame-002",
+      "source": "various3.gif",
+      "source_frame": 2,
+      "duration_ms": 200,
+      "source_crop_xyxy": [
+        32,
+        64,
+        64,
+        96
+      ],
+      "capture_size": [
+        32,
+        32
+      ],
+      "native_grid_size": [
+        8,
+        16
+      ],
+      "palette_rgb": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          211,
+          31,
+          210
+        ],
+        [
+          244,
+          205,
+          207
+        ],
+        [
+          246,
+          246,
+          67
+        ]
+      ],
+      "rgba_background_policy": "Original opaque black retained.",
+      "png": "frames-5200/small-pose-row-02/frame-002.png",
+      "pixel_sha256": "dc20e982950610ea62d82e9601f4a0efb86e8675b518ae202794c184b228c835",
+      "row2bpp": "packed-5200/small-pose-row-02/frame-002.row2bpp",
+      "tiles2bpp": "packed-5200/small-pose-row-02/frame-002.tiles2bpp",
+      "atlas_xywh": [
+        64,
+        64,
+        32,
+        32
+      ],
+      "roundtrip_pixel_difference_count": 0
+    },
+    {
+      "id": "small-pose-row-03/frame-002",
+      "source": "various3.gif",
+      "source_frame": 2,
+      "duration_ms": 200,
+      "source_crop_xyxy": [
+        32,
+        96,
+        64,
+        128
+      ],
+      "capture_size": [
+        32,
+        32
+      ],
+      "native_grid_size": [
+        8,
+        16
+      ],
+      "palette_rgb": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          211,
+          31,
+          210
+        ],
+        [
+          244,
+          205,
+          207
+        ],
+        [
+          246,
+          246,
+          67
+        ]
+      ],
+      "rgba_background_policy": "Original opaque black retained.",
+      "png": "frames-5200/small-pose-row-03/frame-002.png",
+      "pixel_sha256": "2ddd88d8e73f886ffff57ec5a23a208c92bb774ca4185d120ded6fc01afb63bc",
+      "row2bpp": "packed-5200/small-pose-row-03/frame-002.row2bpp",
+      "tiles2bpp": "packed-5200/small-pose-row-03/frame-002.tiles2bpp",
+      "atlas_xywh": [
+        64,
+        96,
+        32,
+        32
+      ],
+      "roundtrip_pixel_difference_count": 0
+    },
+    {
+      "id": "small-pose-row-04/frame-002",
+      "source": "various3.gif",
+      "source_frame": 2,
+      "duration_ms": 200,
+      "source_crop_xyxy": [
+        32,
+        128,
+        64,
+        160
+      ],
+      "capture_size": [
+        32,
+        32
+      ],
+      "native_grid_size": [
+        8,
+        16
+      ],
+      "palette_rgb": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          211,
+          31,
+          210
+        ],
+        [
+          244,
+          205,
+          207
+        ],
+        [
+          246,
+          246,
+          67
+        ]
+      ],
+      "rgba_background_policy": "Original opaque black retained.",
+      "png": "frames-5200/small-pose-row-04/frame-002.png",
+      "pixel_sha256": "b7da962b5e86082cb2f35c6d8f681f0801eb1c1699c3ea97e136df1f7bf2b108",
+      "row2bpp": "packed-5200/small-pose-row-04/frame-002.row2bpp",
+      "tiles2bpp": "packed-5200/small-pose-row-04/frame-002.tiles2bpp",
+      "atlas_xywh": [
+        64,
+        128,
+        32,
+        32
+      ],
+      "roundtrip_pixel_difference_count": 0
+    },
+    {
+      "id": "small-pose-row-05/frame-002",
+      "source": "various3.gif",
+      "source_frame": 2,
+      "duration_ms": 200,
+      "source_crop_xyxy": [
+        32,
+        160,
+        64,
+        192
+      ],
+      "capture_size": [
+        32,
+        32
+      ],
+      "native_grid_size": [
+        8,
+        16
+      ],
+      "palette_rgb": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          211,
+          31,
+          210
+        ],
+        [
+          244,
+          205,
+          207
+        ],
+        [
+          246,
+          246,
+          67
+        ]
+      ],
+      "rgba_background_policy": "Original opaque black retained.",
+      "png": "frames-5200/small-pose-row-05/frame-002.png",
+      "pixel_sha256": "bd827ca55139291e1e18e6e6d8939109a4dcd416fd41a8d448f9415c2adfc7c5",
+      "row2bpp": "packed-5200/small-pose-row-05/frame-002.row2bpp",
+      "tiles2bpp": "packed-5200/small-pose-row-05/frame-002.tiles2bpp",
+      "atlas_xywh": [
+        64,
+        160,
+        32,
+        32
+      ],
+      "roundtrip_pixel_difference_count": 0
+    },
+    {
+      "id": "small-pose-row-06/frame-002",
+      "source": "various3.gif",
+      "source_frame": 2,
+      "duration_ms": 200,
+      "source_crop_xyxy": [
+        32,
+        192,
+        64,
+        224
+      ],
+      "capture_size": [
+        32,
+        32
+      ],
+      "native_grid_size": [
+        8,
+        16
+      ],
+      "palette_rgb": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          41,
+          181,
+          182
+        ],
+        [
+          167,
+          27,
+          206
+        ],
+        [
+          209,
+          29,
+          170
+        ]
+      ],
+      "rgba_background_policy": "Original opaque black retained.",
+      "png": "frames-5200/small-pose-row-06/frame-002.png",
+      "pixel_sha256": "bb89953ecf0bb14eb743e4ccba49ad3a1249f17c008a5989ff851d9170ac1e15",
+      "row2bpp": "packed-5200/small-pose-row-06/frame-002.row2bpp",
+      "tiles2bpp": "packed-5200/small-pose-row-06/frame-002.tiles2bpp",
+      "atlas_xywh": [
+        64,
+        192,
+        32,
+        32
+      ],
+      "roundtrip_pixel_difference_count": 0
+    },
+    {
+      "id": "player-ship/frame-002",
+      "source": "various3.gif",
+      "source_frame": 2,
+      "duration_ms": 200,
+      "source_crop_xyxy": [
+        160,
+        0,
+        224,
+        32
+      ],
+      "capture_size": [
+        64,
+        32
+      ],
+      "native_grid_size": [
+        16,
+        16
+      ],
+      "palette_rgb": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          202,
+          21,
+          23
+        ],
+        [
+          246,
+          246,
+          67
+        ],
+        [
+          255,
+          255,
+          255
+        ]
+      ],
+      "rgba_background_policy": "Original opaque black retained.",
+      "png": "frames-5200/player-ship/frame-002.png",
+      "pixel_sha256": "83578b9ec2f82881c40c8d4976fdfb886e781d8ec8545353bb9156263614e5a2",
+      "row2bpp": "packed-5200/player-ship/frame-002.row2bpp",
+      "tiles2bpp": "packed-5200/player-ship/frame-002.tiles2bpp",
+      "atlas_xywh": [
+        128,
+        224,
+        64,
+        32
+      ],
+      "roundtrip_pixel_difference_count": 0
+    },
+    {
+      "id": "shield/frame-002",
+      "source": "various3.gif",
+      "source_frame": 2,
+      "duration_ms": 200,
+      "source_crop_xyxy": [
+        160,
+        32,
+        224,
+        96
+      ],
+      "capture_size": [
+        64,
+        64
+      ],
+      "native_grid_size": [
+        16,
+        32
+      ],
+      "palette_rgb": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          35,
+          173,
+          35
+        ],
+        [
+          165,
+          23,
+          165
+        ],
+        [
+          255,
+          255,
+          255
+        ]
+      ],
+      "rgba_background_policy": "Original opaque black retained.",
+      "png": "frames-5200/shield/frame-002.png",
+      "pixel_sha256": "4ed1e82653cccdf2342fd40e3aaf849d041f2a35bc133b5e9b8eaa3880b5631b",
+      "row2bpp": "packed-5200/shield/frame-002.row2bpp",
+      "tiles2bpp": "packed-5200/shield/frame-002.tiles2bpp",
+      "atlas_xywh": [
+        128,
+        256,
+        64,
+        64
+      ],
+      "roundtrip_pixel_difference_count": 0
+    },
+    {
+      "id": "explosion/frame-002",
+      "source": "various3.gif",
+      "source_frame": 2,
+      "duration_ms": 200,
+      "source_crop_xyxy": [
+        160,
+        96,
+        224,
+        160
+      ],
+      "capture_size": [
+        64,
+        64
+      ],
+      "native_grid_size": [
+        16,
+        32
+      ],
+      "palette_rgb": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          246,
+          246,
+          67
+        ]
+      ],
+      "rgba_background_policy": "Original opaque black retained.",
+      "png": "frames-5200/explosion/frame-002.png",
+      "pixel_sha256": "870a46c290694c2651c64b442b2c0956fb2b21197981dfb0eb4ac2883e127ad7",
+      "row2bpp": "packed-5200/explosion/frame-002.row2bpp",
+      "tiles2bpp": "packed-5200/explosion/frame-002.tiles2bpp",
+      "atlas_xywh": [
+        128,
+        320,
+        64,
+        64
+      ],
+      "roundtrip_pixel_difference_count": 0
+    },
+    {
+      "id": "small-pose-row-00/frame-003",
+      "source": "various3.gif",
+      "source_frame": 3,
+      "duration_ms": 200,
+      "source_crop_xyxy": [
+        32,
+        0,
+        64,
+        32
+      ],
+      "capture_size": [
+        32,
+        32
+      ],
+      "native_grid_size": [
+        8,
+        16
+      ],
+      "palette_rgb": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          211,
+          31,
+          210
+        ],
+        [
+          244,
+          205,
+          207
+        ],
+        [
+          246,
+          246,
+          67
+        ]
+      ],
+      "rgba_background_policy": "Original opaque black retained.",
+      "png": "frames-5200/small-pose-row-00/frame-003.png",
+      "pixel_sha256": "3a53607cc1b7e5ff58626312bf6f251a859e6af005e0282b8b037f92a3899d47",
+      "row2bpp": "packed-5200/small-pose-row-00/frame-003.row2bpp",
+      "tiles2bpp": "packed-5200/small-pose-row-00/frame-003.tiles2bpp",
+      "atlas_xywh": [
+        96,
+        0,
+        32,
+        32
+      ],
+      "roundtrip_pixel_difference_count": 0
+    },
+    {
+      "id": "small-pose-row-01/frame-003",
+      "source": "various3.gif",
+      "source_frame": 3,
+      "duration_ms": 200,
+      "source_crop_xyxy": [
+        32,
+        32,
+        64,
+        64
+      ],
+      "capture_size": [
+        32,
+        32
+      ],
+      "native_grid_size": [
+        8,
+        16
+      ],
+      "palette_rgb": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          211,
+          31,
+          210
+        ],
+        [
+          244,
+          205,
+          207
+        ],
+        [
+          246,
+          246,
+          67
+        ]
+      ],
+      "rgba_background_policy": "Original opaque black retained.",
+      "png": "frames-5200/small-pose-row-01/frame-003.png",
+      "pixel_sha256": "515023006c7b6839afca1c1dc3ed2154acb78b2fb783e834ce30c6b3d0698327",
+      "row2bpp": "packed-5200/small-pose-row-01/frame-003.row2bpp",
+      "tiles2bpp": "packed-5200/small-pose-row-01/frame-003.tiles2bpp",
+      "atlas_xywh": [
+        96,
+        32,
+        32,
+        32
+      ],
+      "roundtrip_pixel_difference_count": 0
+    },
+    {
+      "id": "small-pose-row-02/frame-003",
+      "source": "various3.gif",
+      "source_frame": 3,
+      "duration_ms": 200,
+      "source_crop_xyxy": [
+        32,
+        64,
+        64,
+        96
+      ],
+      "capture_size": [
+        32,
+        32
+      ],
+      "native_grid_size": [
+        8,
+        16
+      ],
+      "palette_rgb": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          211,
+          31,
+          210
+        ],
+        [
+          244,
+          205,
+          207
+        ],
+        [
+          246,
+          246,
+          67
+        ]
+      ],
+      "rgba_background_policy": "Original opaque black retained.",
+      "png": "frames-5200/small-pose-row-02/frame-003.png",
+      "pixel_sha256": "161fd06d945d49c53b32449454c7d535b57dfc35c7ad79dfbedc283113615ba0",
+      "row2bpp": "packed-5200/small-pose-row-02/frame-003.row2bpp",
+      "tiles2bpp": "packed-5200/small-pose-row-02/frame-003.tiles2bpp",
+      "atlas_xywh": [
+        96,
+        64,
+        32,
+        32
+      ],
+      "roundtrip_pixel_difference_count": 0
+    },
+    {
+      "id": "small-pose-row-03/frame-003",
+      "source": "various3.gif",
+      "source_frame": 3,
+      "duration_ms": 200,
+      "source_crop_xyxy": [
+        32,
+        96,
+        64,
+        128
+      ],
+      "capture_size": [
+        32,
+        32
+      ],
+      "native_grid_size": [
+        8,
+        16
+      ],
+      "palette_rgb": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          211,
+          31,
+          210
+        ],
+        [
+          244,
+          205,
+          207
+        ],
+        [
+          246,
+          246,
+          67
+        ]
+      ],
+      "rgba_background_policy": "Original opaque black retained.",
+      "png": "frames-5200/small-pose-row-03/frame-003.png",
+      "pixel_sha256": "134a90a43bc25786fb8b08d16380517da0b13c9bea61597ac5dfc16c598486b7",
+      "row2bpp": "packed-5200/small-pose-row-03/frame-003.row2bpp",
+      "tiles2bpp": "packed-5200/small-pose-row-03/frame-003.tiles2bpp",
+      "atlas_xywh": [
+        96,
+        96,
+        32,
+        32
+      ],
+      "roundtrip_pixel_difference_count": 0
+    },
+    {
+      "id": "small-pose-row-04/frame-003",
+      "source": "various3.gif",
+      "source_frame": 3,
+      "duration_ms": 200,
+      "source_crop_xyxy": [
+        32,
+        128,
+        64,
+        160
+      ],
+      "capture_size": [
+        32,
+        32
+      ],
+      "native_grid_size": [
+        8,
+        16
+      ],
+      "palette_rgb": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          211,
+          31,
+          210
+        ],
+        [
+          244,
+          205,
+          207
+        ],
+        [
+          246,
+          246,
+          67
+        ]
+      ],
+      "rgba_background_policy": "Original opaque black retained.",
+      "png": "frames-5200/small-pose-row-04/frame-003.png",
+      "pixel_sha256": "5e8cfa80e258b1db2461062066e236c480760d8177b76bea84ce47c6d6f908fa",
+      "row2bpp": "packed-5200/small-pose-row-04/frame-003.row2bpp",
+      "tiles2bpp": "packed-5200/small-pose-row-04/frame-003.tiles2bpp",
+      "atlas_xywh": [
+        96,
+        128,
+        32,
+        32
+      ],
+      "roundtrip_pixel_difference_count": 0
+    },
+    {
+      "id": "small-pose-row-05/frame-003",
+      "source": "various3.gif",
+      "source_frame": 3,
+      "duration_ms": 200,
+      "source_crop_xyxy": [
+        32,
+        160,
+        64,
+        192
+      ],
+      "capture_size": [
+        32,
+        32
+      ],
+      "native_grid_size": [
+        8,
+        16
+      ],
+      "palette_rgb": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          211,
+          31,
+          210
+        ],
+        [
+          244,
+          205,
+          207
+        ],
+        [
+          246,
+          246,
+          67
+        ]
+      ],
+      "rgba_background_policy": "Original opaque black retained.",
+      "png": "frames-5200/small-pose-row-05/frame-003.png",
+      "pixel_sha256": "b945d4014962a2cf77a469287dd98c035afce50b31ab6ac0f1ebd0af4b734661",
+      "row2bpp": "packed-5200/small-pose-row-05/frame-003.row2bpp",
+      "tiles2bpp": "packed-5200/small-pose-row-05/frame-003.tiles2bpp",
+      "atlas_xywh": [
+        96,
+        160,
+        32,
+        32
+      ],
+      "roundtrip_pixel_difference_count": 0
+    },
+    {
+      "id": "small-pose-row-06/frame-003",
+      "source": "various3.gif",
+      "source_frame": 3,
+      "duration_ms": 200,
+      "source_crop_xyxy": [
+        32,
+        192,
+        64,
+        224
+      ],
+      "capture_size": [
+        32,
+        32
+      ],
+      "native_grid_size": [
+        8,
+        16
+      ],
+      "palette_rgb": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          41,
+          181,
+          182
+        ],
+        [
+          167,
+          27,
+          206
+        ],
+        [
+          209,
+          29,
+          170
+        ]
+      ],
+      "rgba_background_policy": "Original opaque black retained.",
+      "png": "frames-5200/small-pose-row-06/frame-003.png",
+      "pixel_sha256": "3d98c0926f4b5a9b06d726e9732482d669250d894b328589ba347c9fed512cc1",
+      "row2bpp": "packed-5200/small-pose-row-06/frame-003.row2bpp",
+      "tiles2bpp": "packed-5200/small-pose-row-06/frame-003.tiles2bpp",
+      "atlas_xywh": [
+        96,
+        192,
+        32,
+        32
+      ],
+      "roundtrip_pixel_difference_count": 0
+    },
+    {
+      "id": "player-ship/frame-003",
+      "source": "various3.gif",
+      "source_frame": 3,
+      "duration_ms": 200,
+      "source_crop_xyxy": [
+        160,
+        0,
+        224,
+        32
+      ],
+      "capture_size": [
+        64,
+        32
+      ],
+      "native_grid_size": [
+        16,
+        16
+      ],
+      "palette_rgb": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          202,
+          21,
+          23
+        ],
+        [
+          246,
+          246,
+          67
+        ],
+        [
+          255,
+          255,
+          255
+        ]
+      ],
+      "rgba_background_policy": "Original opaque black retained.",
+      "png": "frames-5200/player-ship/frame-003.png",
+      "pixel_sha256": "41c18d5b1f5831636c83422d61755c137a7a6d7ebe748bd545000fa315c05dac",
+      "row2bpp": "packed-5200/player-ship/frame-003.row2bpp",
+      "tiles2bpp": "packed-5200/player-ship/frame-003.tiles2bpp",
+      "atlas_xywh": [
+        192,
+        224,
+        64,
+        32
+      ],
+      "roundtrip_pixel_difference_count": 0
+    },
+    {
+      "id": "shield/frame-003",
+      "source": "various3.gif",
+      "source_frame": 3,
+      "duration_ms": 200,
+      "source_crop_xyxy": [
+        160,
+        32,
+        224,
+        96
+      ],
+      "capture_size": [
+        64,
+        64
+      ],
+      "native_grid_size": [
+        16,
+        32
+      ],
+      "palette_rgb": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          35,
+          173,
+          35
+        ],
+        [
+          165,
+          23,
+          165
+        ],
+        [
+          255,
+          255,
+          255
+        ]
+      ],
+      "rgba_background_policy": "Original opaque black retained.",
+      "png": "frames-5200/shield/frame-003.png",
+      "pixel_sha256": "af3a06c84de7eff8e51df21c7fb5147280b0774675bf7c0ef77c9030b062e9a5",
+      "row2bpp": "packed-5200/shield/frame-003.row2bpp",
+      "tiles2bpp": "packed-5200/shield/frame-003.tiles2bpp",
+      "atlas_xywh": [
+        192,
+        256,
+        64,
+        64
+      ],
+      "roundtrip_pixel_difference_count": 0
+    },
+    {
+      "id": "explosion/frame-003",
+      "source": "various3.gif",
+      "source_frame": 3,
+      "duration_ms": 200,
+      "source_crop_xyxy": [
+        160,
+        96,
+        224,
+        160
+      ],
+      "capture_size": [
+        64,
+        64
+      ],
+      "native_grid_size": [
+        16,
+        32
+      ],
+      "palette_rgb": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          246,
+          246,
+          67
+        ]
+      ],
+      "rgba_background_policy": "Original opaque black retained.",
+      "png": "frames-5200/explosion/frame-003.png",
+      "pixel_sha256": "a0ef1d19fb5a86131b0de1183b600bcc8baeb20148bb984bbc432b81b8c20708",
+      "row2bpp": "packed-5200/explosion/frame-003.row2bpp",
+      "tiles2bpp": "packed-5200/explosion/frame-003.tiles2bpp",
+      "atlas_xywh": [
+        192,
+        320,
+        64,
+        64
+      ],
+      "roundtrip_pixel_difference_count": 0
+    }
+  ],
+  "atlases": {
+    "Phoenix5200-Large-Bird-Sprites.png": {
+      "size": [
+        384,
+        192
+      ],
+      "order": "Four columns, frame order left to right then down. Empty final cell is padding.",
+      "asset_prefix": "large-bird/"
+    },
+    "Phoenix5200-Various-Sprites.png": {
+      "size": [
+        256,
+        384
+      ],
+      "order": "Frames 0,1,2,3 left to right. Seven small-pose rows at y=0..223; ship at y=224; shield at y=256; explosion at y=320.",
+      "source": "various3.gif"
+    }
+  },
+  "verification": {
+    "decoded_gif_frames": 27,
+    "extracted_5200_sprite_frames": 63,
+    "maximum_colors_including_background": 4,
+    "native_row_and_tile_roundtrips_exact": true,
+    "atlas_crops_exact": true,
+    "right_hand_large_unique_frames": 23,
+    "total_pixel_differences": 0
+  }
+}

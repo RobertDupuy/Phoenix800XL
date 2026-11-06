@@ -1,4 +1,4 @@
-# Phoenix v0.13 — clean presentation and shootable mothership escorts.
+# Phoenix v0.15 — raised player, safe small-bird entry, four boss escorts.
 # All code executed by the console is NMOS 6502 assembly.
 # Foreground builds buffered graphics independently of the arcade-rate clock.
 # VBI samples input and publishes audio each video frame, committing ready graphics
@@ -62,6 +62,7 @@
 .set SHIP,        0x1400
 .set SHIP_RED,    0x1500           // P1: original red ship layer; no vertical sharing
 
+.include "src/player-geometry.inc"
 .include "src/campaign-defs.inc"
 .section .text,"ax",@progbits
 .global entry,nmi_handler,idle,frame_done
@@ -69,7 +70,7 @@
 .global game_tick,player_update,shot_update,bombs_update
 .global shot_collision,bomb_collision,damage_player,wave_update,score_add
 .global sound_update,render_players,render_missiles,render_hud,render_banner
-.global animate_ship,ship_dli,ship_dli_done
+.global animate_ship
 .global irq_stub
 
 entry:
@@ -256,9 +257,11 @@ clear_gtia:
  ldx #15
 init_ship:
  lda ship_white,x
- sta SHIP+224,x
+ sta SHIP+player_pm_y,x
  lda ship_red,x
- sta SHIP_RED+224,x
+ sta SHIP_RED+player_pm_y,x
+ lda ship_yellow,x
+ sta 0x1600+player_pm_y,x
  dex
  bpl init_ship
  ldx #7
@@ -386,6 +389,10 @@ frame_count_done:
  lda #>playfield_dli
  sta 0x207
  lda #0x3e
+ ldx restart_blank
+ beq 1f
+ lda #0
+1:
  sta 0xd400
  # Every video frame begins with the original arcade HUD font/palette.
  lda front_buffer
@@ -430,6 +437,12 @@ missed_high:
  inc missed_ready+1
  jmp release_work
 publish_frame:
+ lda #0
+ ldx boss_status
+ cpx #1
+ bne 1f
+ lda #1
+1: sta boss_entrance_shown
  lda entrance_timer
  sta entrance_shown
  lda #0x46
@@ -449,7 +462,13 @@ publish_frame:
  tax
  lda large_shown
  beq publish_small_list
- lda large_dl,x
+ cmp #3
+ beq 1f
+ lda supplied_dl,x
+ sta 0xd402
+ lda supplied_dl+1,x
+ bne publish_list_high
+1: lda large_dl,x
  sta 0xd402
  lda large_dl+1,x
  bne publish_list_high
@@ -473,6 +492,19 @@ publish_font_ready:
  sta gameplay_font
  jsr render_players
  jsr render_missiles
+ jsr pilot_commit
+
+ lda restart_blank
+ beq 1f
+ lda #0
+ sta restart_blank
+ lda #3
+ sta 0xc01d
+ lda #0x3e
+ sta 0xd400
+ lda #0xc0
+ sta 0xd40e
+1:
 
  lda #0
  sta render_ready
@@ -508,6 +540,14 @@ release_work:
 nmi_commit:
  jsr large_frame_palette
  jsr render_live_ship
+ lda large_shown
+ cmp #3
+ bne 1f
+ lda #0
+ sta 0xc000
+ sta 0xc001
+ sta 0xc002
+1:
  inc commits
  bne commit_count_done
  inc commits+1
@@ -557,6 +597,10 @@ game_tick_regular:
  jmp respawn_tick
 2:
  lda state
+ cmp #2
+ bne 8f
+ jmp gameover_tick
+8:
  cmp #1
  beq play_tick
  lda fire_edge
@@ -600,7 +644,9 @@ damage_player:
  bne death_count_done
  inc deaths+1
 death_count_done:
- lda #1
+ # Arcade $0CD0 seeds the player explosion with 16 ticks, not the
+ # mothership's 64-tick pulse. Pending carries the event's own duration.
+ lda #16
  sta audio_death_pending
  lda #3
  sta state
@@ -666,31 +712,41 @@ sound_update:
 
 
 animate_ship:
- # Preserve all approved poses; arcade X selects the pose. Idle holds still.
+ # Four exact supplied poses, three independent color planes.
  lda video_ship_x
  clc
  adc #4
- and #7
+ lsr
+ and #3
  cmp ship_pose
- beq ship_pose_done
- sta ship_pose
+ bne 1f
+ rts
+1: sta ship_pose
  asl
  asl
  asl
  asl
  tax
- .irp row,4,5,6,7,14,15
+ .irp row,1,2,3,4,5,6,7,10,11,12,13,14,15
  lda ship_white+\row,x
- sta SHIP+224+\row
+ sta SHIP+player_pm_y+\row
+ .endr
+ .irp row,3,4,5,6,8,9,10,11,12,13,14
+ lda ship_red+\row,x
+ sta SHIP_RED+player_pm_y+\row
  .endr
 ship_pose_done:
  rts
 
 render_players:
+ jsr boss_intro_pending
+ bne ship_hide
  jsr shield_players
  bcc normal_ship_players
  jmp render_enemies
 normal_ship_players:
+ lda #44
+ sta 0xc014
  jsr animate_ship
  lda #0x46
  sta 0xc013
@@ -707,12 +763,14 @@ normal_ship_players:
  sta ship_hpos
  sta 0xc000
  sta 0xc001
+ sta 0xc002
  jmp render_enemies
 ship_hide:
  lda #0
  sta ship_hpos
  sta 0xc000
  sta 0xc001
+ sta 0xc002
 render_enemies:
  jsr render_extra_bombs
  rts
@@ -745,25 +803,9 @@ render_enemies:
 .global render_extra_bombs
 render_extra_bombs:
  lda #0x0e
- sta 0xc014
  sta 0xc015
- extra_bomb 3,0x1600,0xc002
  extra_bomb 4,0x1700,0xc003
  rts
-
-ship_dli:
- # Row 19 ends at scanline 191. WSYNC commits the reuse at scanline 192,
- # four lines before the ship. Enemy pixels end by line 190 (12-row slots
- # have four blank rows), so no enemy pixels are moved or recolored.
- pha
- lda ship_hpos
- sta 0xd40a
- sta 0xc001
- lda #0x46
- sta 0xc013
-ship_dli_done:
- pla
- rti
 
 .macro draw_missile active,xpos,ypos,oldy,oldon,mask,clear,hpos
  lda \oldon
@@ -823,12 +865,10 @@ render_missiles:
  rts
 
 .section .rodata,"a",@progbits
-initial_x: .byte 68,112,156
-initial_y: .byte 62,86,110
-bomb_schedule: .byte 0,21,42
-.balign 128
+.balign 64
 ship_white: .incbin "build/ship-white.bin"
 ship_red: .incbin "build/ship-red.bin"
+ship_yellow: .incbin "build/ship-yellow.bin"
 .set intro_fonts,0xa400
 .set intro_maps,0xb800
 .include "build/intro-size.inc"
@@ -1042,7 +1082,11 @@ intro_font_table: .incbin "build/intro-font-table.bin"
  .byte 0x04,0x84
  .byte 0x44
  .word \base
- .rept 24
+ .rept 19
+ .byte 0x04
+ .endr
+ .byte 0x84
+ .rept 4
  .byte 0x04
  .endr
  .byte 0x41
@@ -1051,7 +1095,7 @@ intro_font_table: .incbin "build/intro-font-table.bin"
 game_list display_list,0x2800
 game_list display_list_1,0x2c00
 game_dl: .word display_list,display_list_1
- .balign 128
+# ANTIC receives the full LMS address; this 120-byte map needs no alignment.
 hud_map:
  .set h,0
  .rept 120
@@ -1068,8 +1112,10 @@ hud_map:
 .include "src/renderer.inc"
 .include "src/hud.inc"
 .include "src/arcade.inc"
+.include "src/safe-entry.inc"
 
 .include "src/death.inc"
+.include "src/restart.inc"
 .include "src/bursts.inc"
 .include "src/music.inc"
 .include "src/projectile.inc"
@@ -1088,3 +1134,5 @@ hud_map:
 .include "src/large_renderer.inc"
 
 .include "src/campaign-bridge.inc"
+
+.include "src/pilot.inc"

@@ -1,13 +1,22 @@
 """Compile the recovered arcade mothership, wipe and round tables."""
 from pathlib import Path
 from prepare_native import tables
+import supplied_art as supplied
 R=Path(__file__).resolve().parents[1];B=R/'build';A=R/'src/arcade-assets'
 def prepare():
  t=tables();raw=t['mothership_tile_page'];body=bytes(v if v>=64 else 0 for row in reversed(range(9)) for v in raw[row*26:row*26+26])
  (B/'boss-body.bin').write_bytes(body)
  art=(A/'original-art-bank2.bin').read_bytes()
  glyphs=bytes(sum({0:0,1:1,2:3,3:2}[(art[2048+y*256+c]>>(6-2*x))&3]<<(6-2*x) for x in range(4)) for c in range(128) for y in range(8))
+ # These cockpit codes retain their gameplay/collision meaning. The visible
+ # alien uses PMG color layers so its purple/cyan colors do not tint the ship.
+ glyphs=bytearray(glyphs)
+ for code in range(112,128):glyphs[code*8:code*8+8]=bytes(8)
+ glyphs=bytes(glyphs)
  (B/'boss-glyphs.bin').write_bytes(glyphs)
+ for pen,name in [(1,'cyan'),(2,'purple'),(3,'pink')]:
+  (B/f'pilot-{name}.bin').write_bytes(bytes(sum(int(supplied.pixels('small-pose-row-06',f)[y,x]==pen)<<(7-x)for x in range(8))for f in range(4)for y in range(16)))
+
  half=[]
  for lower in (False,True):
   for code in range(64,128):
@@ -30,6 +39,9 @@ def prepare():
  (B/'boss-atlas-counts.bin').write_bytes(bytes(counts))
  import json
  stars=json.loads((A/'stars-irregular.json').read_text())['cells']
+ award_stars=[(row*8+3,col) for row,col in stars]
+ award_stars += [((y-192)&255,x) for y,x in award_stars if 160<=y<192]
+ (B/'award-stars.inc').write_text('boss_star_y: .byte '+','.join(str(y) for y,x in award_stars)+'\nboss_star_x: .byte '+','.join(str(x) for y,x in award_stars)+'\n.set BOSS_STARS,'+str(len(award_stars))+'\n')
  (B/'boss-stars.inc').write_text('boss_seed_stars:\n lda back_buffer\n beq boss_stars_zero\n jmp boss_stars_one\nboss_stars_zero:\n lda #129\n'+''.join(f' sta {0x2800+row*32+col-4}\n' for row,col in stars)+' rts\nboss_stars_one:\n lda #129\n'+''.join(f' sta {0x2c00+row*32+col-4}\n' for row,col in stars)+' rts\n')
  a=(A/'original-art-bank1.bin').read_bytes()
  (B/'wipe-glyph.bin').write_bytes(bytes(sum((1 if ((a[y*256+31]>>(6-2*x))&3) else 0)<<(6-2*x) for x in range(4))for y in range(8)))
@@ -47,5 +59,5 @@ def prepare():
     if 7<=x<33 and 0<=y<25:rad[y*32+x-4]=min(rad[y*32+x-4],a)
    addr-=32
  (B/'wipe-radius.bin').write_bytes(bytes(rad))
- (B/'boss-campaign.json').write_text(__import__('json').dumps({'stages':[1,3,5,7,11],'wipe_phases':28,'wipe_ticks':55,'mothership_rows':9,'mothership_columns':26,'large_bird_limit':6,'escort_limit':2,'source':'Original Phoenix ROM tables and 8085 routines 2204..2442,24C4..253F,0610..0638'},indent=2))
+ (B/'boss-campaign.json').write_text(__import__('json').dumps({'stages':[1,3,5,7,11],'wipe_phases':28,'wipe_ticks':55,'mothership_rows':9,'mothership_columns':26,'large_bird_limit':6,'escort_limit':4,'source':'Original Phoenix ROM tables and 8085 routines 2204..2442,24C4..253F,0610..0638'},indent=2))
 if __name__=='__main__':prepare()

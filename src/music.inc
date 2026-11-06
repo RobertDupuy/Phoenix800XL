@@ -18,6 +18,9 @@
 .set audio_hit_count,0x3e45
 .set audio_death_count,0x3e46
 .set audio_wing_count,0x3e47
+.set audio_shield_count,0x3e48
+.set audio_impact_count,0x3e49
+.set audio_bonus_count,0x3e4a
 .section .expanded_code,"ax",@progbits
 .global music_update,music_compute,audio_prepare,music_tick,audio_controls,audio_select_tune
 music_compute:
@@ -58,8 +61,7 @@ music_tick:
  inc music_ticks+1
 1: jsr audio_controls
  jmp audio_tick
-# A=0..3 provides every chip tune. Gameplay selects the original start cue;
-# tune 2 remains available for the mothership award when that stage is added.
+# A=0..3 selects the MM6221AA tune through the original sound latch.
 audio_select_tune:
  and #3
  asl
@@ -74,7 +76,7 @@ audio_select_tune:
  ora 0x72
  sta g_sound_b
  rts
-.section .text,"ax",@progbits
+.section .expanded_code,"ax",@progbits
 audio_controls:
  lda #15
  sta g_sound_a
@@ -86,12 +88,24 @@ audio_controls:
  inc audio_age+1
 1: lda state
  cmp #1
- bne audio_events
+ beq 2f
+ jmp audio_events
+2:
+ lda wave_wait
+ ora wipe_timer
+ ora entrance_timer
+ beq 3f
+ jmp audio_events
+3:
  lda large_mode
  cmp #3
- beq audio_small
+ beq audio_mothership
  lda large_mode
  beq audio_small
+ lda aliens_left
+ bne 4f
+ jmp audio_events
+4:
  lda audio_bird_stage
  and #1
  asl
@@ -104,6 +118,7 @@ audio_controls:
  sta g_sound_b
  lda audio_bird_count
  inc audio_bird_count
+ cmp #0
  beq audio_bird_pulse
  ldx bird_height
  lda bird_cadence,x
@@ -118,15 +133,36 @@ audio_bird_pulse:
  ora #16
  sta g_sound_b
  bne audio_events
+audio_mothership:
+ lda boss_status
+ cmp #1
+ bne 1f
+ # The small-bird clock is stopped during descent. Use the actual entry
+ # countdown so the arrival modulation advances while the ship descends.
+ lda #10
+ sta g_sound_b
+ lda boss_timer
+ eor #255
+ and #96
+ bne audio_events
+ lda boss_timer
+ eor #255
+ and #2
+ clc
+ adc #28
+ sta g_sound_b
+ jmp audio_events
+1: lda boss_status
+ cmp #2
+ bne audio_events
 audio_small:
  ldx #15
  ldy #0
 1: lda enemy_on,x
  beq 2f
- lda enemy_kind,x
- beq 2f
- lda raw_enemy_y,x
- cmp #40
+ # Arcade $3A98 tests the shape byte, not Y: $20..$27 are formation.
+ lda enemy_shape,x
+ cmp #0x28
  bcc 2f
  iny
 2: dex
@@ -145,16 +181,33 @@ audio_small:
  ora 0x72
  sta g_sound_a
 audio_events:
+ lda audio_bonus_count
+ beq 7f
+ dec audio_bonus_count
+ and #8
+ ora #7
+ sta g_sound_b
+7:
+ lda audio_shield_count
+ beq 8f
+ dec audio_shield_count
+ lda audio_shield_count
+ and #6
+ asl
+ sta g_sound_b
+8:
  lda audio_hit_pending
  beq 1f
  lda #0
  sta audio_hit_pending
+ sta audio_impact_count
  lda #32
  sta audio_hit_count
 1: lda audio_wing_pending
  beq 2f
  lda #0
  sta audio_wing_pending
+ sta audio_impact_count
  lda #16
  sta audio_wing_count
 2: lda audio_hit_count
@@ -169,13 +222,22 @@ audio_events:
  jmp audio_shot
 audio_wing:
  lda audio_wing_count
- beq audio_shot
+ beq audio_impact
  dec audio_wing_count
  lda audio_wing_count
  lsr
  eor #255
  and #7
  ora #16
+ sta g_sound_a
+ jmp audio_shot
+audio_impact:
+ lda audio_impact_count
+ beq audio_shot
+ dec audio_impact_count
+ lda g_sound_a
+ and #8
+ ora #4
  sta g_sound_a
 audio_shot:
  lda audio_shot_pending
@@ -186,30 +248,30 @@ audio_shot:
  sta audio_shot_count
 1: lda audio_death_pending
  beq 2f
+ sta audio_death_count
+ sta noise_death_kind
  lda #0
  sta audio_death_pending
- lda #64
- sta audio_death_count
 2: lda audio_death_count
  beq 3f
  dec audio_death_count
  lda #0x8f
  sta g_sound_a
- jmp audio_cancel_tune
+ jmp audio_controls_done
 3: lda audio_shot_count
- beq audio_cancel_tune
+ beq audio_controls_done
  cmp #25
  bcc 4f
  dec audio_shot_count
  lda g_sound_a
  and #191
  sta g_sound_a
- jmp audio_cancel_tune
+ jmp audio_controls_done
 4: dec audio_shot_count
  lda g_sound_a
  ora #64
  sta g_sound_a
-audio_cancel_tune:
+audio_controls_done:
  lda boss_status
  cmp #3
  bcs 1f
@@ -230,15 +292,21 @@ audio_cancel_tune:
 .include "build/audio-tables.inc"
 bird_cadence: .incbin "build/bird_sound_cadence.bin"
 
-# Foreground keeps a three-frame queue filled. The VBI only publishes eight POKEY
-# registers, so circuit multiplication can never run across the HUD deadline.
+# Queue three frames for small birds, four for supplied large-bird art,
+# and six for the heavier mothership and transitions.
+# The eight-slot ring has room for seven frames. Its separate AUDCTL bytes must
+# not overlap the eight-register slots. The VBI only publishes registers.
 .set audio_head,0x3ef0
 .set audio_tail,0x3ef1
+.set audio_underruns,0x3ef2
+.set audio_last_controls,0x3ec8
 .section .text,"ax",@progbits
 music_update:
  lda audio_tail
  cmp audio_head
- beq audio_publish_done
+ bne audio_publish
+ jmp audio_underrun
+audio_publish:
  asl
  asl
  asl
@@ -246,25 +314,63 @@ music_update:
  .irp r,0,1,2,3,4,5,6,7
  lda 0x3e80+\r,x
  sta 0xe800+\r
+ .if (\r & 1)
+ sta audio_last_controls+(\r / 2)
+ .endif
  .endr
- lda #0
+ ldy audio_tail
+ lda 0x3ec0,y
  sta 0xe808
  lda #2
  sta 0xe80f
  inc audio_tail
  lda audio_tail
- and #3
+ and #7
  sta audio_tail
 audio_publish_done:
+ rts
+.section .text,"ax",@progbits
+audio_underrun:
+ # A delayed foreground frame must never leave an oscillator stuck on.
+ # Fade the last published volumes without touching foreground scratch.
+ inc audio_underruns
+ bne 1f
+ inc audio_underruns+1
+1:
+ .irp v,0,1,2,3
+ lda audio_last_controls+\v
+ and #15
+ beq 2f
+ dec audio_last_controls+\v
+2: lda audio_last_controls+\v
+ sta 0xe801+\v*2
+ .endr
  rts
 .section .expanded_code,"ax",@progbits
 audio_prepare:
  lda audio_head
  sec
  sbc audio_tail
- and #3
+ and #7
+ ldx wave_wait
+ bne audio_boss_budget
+ ldx wipe_timer
+ bne audio_boss_budget
+ ldx large_mode
+ beq audio_small_budget
+ cpx #3
+ beq audio_boss_budget
+ cmp #4
+ bcs audio_prepared
+ bcc audio_compute_frame
+audio_small_budget:
  cmp #3
  bcs audio_prepared
+ bcc audio_compute_frame
+audio_boss_budget:
+ cmp #6
+ bcs audio_prepared
+audio_compute_frame:
  jsr music_compute
  lda audio_head
  asl
@@ -275,9 +381,12 @@ audio_prepare:
  lda 0x3e60+\r
  sta 0x3e80+\r,x
  .endr
+ ldy audio_head
+ lda 0x3e68
+ sta 0x3ec0,y
  inc audio_head
  lda audio_head
- and #3
+ and #7
  sta audio_head
  jmp audio_prepare
 audio_prepared:

@@ -1,0 +1,5 @@
+Primary sound reference sources inspected for v0.21 (2026-11-06 UTC):
+phoenix_a.cpp SHA256 0920dcb56bc744b7a1e054954221cdf9b957c1a7b7deb660ebd2ddb598fdfbd0
+tms36xx.cpp SHA256 18238b9b13985ae08231b8e9e1a02442946fa1b9e2224ff1444ce0fc3abd92e6
+Source URLs are in Phoenix5200-Sound-Study.txt.
+Headers and existing BSD notices are retained.

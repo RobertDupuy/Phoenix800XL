@@ -1,0 +1,35 @@
+Phoenix5200 v0.30 — separate left/right return animations
+Cartridge SHA-256: 698bc3c5855e4394e4850b1a778ec28243fd7b16a7ffed367b00d3781bbdc923
+
+Change scope:
+- Only small-bird shape slots 208, 212, 216 and 220 change their pixels.
+- These leftward-return slots horizontally reflect the supplied row-05 art.
+- Rightward return slots 192, 196, 200 and 204 remain byte-for-pixel identical.
+- Every other pose is unchanged from v0.29.
+- All console assembly sources are unchanged. Large-bird, shield and title
+  artwork, sound lookup tables and explosion envelopes compare unchanged.
+- Six large birds and four mothership escorts remain. No population change.
+
+Final-cartridge checks:
+- 16 direction/phase cases passed: both upward return directions, all four
+  poses, in waves 1 and 2. The real 6502 animation and movement entry points
+  select the correct shape family and retain deltas (+4,-2) and (-4,-2).
+- Eight independent source-pose checks passed, requiring an exact horizontal
+  reflection for the left-facing frames and no reflection for the right.
+- 276 artwork checks passed across all 63 source frames, player and shield
+  planes, mothership alien and eight restored bird-hit explosion frames.
+- 1,168 software-renderer scenes passed with zero pixel errors, including
+  edge clipping, overlap, erasure and player death. Maximum synthetic CPU
+  render cost: 22,523 cycles. Maximum dynamic glyph allocation: 25.
+
+These are CPU and source/ROM tests. No new physical-console test or full-game
+playthrough is claimed. The earlier v0.29 actual-raster evidence is retained
+under its original cartridge hash; display interrupt code is unchanged.
+
+Current evidence: evidence/v030. Commands:
+  python3 tests/return_facing_v030.py
+  python3 tests/artwork_v030.py
+  python3 tests/renderer_native.py
+
+Build: LLVM_MOS=/path/to/llvm-mos python3 tools/build.py
+No emulator, BIOS or compiler is included.

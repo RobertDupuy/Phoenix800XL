@@ -2,6 +2,7 @@
 .set cycle_round,0x7a1
 .set wipe_timer,0x7a2
 .set boss_status,0x7a3 // 1 entrance, 2 combat, 3 explosion, 4 award
+.set boss_entrance_shown,0x7ec // entry state of the published display frame
 .set boss_timer,0x7a4
 .set boss_scroll,0x7a5
 .set boss_anim,0x7a6
@@ -48,3 +49,4 @@
 .set boss_free_cursor,0x7c7
 .set effect_origin_x,0x7cd
 .set effect_timer,0x7ce
+.set boss_award_row,0x7cf

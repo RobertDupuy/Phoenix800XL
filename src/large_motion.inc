@@ -604,8 +604,8 @@ large_ship_contact:
  bne large_ship_done
  lda bird_scroll_band
  sec
- sbc #12
- cmp #16
+ sbc #player_explosion_row
+ cmp #17
  bcs large_ship_done
  lda shot_on
  pha
@@ -618,14 +618,14 @@ large_ship_contact:
  tax
  lda ship_left,x
  sta raw_shot_x
- lda #216
+ lda #player_raw_y
  sta raw_shot_y
  lda #1
  sta shot_on
  jsr large_collision
  lda shot_on
  beq large_ship_hit
- lda #224
+ lda #player_raw_y+8
  sta raw_shot_y
  jsr large_collision
  lda shot_on

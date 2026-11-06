@@ -17,6 +17,11 @@
 .set product_high,15892
 .set product_bits,15893
 .set cap_delta,15894
+.set noise_shot_level,15895
+.set noise_death_level,15896
+.set noise_death_kind,15897
+.set noise_extra_freq,15898
+.set noise_extra_control,15899
 .section .text,"ax",@progbits
 .global audio_tick
 audio_tick:
@@ -114,6 +119,11 @@ audio_music_output:
  jsr audio_circuit
  jsr audio_pitch_a
  sta 0x3e64
+ ldx #0
+ cmp #64
+ bcc 1f
+ ldx #32
+1: stx 0x3e68
  lda g_sound_a
  and #15
  cmp #15
@@ -130,29 +140,6 @@ audio_fx_a_silent:
  lda #0
 audio_fx_a_volume:
  sta 0x3e65
- lda g_sound_a
- and #0xc0
- cmp old_noise
- beq audio_noise_decay
- sta old_noise
- cmp #0
- beq audio_noise_decay
- ldx #24
- and #128
- beq audio_noise_start
- ldx #48
-audio_noise_start:
- stx noise_env
-audio_noise_decay:
- ldx noise_env
- beq audio_fx_b
- dex
- stx noise_env
- lda noise_frequency,x
- sta 0x3e66
- lda noise_volume,x
- sta 0x3e67
- jmp audio_output_done
 audio_fx_b:
  jsr audio_pitch_b
  sta 0x3e66
@@ -164,7 +151,8 @@ audio_fx_b:
  and #32
  beq audio_fx_b_tone
  # The original filter attenuates a tone; it is not a noise generator.
- lda #0xa4
+ ldx 0x3e66
+ lda audio_filter_volume,x
  bne audio_fx_b_volume
 audio_fx_b_tone:
  lda #0xa8
@@ -173,6 +161,59 @@ audio_fx_b_silent:
  lda #0
 audio_fx_b_volume:
  sta 0x3e67
+ # Soften the arrival on POKEY: the cabinet's filtered oscillator becomes
+ # a harsh square wave here. Keep its cadence, two octaves lower and quiet.
+ lda boss_status
+ cmp #1
+ bne audio_mix_noise
+ lda 0x3e66
+ asl
+ bcs audio_entry_lowest
+ asl
+ bcs audio_entry_lowest
+ ora #3
+ bne audio_entry_pitch
+audio_entry_lowest:
+ lda #255
+audio_entry_pitch:
+ sta 0x3e66
+ lda 0x3e67
+ and #15
+ beq audio_mix_noise
+ lda #0xa3
+ sta 0x3e67
+audio_mix_noise:
+ jsr audio_noise
+ bcc audio_output_done
+ # Noise must not erase the large-bird pulse on every shot. Borrow an
+ # idle voice, keeping both music channels when their notes are sounding.
+ lda 0x3e63
+ and #15
+ beq audio_noise_voice2
+ lda 0x3e65
+ and #15
+ beq audio_noise_voice3
+ lda 0x3e61
+ and #15
+ beq audio_noise_voice1
+ ldx #6
+ bne audio_noise_store
+audio_noise_voice1:
+ ldx #0
+ beq audio_noise_store
+audio_noise_voice3:
+ lda #0
+ sta 0x3e68
+ ldx #4
+ bne audio_noise_store
+audio_noise_voice2:
+ ldx #2
+audio_noise_store:
+ lda 0x3e69
+ sta 0x3e60,x
+ lda 0x3e6a
+ sta 0x3e61,x
+ jsr audio_extra_mix
 audio_output_done:
 
  inc audio_ticks
@@ -221,14 +262,24 @@ audio_mod_level:
  tya
  rol
  tax
- txa
+ lda c22_target,x
+ sec
+ sbc c22_level
+ bcc audio_rc_fall
+ tax
+ lda audio_rc,x
  clc
- adc #>audio_rc
- sta 0x71
- lda #0
- sta 0x70
- ldy c22_level
- lda (0x70),y
+ adc c22_level
+ jmp audio_rc_store
+audio_rc_fall:
+ eor #255
+ clc
+ adc #1
+ tax
+ lda c22_level
+ sec
+ sbc audio_rc,x
+audio_rc_store:
  sta c22_level
  lda g_sound_b
  and #16
@@ -286,6 +337,114 @@ audio_pitch_b:
 .section .bank0_data,"a",@progbits
 .balign 256
 audio_rc: .incbin "build/audio-lookup.bin"
-.set audio_c7,audio_rc+1536
-.set audio_vco_a,audio_rc+1792
-.set audio_vco_b,audio_rc+2560
+.set audio_c7,audio_rc+256
+.set audio_vco_a,audio_rc+512
+.set audio_vco_b,audio_rc+1280
+audio_noise_tables: .incbin "build/audio-noise.bin"
+.set audio_shot_charge,audio_noise_tables
+.set audio_shot_release,audio_noise_tables+64
+.set audio_noise_frequency,audio_noise_tables+128
+.set audio_noise_volume,audio_noise_tables+256
+.set audio_filter_volume,audio_noise_tables+320
+.section .tables,"a",@progbits
+audio_death_charge8: .incbin "build/death-charge-8bit.bin"
+.section .bank0_data,"a",@progbits
+audio_death_release8: .incbin "build/death-release-8bit.bin"
+
+.section .expanded_code,"ax",@progbits
+# The arcade holds and releases capacitor envelopes; they are not triggered
+# linear chirps. Death has the reference's much lower, roughly 400 Hz noise.
+audio_noise:
+ lda #0
+ sta noise_extra_control
+ ldx noise_shot_level
+ lda g_sound_a
+ and #64
+ beq 1f
+ lda audio_shot_charge,x
+ jmp 2f
+1: lda audio_shot_release,x
+2: sta noise_shot_level
+ ldx noise_death_level
+ lda g_sound_a
+ and #128
+ beq 3f
+ lda audio_death_charge8,x
+ jmp 4f
+3: lda audio_death_release8,x
+4: sta noise_death_level
+ # Keep capacitor precision until the final conversion to POKEY volume.
+ lsr
+ lsr
+ tax
+ jsr audio_ship_noise
+ bcs 6f
+ txa
+ cmp noise_shot_level
+ bcc 5f
+ tax
+ lda #159
+ bne 6f
+5: ldx noise_shot_level
+ lda audio_noise_frequency,x
+6: sta 0x3e69
+ lda audio_noise_volume,x
+ beq 7f
+ sta 0x3e6a
+ sec
+ rts
+7: clc
+ rts
+
+# C24 and C25 are summed in the arcade. A returning gunshot must not replace
+# the player's decaying low-frequency blast. Keep that blast as the primary
+# noise and add C24 on an idle voice, with both capacitors setting its clock.
+# Append helpers after aligned data so this fix does not move graphics pages.
+.section .ship_audio_expanded,"ax",@progbits
+audio_ship_noise:
+ lda noise_death_kind
+ cmp #16
+ bne 1f
+ lda audio_noise_volume,x
+ and #15
+ beq 1f
+ ldy noise_shot_level
+ lda audio_noise_volume,y
+ and #15
+ beq 1f
+ ora #0x80
+ sta noise_extra_control
+ txa
+ clc
+ adc noise_shot_level
+ tay
+ lda audio_noise_frequency,y
+ sta noise_extra_freq
+ lda #159
+ sec
+ rts
+1: clc
+ rts
+
+.section .ship_audio,"ax",@progbits
+audio_extra_mix:
+ lda noise_extra_control
+ beq 3f
+ ldx #6
+1: lda 0x3e61,x
+ and #15
+ beq 2f
+ dex
+ dex
+ bpl 1b
+ rts
+2: cpx #4
+ bne 4f
+ lda 0x3e68
+ and #223
+ sta 0x3e68
+4: lda noise_extra_freq
+ sta 0x3e60,x
+ lda noise_extra_control
+ sta 0x3e61,x
+3: rts

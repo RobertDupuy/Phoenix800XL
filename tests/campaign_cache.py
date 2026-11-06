@@ -29,7 +29,7 @@ for frame in range(600):
    i=rng.choice(candidates);m[S['boss_body']+i]=rng.choice([0,76,77,78,79]);m[0x1200+i]=1
    m[S['boss_dirty_rows']:S['boss_dirty_rows']+10]=bytes([1]*10)
  m[0x9b]^=1;m[0x37c]=frame%4 if frame%11==0 else 255;m[0xa5]=100
- m[0x4d0:0x4d2]=b'\1\1';m[0x410:0x412]=bytes([48,104]);m[0x420:0x422]=bytes([48+(frame%17)*8,72+(frame%15)*8]);m[0x4c0:0x4c2]=bytes([32+(frame%12)*2,32+((frame+3)%12)*2])
+ m[0x4d0:0x4d4]=bytes([1]*4);m[0x410:0x414]=bytes([48,80,104,160]);m[0x420:0x424]=bytes([48+((frame+i*3)%17)*8 for i in range(4)]);m[0x4c0:0x4c4]=bytes([32+((frame+i*3)%12)*2 for i in range(4)])
  t.call('render_scene')
  # Erasure on the same buffer must recover every background pixel, even after
  # foreground glyph eviction, shield cells, phase changes and epoch rollover.

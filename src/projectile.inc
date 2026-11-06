@@ -5,9 +5,10 @@
 .set soft_mask,0xfd
 .set soft_bits,0xfe
 .set soft_lines,0xff
-.section .text,"ax",@progbits
+.section .expanded_code,"ax",@progbits
 .global clear_soft_bomb,draw_soft_bomb,soft_bomb_glyph
 clear_soft_bomb:
+ jsr clear_third_bomb
  jsr clear_second_shot
  jsr clear_soft_shot
  ldx back_buffer
@@ -32,6 +33,7 @@ clear_soft_bomb:
 soft_clear_done:
  rts
 draw_soft_bomb:
+ jsr draw_third_bomb
  jsr projectiles_visible
  bcc soft_clear_done
  lda bomb_on
@@ -140,7 +142,7 @@ soft_bomb_glyph:
 soft_masks: .byte 0x3f,0xcf,0xf3,0xfc
 soft_pixels: .byte 0x40,0x10,0x04,0x01
 
-.section .text,"ax",@progbits
+.section .expanded_code,"ax",@progbits
 .global clear_soft_shot,draw_soft_shot
 clear_soft_shot:
  ldx back_buffer
@@ -199,3 +201,44 @@ projectile_is_visible:
 projectile_is_hidden:
  clc
  rts
+
+# P2 carries the supplied ship's yellow pixels. Its former bomb retains its
+# position, motion and collisions using the existing playfield pixel writer.
+# Separate double-buffered footprint occupies the unused $724-$727 bytes.
+clear_third_bomb:
+ ldx back_buffer
+ lda 0x726,x
+ cmp #127
+ beq third_bomb_done
+ sta draw_row
+ lda 0x724,x
+ sta draw_col
+ lda #127
+ sta 0x726,x
+ jsr row_pointer
+ lda #0
+ ldy #0
+ sta (map_ptr),y
+ lda draw_row
+ cmp #24
+ bcs third_bomb_done
+ lda #0
+ ldy #32
+ sta (map_ptr),y
+third_bomb_done:
+ rts
+draw_third_bomb:
+ jsr projectiles_visible
+ bcc third_bomb_done
+ lda bomb_on+3
+ beq third_bomb_done
+ lda bomb_x+3
+ sta 0x6fd
+ lda #0x34
+ sta 0x6fe
+ lda bomb_y+3
+ cmp #40
+ bcc third_bomb_done
+ cmp #238
+ bcs third_bomb_done
+ jmp soft_common

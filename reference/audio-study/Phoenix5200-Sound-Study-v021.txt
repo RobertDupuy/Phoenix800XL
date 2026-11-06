@@ -1,0 +1,134 @@
+PHOENIX 5200 SOUND STUDY — VERSION 0.21
+2026-11-06
+
+Result
+The port is closer to the arcade in pitch resolution, firing/death behavior,
+sound triggers and uninterrupted timing. The largest remaining timbre mismatch
+is the large-bird siren: POKEY still produces a square wave, while the arcade
+filters that waveform. High whistles remain where the arcade uses them.
+Four mothership escorts are retained.
+
+What was evaluated
+Twelve categories were compared using identical sound-control events: opening
+music, victory music, eight/two small birds, large birds, body and wing hits,
+firing, death, shield, mothership arrival and armor hits. Separate executable
+ROM tests check that gameplay actually triggers the shield, bonus-life, arrival
+and impact paths. Both all-three-tune sequences and their note envelopes were
+checked over 4,200 sound ticks.
+
+The reference audio comes from the checked-in MAME-derived C circuit/TMS model,
+checked against current MAME source. It models the 372 Hz music chip, its 0.21 s
+note timing and 0.50/1.05 s envelopes, the 555/RC effect circuits, and custom
+noise. This is a reconstructed arcade reference, not a recording of a cabinet
+or a new MAME gameplay session.
+
+The before and after POKEY register streams execute the actual built 6502
+sound routines. AltirraSDL renders those streams to WAV through its POKEY
+emulation. The test cart is only an idle sound bench. No equalization or volume
+normalization was applied to the recordings. Metrics remove DC/below-audible
+capacitor offsets with a 40 Hz high-pass filter for analysis only.
+
+Findings and implemented changes
+1. Small-bird pitch steps: the old 64 kHz clock made high whistles jump between
+   widely spaced pitches. Channel 3 now uses its independent 1.79 MHz clock
+   where the divisor fits. In 132 such cases, maximum frequency error falls
+   from 13.28% to 0.49%. Lower tones retain the normal clock.
+   The old B lookup also wrapped at extreme capacitor values; that is now
+   bounded. Those extreme values are outside ordinary play and were not the
+   demonstrated cause of the audible squeakiness.
+
+2. Firing: the old triggered, falling chirp did not follow the circuit. The
+   new envelope rises while the fire latch is held, then releases rapidly.
+   Its rate and noise clock are derived from the C24 network (0.136 s rising-noise
+   envelope and 0.009044 s release). It now has the rising noisy character
+   expected from the reference instead of the previous low, fading burst.
+
+3. Death/explosion: the old noise faded out before the death signal ended.
+   The replacement has a quick attack, sustained low noise while the latch
+   remains active, and a separate release tail based on C25 (0.3196 s).
+   The reference's roughly 400 Hz sampled-noise component is approximated with
+   POKEY noise at that clock rate. Its measured brightness is now close to
+   the reference; this does not mean the two noise generators are identical.
+
+4. Large-bird siren: volume now varies with pitch according to the original
+   10k || 100k / 0.047 uF filter's fundamental response. The lower part of its
+   sweep is fuller relative to the high part. In the diagnostic clip, energy
+   above 2 kHz falls from 9.39% to about 8.2%; the reference is only 0.4%.
+   This is a modest improvement, not a reproduction of the analog filter.
+
+5. Missing or wrong cues: shield activation now starts the original 64-tick
+   control sequence; awarding an extra life starts its 255-tick pulse pattern.
+   The mothership has its early arrival sound, and armor damage uses the short
+   impact pattern instead of the bird-kill chime. Existing bird body/wing hit
+   cues, opening music and victory music are retained.
+
+6. Music: the recovered note sequences and basic envelope durations were
+   already correct and were preserved. The port uses two musical voices;
+   overlapping decay voices from the arcade chip are still simplified. Effects
+   and music share four POKEY channels, so some simultaneous effect combinations
+   still use priority rather than the arcade's independent generators.
+
+7. Mothership sound timing: a three-frame queue could empty while graphics
+   were being prepared. Before this fix, staged 600-frame runs missed 115 and
+   49 sound updates. The mothership now queues six frames in an eight-slot ring;
+   bird waves retain three. Both final runs delivered 600/600 updates with no
+   gaps, no late VBI and no graphics allocation faults. Worst tested audio_tick
+   cost is 673 CPU cycles; VBI publication is 128 cycles.
+   The larger mothership buffer trades a little additional effect latency for
+   continuous playback. Graphics still update less often than sound/simulation.
+
+Measured brightness (spectral centroid, Hz)
+This is an energy-weighted average frequency, not musical pitch. It describes
+spectral balance; envelope timing, note correctness and listening preference
+cannot be reduced to this number. Values are from the complete diagnostic clips.
+
+Sound                  Reference  Previous   Updated
+Opening music             918.6     971.9     971.2
+Victory music            1080.5    1106.6    1106.6
+Eight small birds        5005.6    5007.8    4958.2
+Two small birds          2164.2    2214.6    2214.6
+Large birds               501.7     974.5     897.3
+Bird hit                 1518.8    1588.4    1588.0
+Wing hit                 1674.0    1933.5    1933.9
+Firing                   1619.0     432.6    1314.1
+Death                     366.3     627.1     360.7
+Shield                   1083.7    1142.7    1142.8
+Mothership arrival       2420.2    2422.2    2422.8
+Armor hit                3925.6    4023.7    4021.3
+
+Other changes in this build
+Gameplay stars are dark blue. Small-wave red effect/shield accents share pink
+to free that color; player colors, large-bird palettes and title art remain.
+The mothership's initial descent finishes before the player appears or can
+move, shoot or activate the shield. Four escorts remain; fast mode begins with
+fewer than three survivors. The cartridge is still 256 KiB.
+
+Validation and limits
+The final ROM passed 1,744 pitch cases, 4,200 tune ticks, 512 arrival-control
+cases, shield/bonus triggers, all eight ring slots and both refill depths.
+Altirra checked 119 published entry frames and two 600-frame mothership loads.
+Existing respawn, safe-return, shield, escort-hit, renderer and campaign checks
+also passed. No physical 5200 test or new controller-only full-game completion
+was performed. POKEY's square-wave harmonics, 17-bit noise and four-channel
+limit remain different from the arcade hardware.
+
+Evidence
+The source archive contains evidence/current/audio with twelve reference,
+previous and updated WAV clips, plus sound-study.json with all measurements.
+Isolated shield/arrival/armor clips deliberately feed the same control bytes
+to both drivers; they compare tone generation, not whether the old game
+actually triggered those sounds. Gameplay-trigger tests are separate.
+The six-escort rejection and pre-buffer measurements are separate trials with
+their own ROM hashes, not results for the released cartridge.
+
+Sources
+https://github.com/mamedev/mame/blob/master/src/mame/phoenix/phoenix_a.cpp
+https://github.com/mamedev/mame/blob/master/src/mame/phoenix/phoenix.cpp
+https://github.com/mamedev/mame/blob/master/src/devices/sound/tms36xx.cpp
+https://www.computerarcheology.com/Arcade/Phoenix/Code.html
+https://github.com/ilmenit/AltirraSDL
+Local reference: reference/c/sound.c, sound_discrete.c, tms36xx.c and
+sound_dispatcher.c. Original notices remain included.
+
+Previous cartridge SHA-256: 8440030b29c43a7586d5c134867e4557b604b74757e86c0f35a165739717a310
+Released cartridge SHA-256: 25d1c71fb005ca5aa3e9e520c704ad71fc92e3ce38ad1a9cb200603c9d744bd4

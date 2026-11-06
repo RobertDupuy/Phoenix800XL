@@ -1,0 +1,151 @@
+{
+  "car_sha256": "698bc3c5855e4394e4850b1a778ec28243fd7b16a7ffed367b00d3781bbdc923",
+  "source_pose_checks": 8,
+  "movement_and_animation_cases": [
+    {
+      "wave": 1,
+      "direction": 7,
+      "shape": 192,
+      "delta": [
+        4,
+        -2
+      ]
+    },
+    {
+      "wave": 1,
+      "direction": 7,
+      "shape": 196,
+      "delta": [
+        4,
+        -2
+      ]
+    },
+    {
+      "wave": 1,
+      "direction": 7,
+      "shape": 200,
+      "delta": [
+        4,
+        -2
+      ]
+    },
+    {
+      "wave": 1,
+      "direction": 7,
+      "shape": 204,
+      "delta": [
+        4,
+        -2
+      ]
+    },
+    {
+      "wave": 1,
+      "direction": 8,
+      "shape": 208,
+      "delta": [
+        -4,
+        -2
+      ]
+    },
+    {
+      "wave": 1,
+      "direction": 8,
+      "shape": 212,
+      "delta": [
+        -4,
+        -2
+      ]
+    },
+    {
+      "wave": 1,
+      "direction": 8,
+      "shape": 216,
+      "delta": [
+        -4,
+        -2
+      ]
+    },
+    {
+      "wave": 1,
+      "direction": 8,
+      "shape": 220,
+      "delta": [
+        -4,
+        -2
+      ]
+    },
+    {
+      "wave": 2,
+      "direction": 7,
+      "shape": 192,
+      "delta": [
+        4,
+        -2
+      ]
+    },
+    {
+      "wave": 2,
+      "direction": 7,
+      "shape": 196,
+      "delta": [
+        4,
+        -2
+      ]
+    },
+    {
+      "wave": 2,
+      "direction": 7,
+      "shape": 200,
+      "delta": [
+        4,
+        -2
+      ]
+    },
+    {
+      "wave": 2,
+      "direction": 7,
+      "shape": 204,
+      "delta": [
+        4,
+        -2
+      ]
+    },
+    {
+      "wave": 2,
+      "direction": 8,
+      "shape": 208,
+      "delta": [
+        -4,
+        -2
+      ]
+    },
+    {
+      "wave": 2,
+      "direction": 8,
+      "shape": 212,
+      "delta": [
+        -4,
+        -2
+      ]
+    },
+    {
+      "wave": 2,
+      "direction": 8,
+      "shape": 216,
+      "delta": [
+        -4,
+        -2
+      ]
+    },
+    {
+      "wave": 2,
+      "direction": 8,
+      "shape": 220,
+      "delta": [
+        -4,
+        -2
+      ]
+    }
+  ],
+  "errors": 0
+}

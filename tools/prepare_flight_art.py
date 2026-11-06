@@ -1,5 +1,7 @@
 from pathlib import Path
 import json
+import numpy as np
+import supplied_art as supplied
 from prepare_native import tables
 R=Path(__file__).resolve().parents[1];A=R/'src/arcade-assets';B=R/'build'
 def prepare():
@@ -17,13 +19,21 @@ def prepare():
       for bank,dest,targets in [(0,pix,[(2,3,3),(3,3,0),(0,0,3)]),(1,pix2,[(2,3,0),(3,0,2),(0,2,3)])]:
        rgb=colors['palettes'][bank][code][pen]
        dest[y][c*4+x]=0 if not pen else 1+min(range(3),key=lambda k:sum((rgb[j]-targets[k][j])**2 for j in range(3)))
-   if kind==11:
-    occupied=[x for row in pix for x,v in enumerate(row) if v]
-    if occupied:
-     lo,hi=min(occupied),max(occupied)
-     for image in [pix,pix2]:
-      for row in image:
-       for x in range(lo,(lo+hi)//2+1):row[lo+hi-x]=row[x]
+   frame=supplied.LARGE_MAP[kind][phase]
+   source=supplied.pixels('large-bird',frame)
+   # Keep the established birth/flight origin; only translate whole pixels.
+   sx,sy,ex,ey=supplied.bbox(source)
+   ox,oy,oe,ob=supplied.bbox(np.asarray(pix))
+   dx=round((ox+oe-sx-ex)/2);dx=max(-sx,min(dx,28-ex))
+   dy=max(-sy,min(oy-sy,16-ey))
+   if kind in (12,13,14):
+    # No injured frames were supplied. Remove a wing from the supplied
+    # spread pose, keeping the center/remaining wing pixels unchanged.
+    core=np.where((source==2)|(source==3))
+    left,right=int(core[1].min()),int(core[1].max())+1
+    if kind in (13,14):source[:,:left]=0
+    if kind in (12,14):source[:,right:]=0
+   pix=supplied.place(source,32,16,dx,dy);pix2=[row[:] for row in pix]
    frames.append(pix);frames2.append(pix2)
    for pixels,output in [(pix,padded),(pix2,padded2)]:
     for c in range(8):output+=bytes(8)+bytes(sum(pixels[y][c*4+x]<<(6-2*x) for x in range(4)) for y in range(16))+bytes(8)
@@ -53,5 +63,5 @@ def prepare():
   for fine in range(8):ids.extend(catalogs[fine][pose])
  (B/'flight-ids.bin').write_bytes(bytes(ids));(B/'flight-glyphs.bin').write_bytes(glyphdata)
  (B/'flight-pointers.inc').write_text('flight_ptr_lo: .byte '+','.join(str((0x8000+p*192)&255) for p in range(60))+'\nflight_ptr_hi: .byte '+','.join(str((0x8000+p*192)>>8) for p in range(60))+'\nflight_tile_counts: .byte '+','.join(map(str,counts))+'\n')
- (B/'flight-art.json').write_text(json.dumps(dict(frames=frames,second_palette_frames=frames2,kinds=15,phases=4,columns=[7-((v-32)//8) for v in t['bird_draw_entries'][1:]])))
+ (B/'flight-art.json').write_text(json.dumps(dict(frames=frames,second_palette_frames=frames2,source_frames=[supplied.LARGE_MAP[k][p] for k in range(1,16) for p in range(4)],source='Exact supplied 24 x 16 logical frames; damaged wing states subtract wing pixels',kinds=15,phases=4,columns=[7-((v-32)//8) for v in t['bird_draw_entries'][1:]])))
 if __name__=='__main__':prepare()

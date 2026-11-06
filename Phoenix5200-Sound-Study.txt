@@ -1,0 +1,53 @@
+PHOENIX 5200 — SHIP EXPLOSION MIXING, v0.25
+2026-11-06 UTC
+
+WHAT CHANGED
+
+v0.24 corrected the 64-versus-16-tick event duration, but that did not resolve the user's sound complaint. This revision addresses a separate error seen in both source and actual gameplay: the port selected either the gunshot or the explosion, whichever envelope was louder. The arcade's two noise paths are added together.
+
+The new mixer keeps the player's low blast running and uses an otherwise idle POKEY voice for an overlapping shot. The faster shot-noise clock uses the sum of the active shot and blast capacitor levels. The mixer does not overwrite an occupied music/bird voice for this added sound. With all four voices busy, it prioritizes the low blast and omits the extra shot.
+
+EVIDENCE
+
+Two identical controller-only Altirra runs, using original Atari 5200 BIOS, reached the same death at 16.337907 seconds of the recording. In v0.24 the 400 Hz low-blast voice disappeared from 0.400517 to 0.567397 seconds after death: a 0.166880-second interruption. In v0.25 it remained present throughout that interval. Native WAVs and POKEY bus traces are included.
+
+A separate comparison replayed the same MAME-recorded arcade latch writes through each release's actual 6502 sound code, then recorded the resulting registers through native Altirra POKEY emulation. This is a controlled component replay, not a second claim of live gameplay. The reference is original-ROM MAME 0.264 gameplay; all 14 ROM/PROM hashes matched MAME's manifest.
+
+During the 0.40–0.57-second overlap window, after matching initial-burst RMS, frequency-band differences from that arcade recording were:
+
+Band             v0.24        v0.25
+50–200 Hz        -3.62 dB     +0.67 dB
+200–1000 Hz      +2.03 dB     +0.68 dB
+1000–4000 Hz     -1.23 dB     +0.66 dB
+
+These are measurements of one recorded overlap with independent noise phases. They are not percentages of perceived fidelity and do not establish an exact sound match. The trace evidence directly establishes that the low blast is no longer cut off.
+
+LISTENING FILE
+
+Phoenix5200-Explosion-Comparison.mp4 runs 12 seconds: arcade, v0.24, v0.25, four seconds each. Each explosion starts 1.5 seconds into its section. Presentation copies are mono at 44.1 kHz, with one constant gain per recording to match burst loudness. No EQ is applied. Eight-millisecond edge fades are outside the explosion interval. Raw stereo 48 kHz arcade and raw mono 44.1 kHz port recordings are included separately.
+
+VERIFICATION
+
+- 200 combinations of shot/blast levels, gates and event kinds.
+- All 16 occupied/free voice combinations; active voices preserved.
+- Real damage entry with an active shot: 16 blast ticks and 20 ticks with both noises present; both eventually end.
+- Isolated-blast regression: all nine output registers match v0.24 for 122 ticks when no shot overlaps.
+- Player-death trigger tested on all five waves; mothership collision remains 64 ticks.
+- 4,200 tune ticks, 1,744 pitch cases, 8,192 large-bird cadence ticks, 2,048 quiet-formation cases, buffered playback and eight-bank underrun fallback.
+- 411 campaign checks.
+- 39.52 seconds of controller-only play through death, respawn and wave two. Zero missed updates, zero active-play queue underruns, zero late VBI and zero allocation faults. One startup empty-queue event precedes active play.
+- Maximum measured sound tick in the new focused cases: 906 6502 cycles. No cartridge-size increase.
+
+LIMITS
+
+The isolated blast's noise mode, pitch and four-bit volume fade are unchanged from v0.24. This addresses overlapping gunfire cutting out the explosion; it does not establish that the remaining isolated timbre satisfies the user. The very quiet tail still ends earlier than the arcade reference. No physical-console/cabinet test or new full-game completion is claimed.
+
+FILES
+
+Current CAR SHA-256: 875afd078ce7ef575b8ee3c782f9f08b12230c639c3dbd727eab96a3d73bb1c5
+Previous v0.24 SHA-256: 7092ed5fd38b35ef0abbd3d65eea67e8a0db88b09457e63af318b65d358b7df3
+CAR type 73, 262144-byte payload, 262160 bytes with header; four escorts.
+
+Changed game/build files: src/audio_driver.inc, src/music.inc, src/cart.ld, tools/prepare_native.py. New helpers use the existing free fixed/banked ROM space. Unused six-bit death-envelope tables were removed; the live eight-bit envelope tables are retained.
+
+Primary circuit reference: MAME src/mame/phoenix/phoenix_a.cpp, noise(), included under reference/audio-study. Original control-event reference: https://computerarcheology.com/Arcade/Phoenix/Code.html .

@@ -10,6 +10,9 @@
 .set respawn_population,0x761
 .set respawn_new_game,0x762
 .set respawn_stage,0x765
+.set gameover_timer,0x7ed
+.set restart_blank,0x7ee
+.set gameover_armed,0x7ef
 .section .expanded_code,"ax",@progbits
 .global death_tick,respawn_tick,draw_explosion
 death_tick:
@@ -43,6 +46,11 @@ death_keep_projectiles:
 death_game_over:
  lda #2
  sta state
+ lda #183
+ sta gameover_timer
+ lda #0
+ sta gameover_armed
+ sta fire_edge
 death_tick_done:
  rts
 respawn_tick:
@@ -91,7 +99,7 @@ respawn_small:
  jsr arcade_resume
  rts
 draw_explosion:
- lda #12
+ lda #player_explosion_row
  sta effect_origin_y
  lda boss_picture_flag
  beq 8f

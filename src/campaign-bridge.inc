@@ -19,6 +19,20 @@ campaign_gate mothership_collision,18
 campaign_gate mothership_stamp,21
 campaign_gate arcade_bird_bomb,27
 
+mothership_blast:
+ lda 0xbfc4
+ lda 0xbfd8
+ jsr 0x8000
+ jmp victory_return
+mothership_award:
+ lda 0xbfc4
+ lda 0xbfd8
+ jsr 0x8003
+victory_return:
+ lda 0xbfc0
+ lda 0xbfd0
+ rts
+
 .section .expanded_code,"ax",@progbits
 campaign_reset:
  jsr campaign_choose
@@ -45,6 +59,23 @@ campaign_tick_play:
  beq 7f
  jmp game_tick_regular
 7:
+ lda boss_status
+ cmp #1
+ bne 8f
+ # The arcade arrival is a presentation phase, with no player controls.
+ jsr mothership_tick
+ jmp boss_discard_entry_input
+8:
+ cmp #2
+ bne 9f
+ lda boss_entrance_shown
+ beq 9f
+boss_discard_entry_input:
+ lda #0
+ sta fire_edge
+ sta shield_edge
+ rts
+9:
  lda boss_status
  beq 2f
  jsr mothership_tick
@@ -115,6 +146,7 @@ boss_play:
 2: rts
 boss_render:
  jsr mothership_background
+ jsr pilot_prepare
  lda #0
  sta grouped_scene
  sta draw_index
@@ -221,54 +253,11 @@ mothership_picture:
  lda boss_timer
  cmp #33
  bcc boss_show_award
- lda #1
- sta boss_picture_flag
- jsr draw_explosion
- lda #0
- sta boss_picture_flag
+ jmp mothership_blast
 boss_picture_done:
  rts
 boss_show_award:
- lda boss_award
- beq boss_picture_done
- lda #0
- sta boss_number_index
-boss_digit:
- lda boss_number_index
- clc
- adc #18
- sta draw_col
- lda #64
- sec
- sbc boss_scroll
- lsr
- lsr
- lsr
- and #31
- sta draw_row
- cmp #25
- bcs boss_picture_done
- jsr row_pointer
- lda #0
- ldx boss_number_index
- cpx #2
- bcs 1f
- cpx #1
- beq 2f
- lda boss_award
- bne 1f
-2: lda boss_award_low
-1: tax
- lda bonus_numbers,x
- sta draw_template
- tax
- ldy #0
- jsr stamp_tile
- inc boss_number_index
- lda boss_number_index
- cmp #4
- bcc boss_digit
- rts
+ jmp mothership_award
 
 .section .text,"ax",@progbits
 # Six persistent caches share slots 64..127 with the current foreground.

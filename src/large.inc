@@ -124,6 +124,45 @@ large_resume:
  sta burst_count+2
  sta bonus_count
  sta bonus_count+1
+ # Arcade $0BA0/$32B0: reset scrolling and rebuild only BirdsLeft eggs
+ # from the tail of the original wave table. Never resume a nearby attacker.
+ jsr large_motion_reset
+ lda #8
+ sec
+ sbc aliens_left
+ asl
+ asl
+ asl
+ tax
+ beq large_resume_sync
+ lda #0
+large_resume_empty:
+ dex
+ sta bird_records,x
+ bne large_resume_empty
+large_resume_sync:
+ lda #0
+ sta large_clock
+ sta large_bomber
+ sta large_buffer
+ sta large_buffer+1
+ ldx #0
+large_resume_slot:
+ txa
+ asl
+ asl
+ asl
+ tay
+ lda bird_records,y
+ sta enemy_on,x
+ lda large_world_y,x
+ sta large_y,x
+ lda #0
+ sta large_left,x
+ sta large_right,x
+ inx
+ cpx #8
+ bne large_resume_slot
  rts
 large_tick:
  inc large_clock
@@ -340,6 +379,8 @@ large_frame_palette:
  beq palette_large2
  cmp #1
  beq palette_large1
+ lda #dark_blue_stars
+ sta 0xc019
  lda entrance_shown
  beq palette_small
  lda #198
@@ -356,23 +397,46 @@ palette_small1:
  lda #90
  bne palette_done
 palette_boss:
- lda #134
+ lda #dark_blue_stars
  sta 0xc019
  lda #26
+ ldx boss_status
+ cpx #3
+ bcc palette_boss_color
+ cpx #4
+ bcs palette_award_color
+ ldx boss_timer
+ cpx #33
+ bcc palette_award_color
+ lda #14
+ bne palette_boss_color
+palette_award_color:
+ lda #70
+palette_boss_color:
  sta playfield_c0
  lda #90
  bne palette_done
 palette_large1:
- lda #172
- sta playfield_c0
- lda #134
- bne palette_done
 palette_large2:
- lda #202
+ # Select the short large-wave entry interrupt before the HUD finishes.
+ lda #<supplied_bird_first
+ sta 0x206
+ lda #>supplied_bird_first
+ sta 0x207
+ lda front_buffer
+ asl
+ asl
+ asl
+ asl
+ asl
+ sta supplied_palette_base
+ sta supplied_event
+ # The supplied adult sprite's cyan, yellow-green and magenta roles.
+ lda #170
  sta playfield_c0
- lda #90
+ lda #236
  sta playfield_c1
- lda #154
+ lda #86
 palette_done:
  sta gameplay_color
  rts
@@ -413,7 +477,11 @@ large_pixel_masks: .byte 192,48,12,3
  .byte 0x04
  .endr
  .byte 0x84
- .rept 9
+ .rept 2
+ .byte 0x04
+ .endr
+ .byte 0x84,0x04,0x84
+ .rept 4
  .byte 0x04
  .endr
  .byte 0x41

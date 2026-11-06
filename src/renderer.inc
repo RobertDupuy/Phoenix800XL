@@ -246,12 +246,12 @@ clear_back:
  bne clear_effect_done
  lda 0x334,x
  clc
- adc #124
+ adc #<(player_explosion_row*32-4)
  sta map_ptr
  lda map_hi
  adc #1
  sta map_ptr+1
- ldx #13
+ ldx #25-player_explosion_row
 clear_effect_row:
  lda #0
  ldy #0
@@ -425,7 +425,7 @@ tile_inside:
  lda tile_rows,x
  clc
  adc draw_row
- cmp #12
+ cmp #player_explosion_row
  bcc tile_visible
  lda tile_cols,x
  clc
@@ -461,7 +461,7 @@ stamp_tile:
  sta large_upper_effects
 stamp_effect_marked:
  sty tile_offset
- lda native_flags,x
+ lda #0
  sta draw_palette
  lda (map_ptr),y
  beq stamp_plain
@@ -503,6 +503,7 @@ blank_tile:
  bne lookup_dynamic_cache
  lda native_cache,x
  beq lookup_dynamic_cache
+ and #127
  ldy tile_offset
  sta (map_ptr),y
  rts
@@ -548,45 +549,19 @@ uncached_tile:
  rts
 fresh_star:
  lda draw_template
- bne star_nonblank
- rts
-star_nonblank:
- lda entrance_timer
- beq 4f
- jmp merge_scroll_tile
-4:
- lda direct_scene
- bne star_visible
- lda native_tiles+(TEMPLATE_COUNT*3),x
- and #12
- beq star_visible
+ beq 1f
+ # A star cell is wholly behind foreground artwork, never recoloring it.
  jmp blank_tile
-star_visible:
- jsr allocate_glyph
- bcc 2f
+1: rts
+
+# Used by both the video interrupt and foreground; all banks map this code.
+boss_intro_pending:
+ lda boss_status
+ cmp #1
+ beq 1f
+ lda boss_entrance_shown
  rts
-2:
- ldx plot_tmp
- lda #1
- sta 0x3100,x
- ldx draw_template
-merge_fresh:
- # The fixed background star has one pixel on row 3. All other rows are
- # direct copies. No mask reads or ORs are needed for seven of eight rows.
- .irp row,0,1,2,3,4,5,6,7
- ldy #\row
- .if \row == 3
- lda native_tiles+(TEMPLATE_COUNT*3),x
- and #12
- bne 3f
- lda #4
-3:
- ora native_tiles+(TEMPLATE_COUNT*3),x
- .else
- lda native_tiles+(TEMPLATE_COUNT*\row),x
- .endif
- sta (dst_ptr),y
- .endr
+1: lda #1
  rts
 allocate_glyph:
  ldx cache_count
@@ -622,7 +597,7 @@ owner_cleared:
  sta 0x3a00,x
  lda #0
  sta 0x3100,x
- cpx #102
+ cpx #100
  bcc allocate_marked
  lda back_buffer
  beq allocate_buffer_zero
@@ -654,7 +629,7 @@ reserve_shield_glyphs:
  lda shield_map_offsets,x
  tax
  stx draw_id
- lda #12
+ lda #16
  sta tiles_left
 reserve_shield_next:
  ldx draw_id
@@ -704,7 +679,14 @@ playfield_dli:
  lda gameplay_color
  sta 0xc018
  lda large_shown
- beq playfield_dli_done
+ bne 2f
+ lda #<shield_palette_dli
+ sta 0x206
+ lda #>shield_palette_dli
+ sta 0x207
+ jmp playfield_dli_done
+2:
+1: jsr pilot_start
  lda #<large_lower_dli
  sta 0x206
  lda #>large_lower_dli
@@ -714,7 +696,9 @@ playfield_dli_done:
  rti
 .section .tables,"a",@progbits
 shape_ids: .incbin "build/shape-ids.bin"
+.section .native_data,"a",@progbits
 native_shapes: .incbin "build/native-shapes.bin"
+.section .tables,"a",@progbits
 native_static: .incbin "build/native-static.bin"
 native_cache: .incbin "build/native-cache.bin"
 native_flags: .incbin "build/native-flags.bin"
@@ -733,7 +717,7 @@ row_hi:
  .byte (((v*32-4)>>8)&255)
  .set v,v+1
  .endr
-star_glyph_data: .byte 0,0,0,4,0,0,0,0
+star_glyph_data: .byte 0,0,0,12,0,0,0,0
 
 glyph_lo:
  .set g,0
@@ -775,7 +759,7 @@ draw_bird_fast:
 .section .shield_code,"ax",@progbits
 init_projectile_footprints:
  lda #127
- .irp oldrow,0x6f2,0x6f3,0x6fa,0x6fb,0x722,0x723
+ .irp oldrow,0x6f2,0x6f3,0x6fa,0x6fb,0x722,0x723,0x726,0x727
  sta \oldrow
  .endr
  rts

@@ -5,14 +5,15 @@ change only palettes; no visible character row depends on a font-bank deadline.
 """
 from pathlib import Path
 import json
+import supplied_art as supplied
 
 R = Path(__file__).resolve().parents[1]
 A = R / 'src/arcade-assets'
 B = R / 'build'
 WIDTH, HEIGHT = 160, 192
 SMALL = [0, 14, 44, 90]
-LARGE = [0, 172, 44, 134]
-BOSS = [0, 26, 44, 90]
+LARGE = [0, 170, 236, 86]
+BOSS = [0, 170, 100, 102]
 BASE = [14, 44, 90, 168]
 START_ROWS = [0, 4, 8, 12, 16, 19, 21]
 
@@ -128,33 +129,36 @@ def prepare():
         centered(page, 'AMSTAR ELECTRONICS CORP.', 176)
         centered(page, 'PHOENIX T.M. U.S.A.', 184)
 
-    # Reference arrangement, made only of unscaled existing gameplay sprites.
+    # Letter positions are based on occupied source pixels, not padded cells.
+    # One blank native column separates adjacent bird sprites inside letters.
+    # Three blank columns separate letters on the main line. P rises above H/O.
     title_placements = []
-    logo = [[0]*108 for _ in range(72)]
+    logo = [[0]*92 for _ in range(72)]
     def logo_bird(shape, x, y):
-        title_placements.append(dict(shape=shape, x=x, y=y))
-        for yy, line in enumerate(poses[shape]):
-            for xx, value in enumerate(line):
-                if value:
-                    assert 0 <= x+xx < 108 and 0 <= y+yy < 72
-                    logo[y+yy][x+xx] = value
-    for y in range(0,72,8): logo_bird(36,0,y)
+        pixels=poses[shape]
+        occupied=[(xx,yy) for yy,line in enumerate(pixels) for xx,v in enumerate(line) if v]
+        x0=min(p[0] for p in occupied);y0=min(p[1] for p in occupied)
+        title_placements.append(dict(shape=shape,x=x,y=y,source_trim=[x0,y0]))
+        for xx,yy in occupied:
+            dx=x+xx-x0;dy=y+yy-y0
+            assert 0<=dx<92 and 0<=dy<72
+            assert logo[dy][dx]==0,('title birds overlap',shape,x,y)
+            logo[dy][dx]=pixels[yy][xx]
+    for y in range(0,72,8):logo_bird(36,0,y)
     for y in (0,16):
-        for x in (8,16): logo_bird(36,x,y)
+        for x in (8,16):logo_bird(36,x,y)
         logo_bird(72,24,y)
     logo_bird(36,24,8)
     for y in range(32,72,8):
-        for x in (12,20,28,36,44,60,72,80): logo_bird(72,x,y)
-    for x,y in ((16,48),(32,32),(32,64)): logo_bird(72,x,y)
-    for y in (32,48,64): logo_bird(36,48,y)
-    for x,y,shape in ((60,40,80),(64,48,80),(68,56,84)):
-        logo_bird(shape,x,y)
-    for x in (88,100):
-        for y in (32,64): logo_bird(72,x,y)
-    for x,y,shape in ((88,40,80),(96,40,82),(88,56,86),(96,56,84)):
-        logo_bird(shape,x,y)
-    logo_bird(36,92,48)
-    stamp(title, logo, 28, 40, [0,14,90,202], dict(kind='gameplay-bird-title', placements=title_placements))
+        for x in (10,18,24,32,38,52,64,70):logo_bird(72,x,y)
+    for x,y in ((14,48),(28,32),(28,64)):logo_bird(72,x,y)
+    for y in (32,48,64):logo_bird(36,42,y)
+    for x,y,shape in ((55,40,80),(57,48,80),(59,56,84)):logo_bird(shape,x,y)
+    for x in (76,88):
+        for y in (32,64):logo_bird(72,x,y)
+    for x,y,shape in ((76,40,80),(84,40,82),(76,56,86),(84,56,84)):logo_bird(shape,x,y)
+    logo_bird(36,80,48)
+    stamp(title,logo,34,40,[0,14,90,202],dict(kind='gameplay-bird-title',placements=title_placements))
     # Actual 32-by-16 gameplay frame: no height enlargement.
     stamp(title, large[40], 64, 134, LARGE, dict(kind='large', pose=40))
 
@@ -164,24 +168,18 @@ def prepare():
     centered(scores, 'SCORE AVERAGE TABLE', 88)
     text(scores, '20 40 80', 52, 104, 90)
     text(scores, '200', 52, 120, 90)
-    text(scores, '50 100 100-800', 52, 136, 90)
-    text(scores, '1000-9000', 52, 160, 90)
+    text(scores, '50 100 100-800', 52, 136, 14)
+    text(scores, '1000-9000', 52, 160, 102)
     stamp(scores, poses[36], 24, 104, SMALL, dict(kind='small', shape=36))
-    stamp(scores, poses[220], 20, 112, SMALL, dict(kind='small', shape=220))
-    stamp(scores, poses[204], 28, 112, SMALL, dict(kind='small', shape=204))
+    stamp(scores, poses[204], 24, 112, SMALL, dict(kind='small', shape=204))
     stamp(scores, large[40], 12, 134, LARGE, dict(kind='large', pose=40))
-    pilot = [[0]*8 for _ in range(16)]
-    for cx, codes in enumerate([[0x74, 0x7c], [0x75, 0x7d]]):
-        for cy, code in enumerate(codes):
-            for y, byte in enumerate(boss_glyphs[code*8:code*8+8]):
-                for x in range(4):
-                    pilot[cy*8+y][cx*4+x] = (byte >> (6-x*2)) & 3
-    stamp(scores, pilot, 24, 152, BOSS, dict(kind='pilot', tiles=[0x74, 0x7c, 0x75, 0x7d]))
+    pilot = supplied.pixels('small-pose-row-06',2).tolist()
+    stamp(scores, pilot, 24, 152, BOSS, dict(kind='pilot', source_group='small-pose-row-06', frame=2))
     title_palette = [[14,90,202,168] for _ in START_ROWS]
-    for i in (4,5,6): title_palette[i] = [172,44,134,168]
+    for i in (4,5,6): title_palette[i] = [170,236,86,168]
     score_palette = [BASE[:] for _ in START_ROWS]
-    score_palette[4] = [172, 44, 134, 90]
-    score_palette[5] = [26, 44, 90, 168]
+    score_palette[4] = [170, 236, 86, 14]
+    score_palette[5] = [170, 100, 102, 168]
     score_palette[6] = score_palette[5][:]
     info = pack_fonts([title, scores], [title_palette, score_palette])
     info.update(pages=['native-sprite PHOENIX title', 'native-sprite score table'],
