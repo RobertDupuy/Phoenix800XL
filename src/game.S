@@ -281,6 +281,9 @@ screen_init:
 
 game_reset:
  lda #0
+ sta xl_star_scroll
+ sta xl_star_valid
+ sta xl_star_valid+1
  sta pending_scores
  sta pending_score_fault
  ldx #15

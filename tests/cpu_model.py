@@ -8,7 +8,7 @@ class Memory:
   self.b=bytearray(65536);self.rom=(R/'build/Phoenix800XL.rom').read_bytes()
   self.b[0x4000:0x8000]=self.rom[0x4000:0x8000]
   platform=(R/'build/platform.bin').read_bytes();self.b[0xc000:0xc000+len(platform)]=platform
-  extra=(R/'build/xl-cache.bin').read_bytes();self.b[0xf000:0xf000+len(extra)]=extra
+  self.b[0xe300:0xff00]=(R/'build/xl-background.bin').read_bytes()
   self.bank=0;self.switches=0;self.fire=0;self.pot=114;self.nmist=64;self.console=7
  def __getitem__(self,a):
   if isinstance(a,slice):return bytes(self[i] for i in range(a.start or 0,a.stop,a.step or 1))

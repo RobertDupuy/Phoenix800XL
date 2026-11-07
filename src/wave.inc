@@ -13,6 +13,20 @@
 .set second_old_row,0x722
 .set entrance_initial_wait,0x763
 .set entrance_handoff,0x764
+# XL RAM under the disabled OS ROM; foreground-owned, not touched by the VBI.
+.set xl_star_scroll,0xe000
+.set xl_star_offset,0xe001
+.set xl_star_base,0xe002
+.set xl_star_end,0xe003
+.set xl_star_valid,0xe004
+.set xl_star_lo,0xe100
+.set xl_star_hi,0xe200
+.set xl_space_object,0xe006
+.set xl_space_cell,0xe007
+.set xl_space_row,0xe008
+.set xl_space_star,0xe009
+.set xl_bg_coarse,0xe00a
+.set xl_bg_now,0xe00c
 .section .expanded_code,"ax",@progbits
 .global begin_wave,entrance_tick,player_shots,swap_shots,draw_second_shot,clear_second_shot
 begin_wave:
@@ -20,6 +34,10 @@ begin_wave:
  beq begin_small_wave
  rts
 begin_small_wave:
+ lda #0
+ sta xl_star_scroll
+ sta xl_star_valid
+ sta xl_star_valid+1
  lda #1
  sta entrance_initial_wait
  lda #0
@@ -165,15 +183,37 @@ second_return:
  rts
 .global seed_stars,scroll_stars
 seed_stars:
- ldx back_buffer
- lda star_previous,x
- ora entrance_timer
- bne scroll_stars
- jmp seed_stars_static
 scroll_stars:
  lda entrance_timer
+ bne 1f
+ lda xl_star_scroll
+1:
+ sta xl_star_offset
+ lda #3
+ sec
+ sbc xl_star_offset
+ pha
+ and #7
+ sta star_phase
+ pla
+ lsr
+ lsr
+ lsr
+ sta xl_bg_now
+ ldx back_buffer
+ lda entrance_timer
  sta star_previous,x
- # Four page stores per iteration bound the map clear to 6,419 CPU cycles.
+ lda xl_star_valid,x
+ beq scroll_full_clear
+ lda xl_bg_coarse,x
+ cmp xl_bg_now
+ beq xl_bg_draw
+ jsr xl_bg_select
+ jsr xl_bg_erase
+ jmp xl_bg_draw
+scroll_full_clear:
+ lda #1
+ sta xl_star_valid,x
  ldy #0
  lda #0
  cpx #0
@@ -184,62 +224,32 @@ scroll_clear_zero:
  .endr
  iny
  bne scroll_clear_zero
- beq scroll_map_clear
+ beq xl_bg_draw
 scroll_clear_one:
  .irp page,0x2c00,0x2d00,0x2e00,0x2f00
  sta \page,y
  .endr
  iny
  bne scroll_clear_one
-scroll_map_clear:
+xl_bg_draw:
  lda #8
  sta dst_ptr
  lda font_hi
  sta dst_ptr+1
  ldy #7
  lda #0
-scroll_glyph_clear:
+1:
  sta (dst_ptr),y
  dey
- bpl scroll_glyph_clear
- lda #3
- sec
- sbc entrance_timer
- and #7
- sta star_phase
- tay
+ bpl 1b
+ ldy star_phase
  lda #12
  sta (dst_ptr),y
- lda entrance_timer
- bne 2f
- jmp seed_stars_static
-2:
- lda #0
- sta star_index
-scroll_next:
- ldx star_index
- lda scroll_star_y,x
- sec
- sbc entrance_timer
- bcc scroll_skip
- cmp #200
- bcs scroll_skip
- lsr
- lsr
- lsr
- sta draw_row
- lda scroll_star_x,x
- sta draw_col
- jsr row_pointer
- lda #129
- ldy #0
- sta (map_ptr),y
-scroll_skip:
- inc star_index
- lda star_index
- cmp #SCROLL_STARS
- bcc scroll_next
- rts
+ ldx back_buffer
+ lda xl_bg_now
+ sta xl_bg_coarse,x
+ jsr xl_bg_select
+ jmp xl_bg_paint
 .section .tables,"a",@progbits
 fade_shapes: .byte 244,243,242,241,240,240
 .include "build/scroll-stars.inc"

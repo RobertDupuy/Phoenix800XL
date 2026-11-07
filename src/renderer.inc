@@ -75,7 +75,7 @@ cache_owner_init:
  sta 0x3a00,x
  dex
  bpl cache_owner_init
- ldx #63
+ ldx #127
 static_metadata_init:
  lda #0
  sta 0x3100,x
@@ -153,10 +153,11 @@ cache_epoch_clear:
  bpl cache_epoch_clear
  inc cache_epoch
 cache_epoch_ready:
- lda #64
+ lda #82
  sta next_char
  sta cache_count
  jsr reserve_shield_glyphs
+ jsr xl_draw_scenery
  lda #1
  sta direct_scene
  lda #0

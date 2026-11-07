@@ -1,0 +1,38 @@
+{
+  "method": "Stock 64K NTSC XL: record both scrolling waves and check actual star pixels.\n\nWave placement and invulnerability are explicit fixtures; the cartridge runs\nall movement, rendering, input, interrupts and audio. The movie is silent.\n",
+  "car_sha256": "902bbd1b8110c43eac3cef7ddf032f11d159e899051f0e2ee63133ee7e22ddf0",
+  "stars_rgb": [
+    0,
+    35,
+    141
+  ],
+  "results": [
+    {
+      "wave": 1,
+      "scroll_phases": 252,
+      "samples": 24,
+      "compared_pixels": 1032192,
+      "star_pixels": 4260,
+      "pixel_errors": 0,
+      "video_frames": 600,
+      "render_fps": 29.961,
+      "late_vbi": 0,
+      "audio_underruns": 0,
+      "layout_faults": 0
+    },
+    {
+      "wave": 2,
+      "scroll_phases": 252,
+      "samples": 24,
+      "compared_pixels": 1032192,
+      "star_pixels": 4090,
+      "pixel_errors": 0,
+      "video_frames": 600,
+      "render_fps": 29.961,
+      "late_vbi": 0,
+      "audio_underruns": 0,
+      "layout_faults": 0
+    }
+  ],
+  "movie_frames": 600
+}

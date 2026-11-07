@@ -200,6 +200,14 @@ arcade_clock_ok:
  inc main_phase
  and #3
  sta atmp
+ # Arcade $2160/$2180/$21B1: scroll the background once on each odd
+ # logical tick, including the fast final birds and the wave-clear wait.
+ and #1
+ beq xl_scroll_done
+ lda large_mode
+ bne xl_scroll_done
+ dec xl_star_scroll
+xl_scroll_done:
  lda aliens_left
  bne aliens_still_active
  lda atmp

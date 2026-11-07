@@ -21,7 +21,9 @@
 .set large_temp,0x3851
 .set large_start,0xb6
 .set large_end,0xb7
-.set large_old_mode,0x3854
+# Wave transitions also run during small waves. Keep this byte outside their
+# persistent glyph-owner table (old $3854 was the owner of glyph 84).
+.set large_old_mode,0xe00d
 .set large_hit_x,0x3855
 .set large_hit_y,0x3856
 .set large_hit_count,0x3857

@@ -1,0 +1,9 @@
+{
+  "car_sha256": "8c381f50bde13889c32c35a80942358f30f7e7d0795d340349cf831f1f177ae0",
+  "cases": 64,
+  "pixel_errors": 0,
+  "layout_faults": 0,
+  "max_render_cpu_cycles": 25552,
+  "max_next_char": 106,
+  "method": "Crowded bird/shield scenes with the 18 reserved scenery glyphs."
+}

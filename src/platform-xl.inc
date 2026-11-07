@@ -127,3 +127,88 @@ xl_pilot_descend:
  stx pilot_old_frame
  .include "build/xl-pilot-descend.inc"
  rts
+
+# Eighteen dedicated small-wave glyphs avoid displacing cached bird artwork.
+# Copy four 36-byte groups from the selected pre-shifted RAM page. This code
+# resides in RAM; only foreground-owned operand high bytes are patched.
+xl_draw_scenery:
+ lda star_phase
+ clc
+ adc #0xe3
+ .irp n,0,1,2,3
+ sta xl_space_load\n+2
+ .endr
+ lda font_hi
+ clc
+ adc #2
+ .irp n,0,1,2,3
+ sta xl_space_store\n+2
+ .endr
+ ldy #35
+xl_space_copy:
+ .irp n,0,1,2,3
+xl_space_load\n:
+ lda 0xe300+36*\n,y
+xl_space_store\n:
+ sta 0x2200+36*\n,y
+ .endr
+ dey
+ bpl xl_space_copy
+ rts
+
+# Select one sparse placement list for the shared whole-cell scroll position.
+xl_bg_select:
+ tax
+ lda xl_bg_lo,x
+ sta xl_bg_erase_lo+1
+ sta xl_bg_paint_lo+1
+ clc
+ adc #80
+ sta xl_bg_erase_hi+1
+ sta xl_bg_paint_hi+1
+ lda xl_bg_hi,x
+ sta xl_bg_erase_lo+2
+ sta xl_bg_paint_lo+2
+ adc #0
+ sta xl_bg_erase_hi+2
+ sta xl_bg_paint_hi+2
+ rts
+xl_bg_erase:
+ ldy #0
+ ldx #0
+xl_bg_erase_next:
+xl_bg_erase_hi:
+ lda 0xeb50,x
+ bmi xl_bg_erase_skip
+ ora map_hi
+ sta map_ptr+1
+xl_bg_erase_lo:
+ lda 0xeb00,x
+ sta map_ptr
+ lda #0
+ sta (map_ptr),y
+xl_bg_erase_skip:
+ inx
+ cpx #80
+ bcc xl_bg_erase_next
+ rts
+xl_bg_paint:
+ ldy #0
+ ldx #0
+xl_bg_paint_next:
+xl_bg_paint_hi:
+ lda 0xeb50,x
+ bmi xl_bg_paint_skip
+ ora map_hi
+ sta map_ptr+1
+xl_bg_paint_lo:
+ lda 0xeb00,x
+ sta map_ptr
+ lda xl_bg_codes,x
+ sta (map_ptr),y
+xl_bg_paint_skip:
+ inx
+ cpx #80
+ bcc xl_bg_paint_next
+ rts
+.include "build/xl-background.inc"

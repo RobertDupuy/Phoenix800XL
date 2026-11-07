@@ -4,15 +4,24 @@ The separate mame_display test checks actual observed arcade VRAM/phase.
 from cpu_model import R
 import json,numpy as np
 M=json.loads((R/'build/sprite-manifest.json').read_text());P={p['shape']:p for p in M['poses']};SH=json.loads((R/'build/shield-manifest.json').read_text())
-def background(timer=0):
+SPACE=json.loads((R/'build/scenery-manifest.json').read_text())['objects']
+def background(timer=0,scroll=0):
  a=np.zeros((200,160),dtype=np.uint8)
- for row,col in json.loads((R/'src/arcade-assets/stars-irregular.json').read_text())['cells']:
+ cells=json.loads((R/'src/arcade-assets/stars-irregular.json').read_text())['cells']
+ for row,col in cells+[[12,20],[20,12]]:
   y=row*8+3
-  for yy in ([y,y+192] if y<63 and timer else [y]):
-   if 0<=yy-timer<200:a[yy-timer,col*4+2]=4
+  for yy in ([y,y+192] if y<63 else [y]):
+   yy=(yy-(timer if timer else scroll))&255
+   if 0<=yy<200:a[yy,col*4+2]=4
+ for obj in SPACE:
+  for y,row in enumerate(obj['pixels']):
+   yy=(obj['y']+y-(timer if timer else scroll))&255
+   if yy>=200:continue
+   for x,p in enumerate(row):
+    if p:a[yy,obj['col']*4+x]=4
  return a
 def scene(m,base=None):
- bg=background(m[0x71a]);a=bg.copy() if base is None else base.copy()
+ bg=background(m[0x71a],m[0xe000]);a=bg.copy() if base is None else base.copy()
  def put(cx,cy,tile,flag=0):
   if not(7<=cx<33 and 0<=cy<25):return
   for y,v in enumerate(tile):

@@ -1,0 +1,8 @@
+{
+  "description": "Monochrome mappings of the original Phoenix set-B background tiles in arcade-bg-colors.json. Native 8x16 logical pixels display at 16x16. No resizing or added palette colors.",
+  "left_comet": {
+    "arcade_shape": 2,
+    "blue_pens": [1, 2, 3],
+    "description": "Preserve the original comet silhouette, compact head and broken diagonal tail; all nonzero pens become dark blue."
+  }
+}

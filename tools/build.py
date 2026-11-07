@@ -104,6 +104,9 @@ for section,offset,capacity in [('boot',0,256),('loader',256,256),('cart_tail',0
  boot[offset:offset+len(data)]=data
 (B/'boot-xl.bin').write_bytes(boot)
 xlbanks=[bytearray([255])*16384 for _ in range(16)]
+background=(B/'xl-background.bin').read_bytes()
+assert len(background)==7168
+xlbanks[0][:len(background)]=background
 xlbanks[0][0x2000:0x2000+len(platform)]=platform
 xlbanks[0][0x3000:]=boot
 xlbanks[1][:]=base[:0x4000]

@@ -27,6 +27,25 @@ xl_platform_copy:
  .endr
  inx
  bne xl_platform_copy
+ # One-time copy of background phases and placement tables under the OS ROM.
+ lda #0
+ sta 0x70
+ sta 0x72
+ lda #0x80
+ sta 0x71
+ lda #0xe3
+ sta 0x73
+ ldy #0
+xl_background_copy:
+ lda (0x70),y
+ sta (0x72),y
+ iny
+ bne xl_background_copy
+ inc 0x71
+ inc 0x73
+ lda 0x73
+ cmp #0xff
+ bne xl_background_copy
  ldx #0
 xl_loader_copy:
  lda xl_loader_image,x

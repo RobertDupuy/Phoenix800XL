@@ -70,5 +70,5 @@ tests/victory_audio.py and tests/victory_live.py. Oracle tests take
 `--baseline reference/xl-megacart-baseline`. That directory contains the
 previous game ROM, its symbols and CPU model for repeatable comparisons.
 Raw baseline timing is retained in evidence/xl/baseline-integration.json.
-No physical Atari or PAL validation is claimed. GitHub publication remains
-on hold pending Robert's playtest.
+No physical Atari or PAL validation is claimed. For the later scrolling
+background change, see SCROLLING.md.

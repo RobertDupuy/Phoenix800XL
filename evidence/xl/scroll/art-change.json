@@ -1,0 +1,11 @@
+{
+  "car_sha256": "902bbd1b8110c43eac3cef7ddf032f11d159e899051f0e2ee63133ee7e22ddf0",
+  "baseline_sha256": "6699e67ad0f0d326c0d65bad6552847e80f225eb69b1c389a6fbc5f91ec5f9b5",
+  "changed_bytes": 259,
+  "runtime_code_identical": true,
+  "placement_tables_identical": true,
+  "left_object_identical": true,
+  "right_object_identical": true,
+  "middle_planet_removed": true,
+  "only_middle_slot_and_checksum_changed": true
+}

@@ -3,7 +3,7 @@
 An NTSC Atari 800XL port of the current Phoenix5200 release-candidate build.
 Runs with stock 64 KB RAM and standard ANTIC, GTIA and POKEY hardware.
 
-**Atari 800XL MegaCart release candidate.**
+**800XL continuous-background and space-artwork playtest build.**
 
 Load **Phoenix800XL.car** as a **256 KB MegaCart cartridge (CAR type 30)**.
 The CAR header selects the mapper automatically in compatible emulators.
@@ -27,7 +27,16 @@ for Phoenix5200. The repeating bonus beep is suppressed during Für Elise;
 the extra life and other effects are retained. POKEY note data and synthesis
 are unchanged.
 
-The automated joystick player completed the first cycle and reached wave 6.
+Waves 1 and 2 now have continuously scrolling dark-blue stars, a comet with
+a tail on the left and the approved arcade object on the right, including
+later cycles. The middle planet has been removed, leaving the stars visible.
+Both remaining objects are derived from the original arcade tiles.
+The entrance and wrap are filled too; all scenery uses the existing blue. Both retain 29.961 rendered frames/s with all 16 birds
+in the stock-64-KB NTSC test. See [SCROLLING.md](SCROLLING.md).
+
+The preceding scrolling build completed a full cycle with the automated
+joystick player. Current-build checks cover both scrolling waves and the new
+scenery; earlier five-wave checks retain their original cartridge hashes.
 See [TESTING.md](TESTING.md) for the exact emulator configuration, validation
 results and limitations. PAL timing and physical hardware have not been tested.
 The measured improvements to large-bird and mothership rendering are documented in [PERFORMANCE.md](PERFORMANCE.md).
@@ -54,8 +63,8 @@ Bank 1 contains resident code copied into `$4000–$7FFF`. Banks 2–9 contain t
 eight original upper windows; the remaining banks are padding.
 
 Startup disables the OS/BASIC ROMs, installs RAM interrupt vectors, and copies
-XL support and an expanded bird-drawing routine into `$C000–$CFFF`
-(3,072 bytes currently occupied). The NMI dispatcher preserves the original
+XL support into `$C000–$CFFF` and 7 KiB of precomputed background phases
+and placements into `$E300–$FEFF`. The NMI dispatcher preserves the original
 display-interrupt latency. GTIA and POKEY accesses use the XL register bases;
 PIA joystick input replaces the 5200 analog controller reads.
 

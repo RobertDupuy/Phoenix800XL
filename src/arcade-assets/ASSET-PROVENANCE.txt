@@ -61,3 +61,18 @@ component values and filter gain from the original R19/R20/C5 network. These
 are POKEY approximations, not an analog hardware emulation in the cartridge.
 The current source snapshots used for comparison are in reference/audio-study;
 the existing MAME BSD notices remain applicable. All runtime game code is 6502.
+
+800XL continuous-background addition:
+prepare_formation.py uses set-B objects 0, 4 and 5 from the existing
+arcade-bg-colors.json as ringed-planet, comet and atom-like scenery. Their
+nonzero pixels become a single existing dark-blue pen; no new colors or
+rescaling of gameplay sprites are introduced. The original-art notices apply.
+
+800XL background artwork refinement:
+The left comet derives directly from original set-B object 2 in
+arcade-bg-colors.json. xl-space-objects.json defines its monochrome mapping:
+all nonzero comet pixels become dark blue. Native dimensions are unchanged.
+The middle planet has been removed, leaving only the underlying stars.
+The approved right-hand set-B object 4 remains unchanged. The original-art
+notices apply. Gameplay artwork and T1X credit are unchanged; no new palette
+colors are used.
