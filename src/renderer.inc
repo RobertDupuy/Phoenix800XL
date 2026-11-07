@@ -673,11 +673,11 @@ playfield_dli:
  lda #0x3d
  sta 0xd400
  lda playfield_c0
- sta 0xc016
+ sta 0xd016
  lda playfield_c1
- sta 0xc017
+ sta 0xd017
  lda gameplay_color
- sta 0xc018
+ sta 0xd018
  lda large_shown
  bne 2f
  lda #<shield_palette_dli

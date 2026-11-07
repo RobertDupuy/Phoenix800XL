@@ -1,0 +1,1571 @@
+{
+  "method": "Joystick-only play: RAM observations guide the player; no game memory writes.",
+  "car_sha256": "942711eff8535cb97c96f1f4eaab9488c42356c5aa12de4fea8080d9c1b70a6e",
+  "frames": 36000,
+  "max_wave": 5,
+  "completed_first_cycle": false,
+  "events": [
+    {
+      "frame": 0,
+      "wave": 1,
+      "state": 4,
+      "lives": 3,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 128,
+      "wave": 1,
+      "state": 1,
+      "lives": 3,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 984,
+      "wave": 1,
+      "state": 3,
+      "lives": 3,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        1,
+        4,
+        0
+      ]
+    },
+    {
+      "frame": 1080,
+      "wave": 1,
+      "state": 4,
+      "lives": 2,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        1,
+        8,
+        0
+      ]
+    },
+    {
+      "frame": 1208,
+      "wave": 1,
+      "state": 1,
+      "lives": 2,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        1,
+        8,
+        0
+      ]
+    },
+    {
+      "frame": 1640,
+      "wave": 1,
+      "state": 3,
+      "lives": 2,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        3,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 1736,
+      "wave": 1,
+      "state": 4,
+      "lives": 1,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        3,
+        4,
+        0
+      ]
+    },
+    {
+      "frame": 1864,
+      "wave": 1,
+      "state": 1,
+      "lives": 1,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        3,
+        4,
+        0
+      ]
+    },
+    {
+      "frame": 2064,
+      "wave": 2,
+      "state": 1,
+      "lives": 1,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        3,
+        8,
+        0
+      ]
+    },
+    {
+      "frame": 3240,
+      "wave": 3,
+      "state": 1,
+      "lives": 1,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        7,
+        8,
+        0
+      ]
+    },
+    {
+      "frame": 4784,
+      "wave": 4,
+      "state": 1,
+      "lives": 1,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        1,
+        4,
+        1,
+        0
+      ]
+    },
+    {
+      "frame": 6104,
+      "wave": 5,
+      "state": 1,
+      "lives": 1,
+      "boss": 1,
+      "score": [
+        0,
+        0,
+        2,
+        0,
+        7,
+        0
+      ]
+    },
+    {
+      "frame": 6216,
+      "wave": 5,
+      "state": 1,
+      "lives": 1,
+      "boss": 2,
+      "score": [
+        0,
+        0,
+        2,
+        0,
+        7,
+        0
+      ]
+    },
+    {
+      "frame": 8312,
+      "wave": 5,
+      "state": 3,
+      "lives": 1,
+      "boss": 2,
+      "score": [
+        0,
+        0,
+        2,
+        1,
+        5,
+        0
+      ]
+    },
+    {
+      "frame": 8408,
+      "wave": 5,
+      "state": 2,
+      "lives": 0,
+      "boss": 2,
+      "score": [
+        0,
+        0,
+        2,
+        1,
+        5,
+        0
+      ]
+    },
+    {
+      "frame": 8608,
+      "wave": 1,
+      "state": 4,
+      "lives": 3,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 8728,
+      "wave": 1,
+      "state": 1,
+      "lives": 3,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 9456,
+      "wave": 1,
+      "state": 3,
+      "lives": 3,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        1,
+        8,
+        0
+      ]
+    },
+    {
+      "frame": 9552,
+      "wave": 1,
+      "state": 4,
+      "lives": 2,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        2,
+        4,
+        0
+      ]
+    },
+    {
+      "frame": 9680,
+      "wave": 1,
+      "state": 1,
+      "lives": 2,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        2,
+        4,
+        0
+      ]
+    },
+    {
+      "frame": 10112,
+      "wave": 1,
+      "state": 3,
+      "lives": 2,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        2,
+        8,
+        0
+      ]
+    },
+    {
+      "frame": 10208,
+      "wave": 1,
+      "state": 4,
+      "lives": 1,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        3,
+        2,
+        0
+      ]
+    },
+    {
+      "frame": 10336,
+      "wave": 1,
+      "state": 1,
+      "lives": 1,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        3,
+        2,
+        0
+      ]
+    },
+    {
+      "frame": 10584,
+      "wave": 1,
+      "state": 3,
+      "lives": 1,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        3,
+        8,
+        0
+      ]
+    },
+    {
+      "frame": 10680,
+      "wave": 1,
+      "state": 2,
+      "lives": 0,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        4,
+        2,
+        0
+      ]
+    },
+    {
+      "frame": 10864,
+      "wave": 1,
+      "state": 4,
+      "lives": 3,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 10984,
+      "wave": 1,
+      "state": 1,
+      "lives": 3,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 12104,
+      "wave": 1,
+      "state": 3,
+      "lives": 3,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        2,
+        2,
+        0
+      ]
+    },
+    {
+      "frame": 12200,
+      "wave": 1,
+      "state": 4,
+      "lives": 2,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        2,
+        2,
+        0
+      ]
+    },
+    {
+      "frame": 12328,
+      "wave": 1,
+      "state": 1,
+      "lives": 2,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        2,
+        2,
+        0
+      ]
+    },
+    {
+      "frame": 12936,
+      "wave": 1,
+      "state": 3,
+      "lives": 2,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        3,
+        2,
+        0
+      ]
+    },
+    {
+      "frame": 13024,
+      "wave": 1,
+      "state": 4,
+      "lives": 1,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        3,
+        6,
+        0
+      ]
+    },
+    {
+      "frame": 13152,
+      "wave": 1,
+      "state": 1,
+      "lives": 1,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        3,
+        6,
+        0
+      ]
+    },
+    {
+      "frame": 13304,
+      "wave": 2,
+      "state": 1,
+      "lives": 1,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        4,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 13976,
+      "wave": 2,
+      "state": 3,
+      "lives": 1,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        5,
+        8,
+        0
+      ]
+    },
+    {
+      "frame": 14072,
+      "wave": 2,
+      "state": 2,
+      "lives": 0,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        6,
+        2,
+        0
+      ]
+    },
+    {
+      "frame": 14256,
+      "wave": 1,
+      "state": 4,
+      "lives": 3,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 14376,
+      "wave": 1,
+      "state": 1,
+      "lives": 3,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 15496,
+      "wave": 1,
+      "state": 3,
+      "lives": 3,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        2,
+        2,
+        0
+      ]
+    },
+    {
+      "frame": 15592,
+      "wave": 1,
+      "state": 4,
+      "lives": 2,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        2,
+        2,
+        0
+      ]
+    },
+    {
+      "frame": 15720,
+      "wave": 1,
+      "state": 1,
+      "lives": 2,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        2,
+        2,
+        0
+      ]
+    },
+    {
+      "frame": 16328,
+      "wave": 1,
+      "state": 3,
+      "lives": 2,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        3,
+        2,
+        0
+      ]
+    },
+    {
+      "frame": 16416,
+      "wave": 1,
+      "state": 4,
+      "lives": 1,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        3,
+        6,
+        0
+      ]
+    },
+    {
+      "frame": 16544,
+      "wave": 1,
+      "state": 1,
+      "lives": 1,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        3,
+        6,
+        0
+      ]
+    },
+    {
+      "frame": 16696,
+      "wave": 2,
+      "state": 1,
+      "lives": 1,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        4,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 17520,
+      "wave": 2,
+      "state": 3,
+      "lives": 1,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        6,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 17616,
+      "wave": 2,
+      "state": 2,
+      "lives": 0,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        6,
+        4,
+        0
+      ]
+    },
+    {
+      "frame": 17808,
+      "wave": 1,
+      "state": 4,
+      "lives": 3,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 17928,
+      "wave": 1,
+      "state": 1,
+      "lives": 3,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 18608,
+      "wave": 1,
+      "state": 3,
+      "lives": 3,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        1,
+        2,
+        0
+      ]
+    },
+    {
+      "frame": 18704,
+      "wave": 1,
+      "state": 4,
+      "lives": 2,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        1,
+        6,
+        0
+      ]
+    },
+    {
+      "frame": 18832,
+      "wave": 1,
+      "state": 1,
+      "lives": 2,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        1,
+        6,
+        0
+      ]
+    },
+    {
+      "frame": 19216,
+      "wave": 1,
+      "state": 3,
+      "lives": 2,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        2,
+        4,
+        0
+      ]
+    },
+    {
+      "frame": 19312,
+      "wave": 1,
+      "state": 4,
+      "lives": 1,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        2,
+        8,
+        0
+      ]
+    },
+    {
+      "frame": 19440,
+      "wave": 1,
+      "state": 1,
+      "lives": 1,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        2,
+        8,
+        0
+      ]
+    },
+    {
+      "frame": 19920,
+      "wave": 1,
+      "state": 3,
+      "lives": 1,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        3,
+        6,
+        0
+      ]
+    },
+    {
+      "frame": 20016,
+      "wave": 1,
+      "state": 2,
+      "lives": 0,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        4,
+        4,
+        0
+      ]
+    },
+    {
+      "frame": 20208,
+      "wave": 1,
+      "state": 4,
+      "lives": 3,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 20328,
+      "wave": 1,
+      "state": 1,
+      "lives": 3,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 21008,
+      "wave": 1,
+      "state": 3,
+      "lives": 3,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        1,
+        6,
+        0
+      ]
+    },
+    {
+      "frame": 21104,
+      "wave": 1,
+      "state": 4,
+      "lives": 2,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        2,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 21232,
+      "wave": 1,
+      "state": 1,
+      "lives": 2,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        2,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 21848,
+      "wave": 1,
+      "state": 3,
+      "lives": 2,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        3,
+        4,
+        0
+      ]
+    },
+    {
+      "frame": 21944,
+      "wave": 1,
+      "state": 4,
+      "lives": 1,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        3,
+        8,
+        0
+      ]
+    },
+    {
+      "frame": 22072,
+      "wave": 1,
+      "state": 1,
+      "lives": 1,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        3,
+        8,
+        0
+      ]
+    },
+    {
+      "frame": 22312,
+      "wave": 2,
+      "state": 1,
+      "lives": 1,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        4,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 24104,
+      "wave": 3,
+      "state": 1,
+      "lives": 1,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        9,
+        4,
+        0
+      ]
+    },
+    {
+      "frame": 24488,
+      "wave": 3,
+      "state": 3,
+      "lives": 1,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        1,
+        2,
+        9,
+        0
+      ]
+    },
+    {
+      "frame": 24576,
+      "wave": 3,
+      "state": 2,
+      "lives": 0,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        1,
+        2,
+        9,
+        0
+      ]
+    },
+    {
+      "frame": 24768,
+      "wave": 1,
+      "state": 4,
+      "lives": 3,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 24896,
+      "wave": 1,
+      "state": 1,
+      "lives": 3,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 25544,
+      "wave": 1,
+      "state": 3,
+      "lives": 3,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        0,
+        8,
+        0
+      ]
+    },
+    {
+      "frame": 25632,
+      "wave": 1,
+      "state": 4,
+      "lives": 2,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        1,
+        2,
+        0
+      ]
+    },
+    {
+      "frame": 25760,
+      "wave": 1,
+      "state": 1,
+      "lives": 2,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        1,
+        2,
+        0
+      ]
+    },
+    {
+      "frame": 26096,
+      "wave": 1,
+      "state": 3,
+      "lives": 2,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        2,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 26192,
+      "wave": 1,
+      "state": 4,
+      "lives": 1,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        2,
+        2,
+        0
+      ]
+    },
+    {
+      "frame": 26320,
+      "wave": 1,
+      "state": 1,
+      "lives": 1,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        2,
+        2,
+        0
+      ]
+    },
+    {
+      "frame": 26832,
+      "wave": 1,
+      "state": 3,
+      "lives": 1,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        3,
+        2,
+        0
+      ]
+    },
+    {
+      "frame": 26920,
+      "wave": 1,
+      "state": 2,
+      "lives": 0,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        3,
+        6,
+        0
+      ]
+    },
+    {
+      "frame": 27120,
+      "wave": 1,
+      "state": 4,
+      "lives": 3,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 27240,
+      "wave": 1,
+      "state": 1,
+      "lives": 3,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 27960,
+      "wave": 1,
+      "state": 3,
+      "lives": 3,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        1,
+        4,
+        0
+      ]
+    },
+    {
+      "frame": 28056,
+      "wave": 1,
+      "state": 4,
+      "lives": 2,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        2,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 28184,
+      "wave": 1,
+      "state": 1,
+      "lives": 2,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        2,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 28592,
+      "wave": 1,
+      "state": 3,
+      "lives": 2,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        3,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 28688,
+      "wave": 1,
+      "state": 4,
+      "lives": 1,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        3,
+        4,
+        0
+      ]
+    },
+    {
+      "frame": 28816,
+      "wave": 1,
+      "state": 1,
+      "lives": 1,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        3,
+        4,
+        0
+      ]
+    },
+    {
+      "frame": 29032,
+      "wave": 1,
+      "state": 3,
+      "lives": 1,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        3,
+        8,
+        0
+      ]
+    },
+    {
+      "frame": 29128,
+      "wave": 1,
+      "state": 2,
+      "lives": 0,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        3,
+        8,
+        0
+      ]
+    },
+    {
+      "frame": 29328,
+      "wave": 1,
+      "state": 4,
+      "lives": 3,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 29448,
+      "wave": 1,
+      "state": 1,
+      "lives": 3,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 30168,
+      "wave": 1,
+      "state": 3,
+      "lives": 3,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        1,
+        4,
+        0
+      ]
+    },
+    {
+      "frame": 30264,
+      "wave": 1,
+      "state": 4,
+      "lives": 2,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        2,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 30392,
+      "wave": 1,
+      "state": 1,
+      "lives": 2,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        2,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 30800,
+      "wave": 1,
+      "state": 3,
+      "lives": 2,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        3,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 30896,
+      "wave": 1,
+      "state": 4,
+      "lives": 1,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        3,
+        4,
+        0
+      ]
+    },
+    {
+      "frame": 31024,
+      "wave": 1,
+      "state": 1,
+      "lives": 1,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        3,
+        4,
+        0
+      ]
+    },
+    {
+      "frame": 31280,
+      "wave": 2,
+      "state": 1,
+      "lives": 1,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        4,
+        2,
+        0
+      ]
+    },
+    {
+      "frame": 32768,
+      "wave": 3,
+      "state": 1,
+      "lives": 1,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        9,
+        8,
+        0
+      ]
+    },
+    {
+      "frame": 33312,
+      "wave": 3,
+      "state": 3,
+      "lives": 1,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        1,
+        6,
+        3,
+        0
+      ]
+    },
+    {
+      "frame": 33408,
+      "wave": 3,
+      "state": 2,
+      "lives": 0,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        1,
+        6,
+        3,
+        0
+      ]
+    },
+    {
+      "frame": 33600,
+      "wave": 1,
+      "state": 4,
+      "lives": 3,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 33728,
+      "wave": 1,
+      "state": 1,
+      "lives": 3,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 35632,
+      "wave": 2,
+      "state": 1,
+      "lives": 3,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        3,
+        6,
+        0
+      ]
+    }
+  ],
+  "late_vbi": 0,
+  "layout_faults": 0
+}

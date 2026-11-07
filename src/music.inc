@@ -21,6 +21,7 @@
 .set audio_shield_count,0x3e48
 .set audio_impact_count,0x3e49
 .set audio_bonus_count,0x3e4a
+.set audio_victory_count,0x3e4b
 .section .expanded_code,"ax",@progbits
 .global music_update,music_compute,audio_prepare,music_tick,audio_controls,audio_select_tune
 music_compute:
@@ -184,6 +185,13 @@ audio_events:
  lda audio_bonus_count
  beq 7f
  dec audio_bonus_count
+ # The bonus life is still awarded. Consume its timer silently during the
+ # victory melody, so its repeating beep cannot play now or be queued later.
+ ldx audio_victory_count
+ bne 7f
+ ldx tune
+ cpx #2
+ beq 7f
  and #8
  ora #7
  sta g_sound_b
@@ -272,6 +280,16 @@ audio_shot:
  ora #64
  sta g_sound_a
 audio_controls_done:
+ # Arcade $255B/$3923 reasserts tune 2 while the score-display counter runs.
+ # Extra-life beeps must not erase the melody by overwriting sound latch B.
+ lda audio_victory_count
+ beq 7f
+ dec audio_victory_count
+ lda g_sound_b
+ and #63
+ ora #128
+ sta g_sound_b
+7:
  lda boss_status
  cmp #3
  bcs 1f
@@ -313,16 +331,16 @@ audio_publish:
  tax
  .irp r,0,1,2,3,4,5,6,7
  lda 0x3e80+\r,x
- sta 0xe800+\r
+ sta 0xd200+\r
  .if (\r & 1)
  sta audio_last_controls+(\r / 2)
  .endif
  .endr
  ldy audio_tail
  lda 0x3ec0,y
- sta 0xe808
+ sta 0xd208
  lda #2
- sta 0xe80f
+ sta 0xd20f
  inc audio_tail
  lda audio_tail
  and #7
@@ -343,7 +361,7 @@ audio_underrun:
  beq 2f
  dec audio_last_controls+\v
 2: lda audio_last_controls+\v
- sta 0xe801+\v*2
+ sta 0xd201+\v*2
  .endr
  rts
 .section .expanded_code,"ax",@progbits

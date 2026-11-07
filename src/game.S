@@ -1,4 +1,5 @@
-# Phoenix v0.31 — seven large birds and five mothership escorts.
+# Phoenix800XL v1.0 — based on Phoenix5200 v0.31.
+# Seven large birds and five mothership escorts; standard 64 KiB XL/XE.
 # All code executed by the console is NMOS 6502 assembly.
 # Foreground builds buffered graphics independently of the arcade-rate clock.
 # VBI samples input and publishes audio each video frame, committing ready graphics
@@ -74,15 +75,15 @@
 .global irq_stub
 
 entry:
- lda 0xbfc0
- lda 0xbfd0
+ lda #2
+ sta 0xd500
  sei
  cld
  ldx #255
  txs
  lda #0
  sta 0xd40e
- sta 0xe80e
+ sta 0xd20e
  sta 0xd400
  ldx #0
 clear_ram:
@@ -94,6 +95,7 @@ clear_ram:
  beq clear_finished
  jmp clear_ram
 clear_finished:
+ jsr xl_install_interrupts
  ldx #15
  lda #127
 init_footprints:
@@ -119,7 +121,8 @@ init_footprints:
 idle:
  lda start_requested
  beq idle_game
- lda 0xbfd0
+ lda #2
+ sta 0xd500
  jsr prepare_gameplay
 idle_game:
  lda work_due
@@ -198,7 +201,7 @@ hardware_init:
  ldx #31
  lda #0
 clear_gtia:
- sta 0xc000,x
+ sta 0xd000,x
  dex
  bpl clear_gtia
  lda #<nmi_handler
@@ -226,34 +229,34 @@ clear_gtia:
  lda #0x10
  sta 0xd407
  lda #3
- sta 0xc01d
- sta 0xe80f
- lda #4
- sta 0xc01f                    // enable analog controller pots
+ sta 0xd01d
+ sta 0xd20f
+ lda #8
+ sta 0xd01f                    // silence the console speaker
  lda #0
- sta 0xe808
- sta 0xe80e
- sta 0xe801
- sta 0xe803
- sta 0xe805
- sta 0xe807
+ sta 0xd208
+ sta 0xd20e
+ sta 0xd201
+ sta 0xd203
+ sta 0xd205
+ sta 0xd207
  sta 0xd404
  sta 0xd405
  lda #0x01                      // M0/M2/M3 use their white player colors
- sta 0xc01b
+ sta 0xd01b
  lda #0x0e
- sta 0xc012
- sta 0xc017
- sta 0xc019
+ sta 0xd012
+ sta 0xd017
+ sta 0xd019
  lda #0x2c
- sta 0xc013
+ sta 0xd013
  lda #0x2c
- sta 0xc014
+ sta 0xd014
  lda #0x2c
- sta 0xc015
+ sta 0xd015
  lda #0
- sta 0xc018
- sta 0xc01a
+ sta 0xd018
+ sta 0xd01a
  ldx #15
 init_ship:
  lda ship_white,x
@@ -344,25 +347,6 @@ reset_bombs:
  bpl reset_bombs
  rts
 
-input_sample:
- lda fire_now
- sta fire_prev
- lda 0xc010
- eor #1
- and #1
- sta fire_now
- beq no_fire_edge
- lda fire_prev
- bne no_fire_edge
- lda #1
- sta fire_edge
-no_fire_edge:
- jsr shield_input
- lda 0xe800
- sta stick_x
- lda #0
- sta 0xe80b // sample pots for NEXT frame
- rts
 
 nmi_handler:
  pha
@@ -402,11 +386,11 @@ frame_count_done:
  adc #8
  sta 0xd409
  lda #0xa8
- sta 0xc016
+ sta 0xd016
  lda #0x46
- sta 0xc017
+ sta 0xd017
  lda #0x5a
- sta 0xc018
+ sta 0xd018
  lda video_phase
  eor #1
  sta video_phase
@@ -446,7 +430,7 @@ publish_frame:
  lda entrance_timer
  sta entrance_shown
  lda #0x46
- sta 0xc019
+ sta 0xd019
  ldx back_buffer
  lda large_buffer,x
  sta large_shown
@@ -499,7 +483,7 @@ publish_font_ready:
  lda #0
  sta restart_blank
  lda #3
- sta 0xc01d
+ sta 0xd01d
  lda #0x3e
  sta 0xd400
  lda #0xc0
@@ -544,9 +528,9 @@ nmi_commit:
  cmp #3
  bne 1f
  lda #0
- sta 0xc000
- sta 0xc001
- sta 0xc002
+ sta 0xd000
+ sta 0xd001
+ sta 0xd002
 1:
  inc commits
  bne commit_count_done
@@ -746,10 +730,10 @@ render_players:
  jmp render_enemies
 normal_ship_players:
  lda #44
- sta 0xc014
+ sta 0xd014
  jsr animate_ship
  lda #0x46
- sta 0xc013
+ sta 0xd013
  lda entrance_timer
  ora entrance_handoff
  bne ship_hide
@@ -761,16 +745,16 @@ normal_ship_players:
  bne ship_hide
  lda ship_x
  sta ship_hpos
- sta 0xc000
- sta 0xc001
- sta 0xc002
+ sta 0xd000
+ sta 0xd001
+ sta 0xd002
  jmp render_enemies
 ship_hide:
  lda #0
  sta ship_hpos
- sta 0xc000
- sta 0xc001
- sta 0xc002
+ sta 0xd000
+ sta 0xd001
+ sta 0xd002
 render_enemies:
  jsr render_extra_bombs
  rts
@@ -803,8 +787,8 @@ render_enemies:
 .global render_extra_bombs
 render_extra_bombs:
  lda #0x0e
- sta 0xc015
- extra_bomb 4,0x1700,0xc003
+ sta 0xd015
+ extra_bomb 4,0x1700,0xd003
  rts
 
 .macro draw_missile active,xpos,ypos,oldy,oldon,mask,clear,hpos
@@ -855,13 +839,13 @@ render_missiles:
  lda #0
  sta 0x6fc
 1:
- draw_missile 0x6fc,shot_x,shot_y,shot_old_y,shot_old_on,0x02,0xfc,0xc004
+ draw_missile 0x6fc,shot_x,shot_y,shot_old_y,shot_old_on,0x02,0xfc,0xd004
  # M1 shares the red ship layer's color. Its bomb is drawn in the character
  # buffer, freeing COLPF3 for the arcade's red explosion pixels.
  lda #0
- sta 0xc005
- draw_missile bomb_on+1,bomb_x+1,bomb_y+1,bomb_old_y+1,bomb_old_on+1,0x20,0xcf,0xc006
- draw_missile bomb_on+2,bomb_x+2,bomb_y+2,bomb_old_y+2,bomb_old_on+2,0x80,0x3f,0xc007
+ sta 0xd005
+ draw_missile bomb_on+1,bomb_x+1,bomb_y+1,bomb_old_y+1,bomb_old_on+1,0x20,0xcf,0xd006
+ draw_missile bomb_on+2,bomb_x+2,bomb_y+2,bomb_old_y+2,bomb_old_on+2,0x80,0x3f,0xd007
  rts
 
 .section .rodata,"a",@progbits
@@ -895,9 +879,10 @@ intro_list intro_scores_dl,intro_maps+1024
 startup_init:
  lda #0
  sta 0xd40e
- sta 0xc01d
+ sta 0xd01d
  sta intro_page
- lda 0xbfdc
+ lda #5
+ sta 0xd500
  jsr expand_startup_fonts
  lda #<startup_nmi
  sta 0x202
@@ -908,13 +893,13 @@ startup_init:
  lda #>startup_dli
  sta 0x207
  lda #0xa8
- sta 0xc016
+ sta 0xd016
  lda #0x5a
- sta 0xc017
+ sta 0xd017
  lda #0x2c
- sta 0xc018
+ sta 0xd018
  lda #0x0e
- sta 0xc019
+ sta 0xd019
  jsr startup_select
  lda #0x22                      // wide playfield, no player/missile DMA
  sta 0xd400
@@ -1009,13 +994,13 @@ startup_dli:
 startup_colors:
  # Palette changes have blank guard scanlines on both sides of the boundary.
  lda intro_maps+960,x
- sta 0xc016
+ sta 0xd016
  lda intro_maps+974,x
- sta 0xc017
+ sta 0xd017
  lda intro_maps+988,x
- sta 0xc018
+ sta 0xd018
  lda intro_maps+1002,x
- sta 0xc019
+ sta 0xd019
  rts
 
 enter_gameplay:
@@ -1045,13 +1030,13 @@ intro_start_counted:
  lda #0x20
  sta gameplay_font
  lda #0x0e
- sta 0xc012
- sta 0xc016
- sta 0xc017
- sta 0xc018
- sta 0xc019
+ sta 0xd012
+ sta 0xd016
+ sta 0xd017
+ sta 0xd018
+ sta 0xd019
  lda #0x46
- sta 0xc013
+ sta 0xd013
  lda front_buffer
  asl
  asl
@@ -1065,7 +1050,7 @@ intro_start_counted:
  jsr render_players
  jsr render_hud
  lda #3
- sta 0xc01d
+ sta 0xd01d
  lda #0x3e
  sta 0xd400
  rts
@@ -1136,3 +1121,7 @@ hud_map:
 .include "src/campaign-bridge.inc"
 
 .include "src/pilot.inc"
+
+.include "src/platform-xl.inc"
+
+.include "src/xl-large-row.inc"

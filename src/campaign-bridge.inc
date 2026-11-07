@@ -2,10 +2,12 @@
 .section .text,"ax",@progbits
 .macro campaign_gate name,offset
 \name:
- lda 0xbfd4
+ lda #3
+ sta 0xd500
  jsr 0x8000+\offset
  pha
- lda 0xbfd0
+ lda #2
+ sta 0xd500
  pla
  rts
 .endm
@@ -20,17 +22,17 @@ campaign_gate mothership_stamp,21
 campaign_gate arcade_bird_bomb,27
 
 mothership_blast:
- lda 0xbfc4
- lda 0xbfd8
+ lda #8
+ sta 0xd500
  jsr 0x8000
  jmp victory_return
 mothership_award:
- lda 0xbfc4
- lda 0xbfd8
+ lda #8
+ sta 0xd500
  jsr 0x8003
 victory_return:
- lda 0xbfc0
- lda 0xbfd0
+ lda #2
+ sta 0xd500
  rts
 
 .section .expanded_code,"ax",@progbits
@@ -192,20 +194,22 @@ campaign_render:
 
 .section .text,"ax",@progbits
 boss_copy_tile:
- lda 0xbfdc
+ lda #5
+ sta 0xd500
  .irp row,0,1,2,3,4,5,6,7
  ldy #\row
  lda (src_data),y
  ora (boss_src2),y
  sta (dst_ptr),y
  .endr
- lda 0xbfd4
+ lda #3
+ sta 0xd500
  rts
 
 .section .text,"ax",@progbits
 boss_load_atlas:
- lda 0xbfc4
- lda 0xbfd0
+ lda #6
+ sta 0xd500
 1: lda lg_font_bases,x
  sta dst_ptr+1
  lda back_buffer
@@ -241,8 +245,8 @@ boss_load_atlas:
 3:
  dex
  bne 2b
- lda 0xbfc0
- lda 0xbfd4
+ lda #3
+ sta 0xd500
  rts
 
 # Counts live immediately after the atlases in the same mapped ROM bank.

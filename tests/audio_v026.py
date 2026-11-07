@@ -101,24 +101,24 @@ for noise in (64,128):
 for slot in range(8):
  m[S['audio_head']]=(slot+1)&7;m[S['audio_tail']]=slot
  regs=bytes([42,167,128,166,200,164,159,136]);m[0x3e80+slot*8:0x3e88+slot*8]=regs;m[0x3ec0+slot]=32
- pub=t.call('music_update');assert bytes(m[0xe800:0xe808])==regs and m[0xe808]==32
+ pub=t.call('music_update');assert bytes(m[0xd200:0xd208])==regs and m[0xd208]==32
  assert m[S['audio_tail']]==(slot+1)&7
 # The fallback is fixed-bank NMI code: a stalled/banked foreground cannot
 # hold a note forever, and it does not use foreground zero-page scratch.
 for bank in range(8):
- t.m.high=bank&4;t.m.low=bank&3
+ t.m.bank=bank
  m[S['audio_head']]=m[S['audio_tail']]=0
  m[S['audio_last_controls']:S['audio_last_controls']+4]=bytes([0xaf,0xa8,0xa4,0x8f])
  scratch=bytes(m[0x70:0x80])
  for _ in range(15):t.call('music_update')
- assert all(m[x]&15==0 for x in (0xe801,0xe803,0xe805,0xe807))
+ assert all(m[x]&15==0 for x in (0xd201,0xd203,0xd205,0xd207))
  assert bytes(m[0x70:0x80])==scratch
- t.m.high=t.m.low=0
+ t.m.bank=0
 # Transition buffering covers the reset work without adding normal-wave latency.
 for mode,wait,wipe,depth in [(0,0,0,3),(1,0,0,4),(2,0,0,4),(3,0,0,6),(1,30,0,6),(2,0,40,6)]:
  m[S['large_mode']]=mode;m[S['wave_wait']]=wait;m[S['wipe_timer']]=wipe
  m[S['audio_head']]=m[S['audio_tail']]=0;m[S['music_pending']]=0
  t.call('audio_prepare');assert (m[S['audio_head']]-m[S['audio_tail']])&7==depth
-report=dict(car_sha256=hashlib.sha256((R/'build/Phoenix-First-Flight.car').read_bytes()).hexdigest(),tune_ticks=4200,pitch_cases=pitch_cases,large_bird_reference_control_ticks=pulse_cases,formation_cases=formation_cases,arrival_seconds=120/61,arrival_max_hz=max(arrival_hz),arrival_peak_volume=3,noise_does_not_cut_bird_tone=True,underrun_fades_in_frames=15,underrun_banks_tested=8,small_queue_frames=3,large_queue_frames=4,transition_and_boss_queue_frames=6)
+report=dict(car_sha256=hashlib.sha256((R/'build/Phoenix800XL.car').read_bytes()).hexdigest(),tune_ticks=4200,pitch_cases=pitch_cases,large_bird_reference_control_ticks=pulse_cases,formation_cases=formation_cases,arrival_seconds=120/61,arrival_max_hz=max(arrival_hz),arrival_peak_volume=3,noise_does_not_cut_bird_tone=True,underrun_fades_in_frames=15,underrun_banks_tested=8,small_queue_frames=3,large_queue_frames=4,transition_and_boss_queue_frames=6)
 (R/'evidence/v026').mkdir(parents=True,exist_ok=True)
 (R/'evidence/v026/audio-cpu.json').write_text(json.dumps(report,indent=2));print(json.dumps(report,indent=2))

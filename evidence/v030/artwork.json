@@ -1,8 +1,8 @@
 {
-  "car_sha256": "698bc3c5855e4394e4850b1a778ec28243fd7b16a7ffed367b00d3781bbdc923",
+  "car_sha256": "942711eff8535cb97c96f1f4eaab9488c42356c5aa12de4fea8080d9c1b70a6e",
   "source_frames_used": 63,
   "restored_bird_hit_frames": 8,
-  "checks": 276,
+  "checks": 356,
   "pixel_shape_or_color_region_errors": 0,
   "normal_frames": "exact source pixels; four left-return poses use horizontal reflection; transparent margins preserve anchors",
   "injured_states": "supplied full-spread frame with the appropriate wing removed",

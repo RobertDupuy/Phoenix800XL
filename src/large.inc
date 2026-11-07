@@ -249,8 +249,8 @@ large_pixel_next:
  inc large_hit_y
  dec large_hit_count
  bne large_collision_pixel
- lda 0xbfc0
- lda 0xbfd0
+ lda #2
+ sta 0xd500
  ldx large_index
 large_collision_next:
  dex
@@ -259,8 +259,8 @@ large_collision_next:
 large_collision_done:
  rts
 large_pixel_hit:
- lda 0xbfc0
- lda 0xbfd0
+ lda #2
+ sta 0xd500
  ldx large_index
  lda enemy_on,x
  cmp #11
@@ -352,7 +352,7 @@ large_soft_source:
 .section .text,"ax",@progbits
 large_frame_palette:
  lda #70
- sta 0xc019
+ sta 0xd019
  lda #14
  sta playfield_c0
  lda #44
@@ -365,7 +365,7 @@ large_frame_palette:
  cmp #1
  beq palette_large1
  lda #dark_blue_stars
- sta 0xc019
+ sta 0xd019
  lda entrance_shown
  beq palette_small
  lda #198
@@ -383,7 +383,7 @@ palette_small1:
  bne palette_done
 palette_boss:
  lda #dark_blue_stars
- sta 0xc019
+ sta 0xd019
  lda #26
  ldx boss_status
  cpx #3
@@ -429,12 +429,12 @@ large_art_bank:
  lda large_mode
  cmp #2
  beq large_art_second
- lda 0xbfc0
- lda 0xbfd8
+ lda #4
+ sta 0xd500
  rts
 large_art_second:
- lda 0xbfc4
- lda 0xbfd4
+ lda #7
+ sta 0xd500
  rts
 
 .section .large_data,"a",@progbits

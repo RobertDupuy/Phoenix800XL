@@ -1,4 +1,4 @@
-"""Assemble the console program. Python only makes ROM data and CAR packaging."""
+"""Assemble the Atari XL program and package its MegaCart cartridge image."""
 from pathlib import Path
 import os, subprocess, struct, json, re, hashlib, shutil
 from prepare_large import prepare as prepare_large
@@ -10,6 +10,7 @@ from prepare_intro import prepare as prepare_intro
 from prepare_art import prepare
 from prepare_formation import prepare as prepare_formation
 from prepare_victory import prepare as prepare_victory
+from prepare_xl import prepare as prepare_xl
 R=Path(__file__).resolve().parents[1]
 B=R/'build'; B.mkdir(exist_ok=True)
 MOS=Path(os.environ['LLVM_MOS'])/'bin' if os.environ.get('LLVM_MOS') else Path(shutil.which('mos-common-clang') or '/missing/mos-common-clang').parent
@@ -23,6 +24,7 @@ native=(B/'native-tiles.bin').read_bytes()
 prepare_large()
 prepare_flight_art()
 prepare_campaign()
+prepare_xl()
 prepare_intro()
 prepare_victory()
 (B/'intro-size.inc').write_text(".set intro_fonts_end,"+str(0xa400+len((B/'intro-fonts-packed.bin').read_bytes()))+"\n")
@@ -38,8 +40,8 @@ assert len(header)==22
 (B/'header.bin').write_bytes(bytes((ord(c)-32)|0x40 for c in header))
 subprocess.run([str(MOS/'mos-common-clang'),'-c','src/game.S','-o','build/game.o'],cwd=R,check=True)
 subprocess.run([str(MOS/'ld.lld'),'-T','src/cart.ld','build/game.o','-o','build/game.elf','-Map=build/game.map'],cwd=R,check=True)
-subprocess.run([str(MOS/'llvm-objcopy'),'-O','binary','build/game.elf','build/Phoenix-First-Flight.rom'],cwd=R,check=True)
-rom=(B/'Phoenix-First-Flight.rom').read_bytes()
+subprocess.run([str(MOS/'llvm-objcopy'),'-O','binary','--remove-section=.platform','build/game.elf','build/game-base.bin'],cwd=R,check=True)
+rom=(B/'game-base.bin').read_bytes()
 assert len(rom)==32768,len(rom)
 # Check the final binary against every allocated ELF data/code section. This
 # catches unexpected load-segment gap padding from toolchain/linker changes.
@@ -48,7 +50,7 @@ shoff=struct.unpack_from('<I',elf,32)[0]
 shsize,shnum=struct.unpack_from('<HH',elf,46)
 for i in range(shnum):
  name,typ,flags,addr,off,size,*_=struct.unpack_from('<10I',elf,shoff+i*shsize)
- if typ==1 and flags&2 and size:
+ if typ==1 and flags&2 and size and addr<0xc000:
   assert 0x4000<=addr and addr+size<=0xc000
   assert rom[addr-0x4000:addr-0x4000+size]==elf[off:off+size],hex(addr)
 nm=subprocess.check_output([str(MOS/'llvm-nm'),'build/game.elf'],cwd=R,text=True)
@@ -86,12 +88,33 @@ banks[5][0x4000:0x7fc0]=padded2+bytes(0x3fc0-len(padded2))
 packed=(B/'intro-fonts-packed.bin').read_bytes();maps=(B/'intro-maps.bin').read_bytes()
 banks[3][0x6400:0x6400+len(packed)]=packed
 banks[3][0x7800:0x7800+len(maps)]=maps
-rom=b''.join(banks)
-(B/'Phoenix-First-Flight.rom').write_bytes(rom)
-assert all(bytes(b[:0x4000])==base[:0x4000] for b in banks)
-assert all(bytes(b[0x7fc0:])==base[0x7fc0:] for b in banks)
-car=b'CART'+struct.pack('>III',73,sum(rom)&0xffffffff,0)+rom
-(B/'Phoenix-First-Flight.car').write_bytes(car)
+# Convert the banked 5200 layout into ten 16 KiB MegaCart banks, padded to 256 KiB.
+# Bank 0: boot/platform. Bank 1: resident code copied into $4000-$7FFF.
+# Banks 2..9: the eight original upper windows, now selected through $D500.
+subprocess.run([str(MOS/'llvm-objcopy'),'-O','binary','--only-section=.platform','build/game.elf','build/platform.bin'],cwd=R,check=True)
+platform=(B/'platform.bin').read_bytes()
+assert len(platform)<=4096
+subprocess.run([str(MOS/'mos-common-clang'),'-c','src/boot-xl.S','-o','build/boot-xl.o'],cwd=R,check=True)
+subprocess.run([str(MOS/'ld.lld'),'-T','src/boot-xl.ld','build/boot-xl.o','-o','build/boot-xl.elf','-Map=build/boot-xl.map'],cwd=R,check=True)
+boot=bytearray([255])*4096
+for section,offset,capacity in [('boot',0,256),('loader',256,256),('cart_tail',0xfd0,48)]:
+ subprocess.run([str(MOS/'llvm-objcopy'),'-O','binary','--only-section=.'+section,'build/boot-xl.elf','build/'+section+'.bin'],cwd=R,check=True)
+ data=(B/(section+'.bin')).read_bytes()
+ assert len(data)<=capacity,(section,len(data))
+ boot[offset:offset+len(data)]=data
+(B/'boot-xl.bin').write_bytes(boot)
+xlbanks=[bytearray([255])*16384 for _ in range(16)]
+xlbanks[0][0x2000:0x2000+len(platform)]=platform
+xlbanks[0][0x3000:]=boot
+xlbanks[1][:]=base[:0x4000]
+for n,bank in enumerate(banks):
+ xlbanks[n+2][:]=bank[0x4000:]
+ xlbanks[n+2][0x3fd0:]=boot[0xfd0:]
+rom=b''.join(xlbanks)
+(B/'Phoenix800XL.rom').write_bytes(rom)
+car=b'CART'+struct.pack('>III',30,sum(rom)&0xffffffff,0)+rom
+(B/'Phoenix800XL.car').write_bytes(car)
+(R/'Phoenix800XL.car').write_bytes(car)
 nm=subprocess.check_output([str(MOS/'llvm-nm'),'build/game.elf'],cwd=R,text=True)
 symbols={m[3]:int(m[1],16) for line in nm.splitlines() if (m:=re.match(r'^([0-9A-Fa-f]+)\s+(\w)\s+(.+)$',line))}
 assert symbols['large_collision']<0xa400
@@ -100,7 +123,9 @@ assert symbols['expanded_end']<=0xbfc0,hex(symbols['expanded_end'])
 assert symbols['alien_movement_cluster_a']%256==symbols['alien_movement_cluster_b']%256==0
 for page in range(48):
  expected=(symbols['alien_movement_cluster_a']//256+page-16) if page<32 else (symbols['alien_movement_cluster_b']//256+page-44)
- assert rom[symbols['pattern_pages']-0x4000+page]==expected
+ assert base[symbols['pattern_pages']-0x4000+page]==expected
 (B/'symbols.json').write_text(json.dumps(symbols,indent=2))
-assert int.from_bytes(rom[-2:],'little')==symbols['entry']
-print(json.dumps({'payload_bytes':len(rom),'car_type':73,'entry':hex(symbols['entry']),'sha256':hashlib.sha256(car).hexdigest()},indent=2))
+assert rom[0x3ffa:0x4000]==bytes([0xd0,0xbf,0,4,0xf9,0xbf])
+assert len(rom)==262144
+assert symbols['platform_end']<=0xd000
+print(json.dumps({'payload_bytes':len(rom),'car_type':30,'entry':hex(symbols['entry']),'sha256':hashlib.sha256(car).hexdigest()},indent=2))

@@ -43,7 +43,7 @@ for wave in (1,2):
             t.call('alien_move')
             assert (m[S['raw_enemy_x']],m[S['raw_enemy_y']])==(x+dx,y-2)
             cases.append(dict(wave=wave,direction=direction,shape=shape,delta=[dx,-2]))
-report=dict(car_sha256=hashlib.sha256((R/'build/Phoenix-First-Flight.car').read_bytes()).hexdigest(),
+report=dict(car_sha256=hashlib.sha256((R/'build/Phoenix800XL.car').read_bytes()).hexdigest(),
             source_pose_checks=8,movement_and_animation_cases=cases,errors=0)
 out=R/'evidence/v030';out.mkdir(parents=True,exist_ok=True)
 (out/'return-facing.json').write_text(json.dumps(report,indent=2))

@@ -1,6 +1,5 @@
 build/
 __pycache__/
 *.pyc
-env.sh
-*.avi
-frontend.log
+*.log
+.DS_Store

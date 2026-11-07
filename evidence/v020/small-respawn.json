@@ -1,0 +1,33 @@
+{
+  "car_sha256": "942711eff8535cb97c96f1f4eaab9488c42356c5aa12de4fea8080d9c1b70a6e",
+  "method": "Execute actual small-bird death/respawn instructions in CPU fixtures.\n\nThe v0.19 regression fell through from arcade_resume into player_update because\nthe initializer occupies a different ROM section. Surviving attackers stayed\nat the next ship's location. These fixtures place survivors at that location,\nrun the complete death delay, and check the reset and first live collision ticks.\nNo emulator display timing or physical hardware is simulated.\n",
+  "death_and_respawn_cases": 544,
+  "rounds": 16,
+  "small_bird_waves": 2,
+  "survivor_counts": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16
+  ],
+  "exact_original_formation_matches": 544,
+  "rendered_buffer_checks": 40,
+  "pixel_errors": 0,
+  "immediate_collision_checks": 4640,
+  "added_invulnerability": false,
+  "score_wave_and_survivors_preserved": true,
+  "payload_bytes": 262144
+}

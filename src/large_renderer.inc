@@ -116,8 +116,8 @@ large_scene_next:
  ldx large_index
  dex
  bpl large_scene_slot
- lda 0xbfc0
- lda 0xbfd0
+ lda #2
+ sta 0xd500
 large_scene_effects:
  jsr supplied_palette_build
  jsr large_effect_cache_clear
@@ -219,8 +219,8 @@ large_draw_one:
  asl
  ora lg_maskptr
  sta lg_maskptr
- lda 0xbfc0
- lda 0xbfd4
+ lda #3
+ sta 0xd500
  .irp b,0,1,2
  ldy #\b
  lda (lg_maskptr),y
@@ -284,66 +284,7 @@ large_row:
  lda lg_first_col
  sta draw_col
  jsr row_pointer
- lda lg_offset
- sta large_src
- lda #8
- sta lg_col
-large_fast_tile:
- lsr lg_bits
- bcs 8f
- jmp large_fast_next
-8: ldy #0
- lda (map_ptr),y
- and #127
- bne large_fast_merge
- ldx lg_region
- lda lg_next,x
- inc lg_next,x
- cmp #128
- bcc 1f
- inc layout_faults
- lda #127
-1: ora draw_palette
- sta (map_ptr),y
- and #127
- # Inline the hot pointer lookup: avoids JSR/RTS per occupied tile.
- tax
- lda glyph_lo,x
- sta dst_ptr
- lda glyph_hi,x
- ora font_hi
- sta dst_ptr+1
- .irp row,0,1,2,3,4,5,6,7
- ldy #\row
- lda (large_src),y
- sta (dst_ptr),y
- .endr
- jmp large_fast_next
-large_fast_merge:
- # Inline the hot pointer lookup: avoids JSR/RTS per occupied tile.
- tax
- lda glyph_lo,x
- sta dst_ptr
- lda glyph_hi,x
- ora font_hi
- sta dst_ptr+1
- .irp row,0,1,2,3,4,5,6,7
- ldy #\row
- lda (large_src),y
- ora (dst_ptr),y
- sta (dst_ptr),y
- .endr
-large_fast_next:
- clc
- lda large_src
- adc #32
- sta large_src
- inc map_ptr
- bne 1f
- inc map_ptr+1
-1: dec lg_col
- beq large_row_next
- jmp large_fast_tile
+ jsr xl_large_row
 large_row_next:
  clc
  lda lg_offset
@@ -1084,10 +1025,10 @@ supplied_first_wait:
  sta 0xd409
  lda #0x3d
  sta 0xd400
- stx 0xc017
- sty 0xc018
+ stx 0xd017
+ sty 0xd018
  lda 0x110c
- sta 0xc016
+ sta 0xd016
  ldx supplied_event
  lda supplied_delay,x
  and #7
@@ -1114,19 +1055,19 @@ supplied_bird_dli:
  # No Y save or delay decoding may precede these three writes: the first
  # ANTIC character fetch leaves only a short color-update window.
  lda supplied_color0,x
- sta 0xc016
+ sta 0xd016
  lda supplied_color1,x
- sta 0xc017
+ sta 0xd017
  lda supplied_color2,x
- sta 0xc018
+ sta 0xd018
  jmp supplied_raster_zero_done
 supplied_raster_effect:
  lda supplied_color2,x
- sta 0xc018
+ sta 0xd018
  lda supplied_color1,x
- sta 0xc017
+ sta 0xd017
  lda supplied_color0,x
- sta 0xc016
+ sta 0xd016
 supplied_raster_zero_done:
  inc supplied_event
  pla
@@ -1145,11 +1086,11 @@ supplied_raster_wait:
  bne supplied_raster_wait
 supplied_raster_colors:
  lda supplied_color2,x
- sta 0xc018
+ sta 0xd018
  lda supplied_color1,x
- sta 0xc017
+ sta 0xd017
  lda supplied_color0,x
- sta 0xc016
+ sta 0xd016
 supplied_raster_done:
  inc supplied_event
  pla
@@ -1177,9 +1118,9 @@ supplied_raster_last:
  lda 0x110d
  sta 0xd40a
  sta 0xd40a
- sta 0xc016
- stx 0xc017
- sty 0xc018
+ sta 0xd016
+ stx 0xd017
+ sty 0xd018
  pla
  tay
  pla

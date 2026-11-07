@@ -1,6 +1,6 @@
 """Inspect real large-wave ANTIC output against the published display buffer.
-Stages/invulnerability are explicit fixtures. The emulator runs the original
-BIOS and cartridge normally between samples. Stop before VBI publication so
+Stages/invulnerability are explicit fixtures. The emulator runs the stock 64 KiB XL
+hardware and cartridge normally between samples. Stop before VBI publication so
 RAM and the finished raster refer to the same picture.
 """
 from pathlib import Path
@@ -11,8 +11,8 @@ R=Path(__file__).resolve().parents[1]
 P=argparse.ArgumentParser();P.add_argument('--out',type=Path,required=True);P.add_argument('--samples',type=int,default=200);P.add_argument('--check',action='store_true');args=P.parse_args();O=args.out;O.mkdir(parents=True,exist_ok=True)
 S=json.loads((R/'build/symbols.json').read_text());B=Path(os.environ['ALTIRRA_BRIDGE_PACKAGE']);sys.path.insert(0,str(B/'sdk/python'))
 from altirra_bridge import AltirraBridge
-private=tempfile.TemporaryDirectory(prefix='phoenix-large-');logpath=Path(private.name)/'server.log';log=logpath.open('w')
-p=subprocess.Popen([str(B/'AltirraBridgeServer'),'--machine=5200','--memory=16K','--bridge=tcp:127.0.0.1:0'],stdout=log,stderr=log,env=dict(os.environ,SDL_AUDIODRIVER='dummy'))
+from xl_emulator import XL
+e=XL(O/'emulator')
 def decode(m,pal):
  b=m[S['front_buffer']];pens=np.zeros((200,128),np.uint8)
  for row in range(25):
@@ -31,11 +31,7 @@ def decode(m,pal):
  codes=colors[np.arange(200)[:,None],pens]
  return np.repeat(pal[codes],2,1),pens,list(commands)
 try:
- for _ in range(100):
-  match=re.search(r'token-file: (\S+)',logpath.read_text())
-  if match:break
-  time.sleep(.05)
- a=AltirraBridge.from_token_file(match[1]);a.pause();a.config('video','ntsc');a.config('kernel',os.environ['ATARI5200_BIOS']);a.boot(str(R/'build/Phoenix-First-Flight.car'));a.frame(500)
+ a=e.a;a.frame(500)
  a.joy(0,fire=True);a.frame(8);a.joy(0,fire=False);a.frame(480)
  pal=np.frombuffer(a.palette(),np.uint8).reshape(256,3);(O/'palette.bin').write_bytes(pal.tobytes());results=[];timing=[]
  for wave in (3,4):
@@ -86,9 +82,9 @@ try:
   ticks=[v['tick']for v in trace if v['chip']==1 and v['reg']==1];gaps=[y-x for x,y in zip(ticks,ticks[1:])]
   def delta(name,n):return (int.from_bytes(after[S[name]:S[name]+n],'little')-int.from_bytes(before[S[name]:S[name]+n],'little'))%(1<<(8*n))
   timing.append(dict(wave=wave,video_frames=delta('frames',4),render_fps=round(delta('fresh_commits',4)/delta('frames',4)*59.922743,3),simulation_hz=round(delta('sim_steps',4)/delta('frames',4)*59.922743,3),late_vbi=delta('late_frames',2),missing_audio_updates=sum(max(0,round(g/(262*114))-1)for g in gaps),max_audio_gap_clocks=max(gaps),layout_faults=after[S['layout_faults']]))
- report=dict(car_sha256=hashlib.sha256((R/'build/Phoenix-First-Flight.car').read_bytes()).hexdigest(),method=__doc__,compared_playfield_pixels=len(results)*200*256,timing=timing,samples=results,extra=sum(r['extra']for r in results),missing=sum(r['missing']for r in results),color=sum(r['color']for r in results))
+ report=dict(car_sha256=hashlib.sha256((R/'build/Phoenix800XL.car').read_bytes()).hexdigest(),method=__doc__,compared_playfield_pixels=len(results)*200*256,timing=timing,samples=results,extra=sum(r['extra']for r in results),missing=sum(r['missing']for r in results),color=sum(r['color']for r in results))
  (O/'report.json').write_text(json.dumps(report,indent=2));print('TOTAL',report['missing'],report['extra'],report['color'],timing,flush=True)
  if args.check:
   assert report['missing']==report['extra']==report['color']==0
   assert all(t['late_vbi']==t['layout_faults']==t['missing_audio_updates']==0 for t in timing)
-finally:p.terminate();p.wait(timeout=5);log.close();private.cleanup()
+finally:e.close()

@@ -72,5 +72,5 @@ for w in [2,3,4]:
  for i in range(55):t.call('campaign_tick')
  assert m[0x83]==w+1 and m[S['wipe_timer']]==0
  checks+=1
-report=dict(car_sha256=hashlib.sha256((R/'build/Phoenix-First-Flight.car').read_bytes()).hexdigest(),checks=checks,rounds=16,armor_and_barrier_cases=120,entry_ticks=120,victory_ticks=160,next_wave=6,award=3200,method=__doc__)
+report=dict(car_sha256=hashlib.sha256((R/'build/Phoenix800XL.car').read_bytes()).hexdigest(),checks=checks,rounds=16,armor_and_barrier_cases=120,entry_ticks=120,victory_ticks=160,next_wave=6,award=3200,method=__doc__)
 (R/'evidence/v011/campaign.json').write_text(json.dumps(report,indent=2));print(report)

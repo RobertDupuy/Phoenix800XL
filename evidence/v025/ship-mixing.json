@@ -1,0 +1,1040 @@
+{
+  "car_sha256": "942711eff8535cb97c96f1f4eaab9488c42356c5aa12de4fea8080d9c1b70a6e",
+  "envelope_combinations": 200,
+  "voice_allocation_cases": 16,
+  "gate_ticks": 16,
+  "real_damage_overlap_ticks": 20,
+  "maximum_audio_cycles": 911,
+  "records": [
+    {
+      "tick": 0,
+      "control": 143,
+      "voices": [
+        [
+          159,
+          7
+        ],
+        [
+          17,
+          1
+        ]
+      ]
+    },
+    {
+      "tick": 1,
+      "control": 143,
+      "voices": [
+        [
+          159,
+          8
+        ]
+      ]
+    },
+    {
+      "tick": 2,
+      "control": 143,
+      "voices": [
+        [
+          159,
+          8
+        ]
+      ]
+    },
+    {
+      "tick": 3,
+      "control": 143,
+      "voices": [
+        [
+          159,
+          8
+        ]
+      ]
+    },
+    {
+      "tick": 4,
+      "control": 143,
+      "voices": [
+        [
+          159,
+          8
+        ]
+      ]
+    },
+    {
+      "tick": 5,
+      "control": 143,
+      "voices": [
+        [
+          159,
+          8
+        ]
+      ]
+    },
+    {
+      "tick": 6,
+      "control": 143,
+      "voices": [
+        [
+          159,
+          8
+        ]
+      ]
+    },
+    {
+      "tick": 7,
+      "control": 143,
+      "voices": [
+        [
+          159,
+          8
+        ]
+      ]
+    },
+    {
+      "tick": 8,
+      "control": 143,
+      "voices": [
+        [
+          159,
+          8
+        ]
+      ]
+    },
+    {
+      "tick": 9,
+      "control": 143,
+      "voices": [
+        [
+          159,
+          8
+        ]
+      ]
+    },
+    {
+      "tick": 10,
+      "control": 143,
+      "voices": [
+        [
+          159,
+          8
+        ]
+      ]
+    },
+    {
+      "tick": 11,
+      "control": 143,
+      "voices": [
+        [
+          159,
+          8
+        ]
+      ]
+    },
+    {
+      "tick": 12,
+      "control": 143,
+      "voices": [
+        [
+          159,
+          8
+        ]
+      ]
+    },
+    {
+      "tick": 13,
+      "control": 143,
+      "voices": [
+        [
+          159,
+          8
+        ]
+      ]
+    },
+    {
+      "tick": 14,
+      "control": 143,
+      "voices": [
+        [
+          159,
+          8
+        ]
+      ]
+    },
+    {
+      "tick": 15,
+      "control": 143,
+      "voices": [
+        [
+          159,
+          8
+        ]
+      ]
+    },
+    {
+      "tick": 16,
+      "control": 79,
+      "voices": [
+        [
+          159,
+          8
+        ],
+        [
+          15,
+          1
+        ]
+      ]
+    },
+    {
+      "tick": 17,
+      "control": 79,
+      "voices": [
+        [
+          159,
+          7
+        ],
+        [
+          15,
+          2
+        ]
+      ]
+    },
+    {
+      "tick": 18,
+      "control": 79,
+      "voices": [
+        [
+          159,
+          7
+        ],
+        [
+          14,
+          2
+        ]
+      ]
+    },
+    {
+      "tick": 19,
+      "control": 79,
+      "voices": [
+        [
+          159,
+          6
+        ],
+        [
+          14,
+          3
+        ]
+      ]
+    },
+    {
+      "tick": 20,
+      "control": 79,
+      "voices": [
+        [
+          159,
+          6
+        ],
+        [
+          13,
+          4
+        ]
+      ]
+    },
+    {
+      "tick": 21,
+      "control": 79,
+      "voices": [
+        [
+          159,
+          6
+        ],
+        [
+          13,
+          4
+        ]
+      ]
+    },
+    {
+      "tick": 22,
+      "control": 79,
+      "voices": [
+        [
+          159,
+          6
+        ],
+        [
+          13,
+          5
+        ]
+      ]
+    },
+    {
+      "tick": 23,
+      "control": 79,
+      "voices": [
+        [
+          159,
+          5
+        ],
+        [
+          13,
+          5
+        ]
+      ]
+    },
+    {
+      "tick": 24,
+      "control": 79,
+      "voices": [
+        [
+          159,
+          5
+        ],
+        [
+          13,
+          5
+        ]
+      ]
+    },
+    {
+      "tick": 25,
+      "control": 79,
+      "voices": [
+        [
+          159,
+          5
+        ],
+        [
+          13,
+          6
+        ]
+      ]
+    },
+    {
+      "tick": 26,
+      "control": 79,
+      "voices": [
+        [
+          159,
+          5
+        ],
+        [
+          13,
+          6
+        ]
+      ]
+    },
+    {
+      "tick": 27,
+      "control": 79,
+      "voices": [
+        [
+          159,
+          4
+        ],
+        [
+          13,
+          6
+        ]
+      ]
+    },
+    {
+      "tick": 28,
+      "control": 79,
+      "voices": [
+        [
+          159,
+          4
+        ],
+        [
+          13,
+          6
+        ]
+      ]
+    },
+    {
+      "tick": 29,
+      "control": 79,
+      "voices": [
+        [
+          159,
+          4
+        ],
+        [
+          13,
+          6
+        ]
+      ]
+    },
+    {
+      "tick": 30,
+      "control": 79,
+      "voices": [
+        [
+          159,
+          4
+        ],
+        [
+          13,
+          7
+        ]
+      ]
+    },
+    {
+      "tick": 31,
+      "control": 79,
+      "voices": [
+        [
+          159,
+          4
+        ],
+        [
+          13,
+          7
+        ]
+      ]
+    },
+    {
+      "tick": 32,
+      "control": 79,
+      "voices": [
+        [
+          159,
+          3
+        ],
+        [
+          13,
+          7
+        ]
+      ]
+    },
+    {
+      "tick": 33,
+      "control": 79,
+      "voices": [
+        [
+          159,
+          3
+        ],
+        [
+          13,
+          7
+        ]
+      ]
+    },
+    {
+      "tick": 34,
+      "control": 15,
+      "voices": [
+        [
+          159,
+          3
+        ],
+        [
+          27,
+          1
+        ]
+      ]
+    },
+    {
+      "tick": 35,
+      "control": 15,
+      "voices": [
+        [
+          159,
+          3
+        ]
+      ]
+    },
+    {
+      "tick": 36,
+      "control": 15,
+      "voices": [
+        [
+          159,
+          3
+        ]
+      ]
+    },
+    {
+      "tick": 37,
+      "control": 15,
+      "voices": [
+        [
+          159,
+          3
+        ]
+      ]
+    },
+    {
+      "tick": 38,
+      "control": 15,
+      "voices": [
+        [
+          159,
+          2
+        ]
+      ]
+    },
+    {
+      "tick": 39,
+      "control": 15,
+      "voices": [
+        [
+          159,
+          2
+        ]
+      ]
+    },
+    {
+      "tick": 40,
+      "control": 15,
+      "voices": [
+        [
+          159,
+          2
+        ]
+      ]
+    },
+    {
+      "tick": 41,
+      "control": 15,
+      "voices": [
+        [
+          159,
+          2
+        ]
+      ]
+    },
+    {
+      "tick": 42,
+      "control": 15,
+      "voices": [
+        [
+          159,
+          2
+        ]
+      ]
+    },
+    {
+      "tick": 43,
+      "control": 15,
+      "voices": [
+        [
+          159,
+          2
+        ]
+      ]
+    },
+    {
+      "tick": 44,
+      "control": 15,
+      "voices": [
+        [
+          159,
+          2
+        ]
+      ]
+    },
+    {
+      "tick": 45,
+      "control": 15,
+      "voices": [
+        [
+          159,
+          2
+        ]
+      ]
+    },
+    {
+      "tick": 46,
+      "control": 15,
+      "voices": [
+        [
+          159,
+          2
+        ]
+      ]
+    },
+    {
+      "tick": 47,
+      "control": 15,
+      "voices": [
+        [
+          159,
+          2
+        ]
+      ]
+    },
+    {
+      "tick": 48,
+      "control": 15,
+      "voices": [
+        [
+          159,
+          1
+        ]
+      ]
+    },
+    {
+      "tick": 49,
+      "control": 15,
+      "voices": [
+        [
+          159,
+          1
+        ]
+      ]
+    },
+    {
+      "tick": 50,
+      "control": 15,
+      "voices": [
+        [
+          159,
+          1
+        ]
+      ]
+    },
+    {
+      "tick": 51,
+      "control": 15,
+      "voices": [
+        [
+          159,
+          1
+        ]
+      ]
+    },
+    {
+      "tick": 52,
+      "control": 15,
+      "voices": [
+        [
+          159,
+          1
+        ]
+      ]
+    },
+    {
+      "tick": 53,
+      "control": 15,
+      "voices": [
+        [
+          159,
+          1
+        ]
+      ]
+    },
+    {
+      "tick": 54,
+      "control": 15,
+      "voices": [
+        [
+          159,
+          1
+        ]
+      ]
+    },
+    {
+      "tick": 55,
+      "control": 15,
+      "voices": [
+        [
+          159,
+          1
+        ]
+      ]
+    },
+    {
+      "tick": 56,
+      "control": 15,
+      "voices": [
+        [
+          159,
+          1
+        ]
+      ]
+    },
+    {
+      "tick": 57,
+      "control": 15,
+      "voices": [
+        [
+          159,
+          1
+        ]
+      ]
+    },
+    {
+      "tick": 58,
+      "control": 15,
+      "voices": [
+        [
+          159,
+          1
+        ]
+      ]
+    },
+    {
+      "tick": 59,
+      "control": 15,
+      "voices": [
+        [
+          159,
+          1
+        ]
+      ]
+    },
+    {
+      "tick": 60,
+      "control": 15,
+      "voices": [
+        [
+          159,
+          1
+        ]
+      ]
+    },
+    {
+      "tick": 61,
+      "control": 15,
+      "voices": [
+        [
+          159,
+          1
+        ]
+      ]
+    },
+    {
+      "tick": 62,
+      "control": 15,
+      "voices": [
+        [
+          159,
+          1
+        ]
+      ]
+    },
+    {
+      "tick": 63,
+      "control": 15,
+      "voices": [
+        [
+          159,
+          1
+        ]
+      ]
+    },
+    {
+      "tick": 64,
+      "control": 15,
+      "voices": [
+        [
+          159,
+          1
+        ]
+      ]
+    },
+    {
+      "tick": 65,
+      "control": 15,
+      "voices": [
+        [
+          159,
+          1
+        ]
+      ]
+    },
+    {
+      "tick": 66,
+      "control": 15,
+      "voices": [
+        [
+          159,
+          1
+        ]
+      ]
+    },
+    {
+      "tick": 67,
+      "control": 15,
+      "voices": [
+        [
+          159,
+          1
+        ]
+      ]
+    },
+    {
+      "tick": 68,
+      "control": 15,
+      "voices": [
+        [
+          159,
+          1
+        ]
+      ]
+    },
+    {
+      "tick": 69,
+      "control": 15,
+      "voices": [
+        [
+          159,
+          1
+        ]
+      ]
+    },
+    {
+      "tick": 70,
+      "control": 15,
+      "voices": []
+    },
+    {
+      "tick": 71,
+      "control": 15,
+      "voices": []
+    },
+    {
+      "tick": 72,
+      "control": 15,
+      "voices": []
+    },
+    {
+      "tick": 73,
+      "control": 15,
+      "voices": []
+    },
+    {
+      "tick": 74,
+      "control": 15,
+      "voices": []
+    },
+    {
+      "tick": 75,
+      "control": 15,
+      "voices": []
+    },
+    {
+      "tick": 76,
+      "control": 15,
+      "voices": []
+    },
+    {
+      "tick": 77,
+      "control": 15,
+      "voices": []
+    },
+    {
+      "tick": 78,
+      "control": 15,
+      "voices": []
+    },
+    {
+      "tick": 79,
+      "control": 15,
+      "voices": []
+    },
+    {
+      "tick": 80,
+      "control": 15,
+      "voices": []
+    },
+    {
+      "tick": 81,
+      "control": 15,
+      "voices": []
+    },
+    {
+      "tick": 82,
+      "control": 15,
+      "voices": []
+    },
+    {
+      "tick": 83,
+      "control": 15,
+      "voices": []
+    },
+    {
+      "tick": 84,
+      "control": 15,
+      "voices": []
+    },
+    {
+      "tick": 85,
+      "control": 15,
+      "voices": []
+    },
+    {
+      "tick": 86,
+      "control": 15,
+      "voices": []
+    },
+    {
+      "tick": 87,
+      "control": 15,
+      "voices": []
+    },
+    {
+      "tick": 88,
+      "control": 15,
+      "voices": []
+    },
+    {
+      "tick": 89,
+      "control": 15,
+      "voices": []
+    },
+    {
+      "tick": 90,
+      "control": 15,
+      "voices": []
+    },
+    {
+      "tick": 91,
+      "control": 15,
+      "voices": []
+    },
+    {
+      "tick": 92,
+      "control": 15,
+      "voices": []
+    },
+    {
+      "tick": 93,
+      "control": 15,
+      "voices": []
+    },
+    {
+      "tick": 94,
+      "control": 15,
+      "voices": []
+    },
+    {
+      "tick": 95,
+      "control": 15,
+      "voices": []
+    },
+    {
+      "tick": 96,
+      "control": 15,
+      "voices": []
+    },
+    {
+      "tick": 97,
+      "control": 15,
+      "voices": []
+    },
+    {
+      "tick": 98,
+      "control": 15,
+      "voices": []
+    },
+    {
+      "tick": 99,
+      "control": 15,
+      "voices": []
+    },
+    {
+      "tick": 100,
+      "control": 15,
+      "voices": []
+    },
+    {
+      "tick": 101,
+      "control": 15,
+      "voices": []
+    },
+    {
+      "tick": 102,
+      "control": 15,
+      "voices": []
+    },
+    {
+      "tick": 103,
+      "control": 15,
+      "voices": []
+    },
+    {
+      "tick": 104,
+      "control": 15,
+      "voices": []
+    },
+    {
+      "tick": 105,
+      "control": 15,
+      "voices": []
+    },
+    {
+      "tick": 106,
+      "control": 15,
+      "voices": []
+    },
+    {
+      "tick": 107,
+      "control": 15,
+      "voices": []
+    },
+    {
+      "tick": 108,
+      "control": 15,
+      "voices": []
+    },
+    {
+      "tick": 109,
+      "control": 15,
+      "voices": []
+    },
+    {
+      "tick": 110,
+      "control": 15,
+      "voices": []
+    },
+    {
+      "tick": 111,
+      "control": 15,
+      "voices": []
+    },
+    {
+      "tick": 112,
+      "control": 15,
+      "voices": []
+    },
+    {
+      "tick": 113,
+      "control": 15,
+      "voices": []
+    },
+    {
+      "tick": 114,
+      "control": 15,
+      "voices": []
+    },
+    {
+      "tick": 115,
+      "control": 15,
+      "voices": []
+    },
+    {
+      "tick": 116,
+      "control": 15,
+      "voices": []
+    },
+    {
+      "tick": 117,
+      "control": 15,
+      "voices": []
+    },
+    {
+      "tick": 118,
+      "control": 15,
+      "voices": []
+    },
+    {
+      "tick": 119,
+      "control": 15,
+      "voices": []
+    }
+  ]
+}

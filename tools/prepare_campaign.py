@@ -59,5 +59,5 @@ def prepare():
     if 7<=x<33 and 0<=y<25:rad[y*32+x-4]=min(rad[y*32+x-4],a)
    addr-=32
  (B/'wipe-radius.bin').write_bytes(bytes(rad))
- (B/'boss-campaign.json').write_text(__import__('json').dumps({'stages':[1,3,5,7,11],'wipe_phases':28,'wipe_ticks':55,'mothership_rows':9,'mothership_columns':26,'large_bird_limit':6,'escort_limit':4,'source':'Original Phoenix ROM tables and 8085 routines 2204..2442,24C4..253F,0610..0638'},indent=2))
+ (B/'boss-campaign.json').write_text(__import__('json').dumps({'stages':[1,3,5,7,11],'wipe_phases':28,'wipe_ticks':55,'mothership_rows':9,'mothership_columns':26,'large_bird_limit':7,'escort_limit':5,'source':'Original Phoenix ROM tables and 8085 routines 2204..2442,24C4..253F,0610..0638'},indent=2))
 if __name__=='__main__':prepare()

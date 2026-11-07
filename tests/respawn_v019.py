@@ -106,7 +106,7 @@ for round_number in range(16):
                     live_checks += 1
             cases += 1
 
-report = dict(car_sha256=hashlib.sha256((R/'build/Phoenix-First-Flight.car').read_bytes()).hexdigest(),
+report = dict(car_sha256=hashlib.sha256((R/'build/Phoenix800XL.car').read_bytes()).hexdigest(),
               method=__doc__, death_and_respawn_cases=cases, rounds=16, large_bird_waves=2,
               survivor_counts=list(range(S['large_population']+1)), exact_original_record_matches=cases,
               rendered_buffer_checks=pixels, pixel_errors=0,

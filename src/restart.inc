@@ -26,7 +26,7 @@ gameover_wait_press:
  sta 0xd40e
  lda #0
  sta 0xd400
- sta 0xc01d
+ sta 0xd01d
  sta display_active
  sta render_ready
  sta gameover_armed

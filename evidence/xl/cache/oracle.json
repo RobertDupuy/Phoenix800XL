@@ -1,0 +1,12 @@
+{
+  "car_sha256": "942711eff8535cb97c96f1f4eaab9488c42356c5aa12de4fea8080d9c1b70a6e",
+  "baseline_sha256": "59a43e6189fa3ac936cb9d4595aa885126c5f3ce0ba9e25fc1041ef40a4712bd",
+  "method": "Compare decoded mothership pixels with the baseline MegaCart renderer.\n\nBoth CPUs receive identical explicit damage, scroll and animation fixtures.\nThis tests background composition and foreground overlap,\nincluding both display buffers, scroll changes and allocator epoch wrap.\n",
+  "frames": 280,
+  "decoded_pixel_errors": 0,
+  "cpu_cycles": [
+    10622449,
+    10061353
+  ],
+  "cpu_reduction_pct": 5.28
+}

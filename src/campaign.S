@@ -187,16 +187,26 @@ boss_tick:
  .irp off,0,26,52,78
  lda boss_pilot_shapes,x
  sta boss_body+\off,y
+ # A cell restored to its original artwork uses the static atlas directly.
+ cmp boss_initial+\off,y
+ beq 30f
  lda #1
- sta 0x1200+\off,y
+ bne 31f
+30: lda #0
+31: sta 0x1200+\off,y
  inx
  .endr
  iny
  .irp off,0,26,52,78
  lda boss_pilot_shapes,x
  sta boss_body+\off,y
+ # A cell restored to its original artwork uses the static atlas directly.
+ cmp boss_initial+\off,y
+ beq 30f
  lda #1
- sta 0x1200+\off,y
+ bne 31f
+30: lda #0
+31: sta 0x1200+\off,y
  inx
  .endr
 boss_tick_done:
@@ -234,8 +244,12 @@ boss_rotate:
  ora boss_t1
  ora #96
  sta boss_body+104,x
+ cmp boss_initial+104,x
+ beq 30f
  lda #1
- sta 0x1200+104,x
+ bne 31f
+30: lda #0
+31: sta 0x1200+104,x
  inx
  cpx #22
  bne 1b
@@ -290,6 +304,8 @@ boss_end_tick:
  sta boss_status
  lda #64
  sta boss_timer
+ lda #255
+ sta audio_victory_count
  lda g_sound_b
  and #63
  ora #128
@@ -771,13 +787,6 @@ boss_dirty_normal:
 boss_dirty_cell:
  stx boss_offset
  sty boss_c
- tya
- clc
- adc map_ptr
- sta map_ptr
- bcc 1f
- inc map_ptr+1
-1:
  ldy boss_r
  cpy #255
  beq boss_bg_top
@@ -820,7 +829,7 @@ boss_bg_patch:
  lda boss_upper
  ora boss_lower
  bne 1f
- ldy #0
+ ldy boss_c
  sta (map_ptr),y
  jmp boss_bg_nextcell
 1: lda boss_upper
@@ -850,7 +859,7 @@ boss_patch_reuse:
  tya
  clc
  adc #64
- ldy #0
+ ldy boss_c
  sta (map_ptr),y
  jmp boss_bg_nextcell
 boss_patch_lower_miss:
@@ -880,7 +889,7 @@ boss_patch_new:
  lda boss_hash
  clc
  adc #64
- ldy #0
+ ldy boss_c
  sta (map_ptr),y
  tax
  lda glyph_lo,x
@@ -916,13 +925,7 @@ boss_patch_new:
  sta boss_src2+1
  jsr boss_copy_tile
 boss_bg_nextcell:
- sec
- lda map_ptr
- sbc boss_c
- sta map_ptr
- bcs 1f
- dec map_ptr+1
-1: ldx boss_offset
+ ldx boss_offset
  rts
 boss_bg_nextrow:
  inc draw_row

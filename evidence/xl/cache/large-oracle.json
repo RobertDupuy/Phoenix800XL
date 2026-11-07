@@ -1,0 +1,12 @@
+{
+  "car_sha256": "942711eff8535cb97c96f1f4eaab9488c42356c5aa12de4fea8080d9c1b70a6e",
+  "baseline_sha256": "59a43e6189fa3ac936cb9d4595aa885126c5f3ce0ba9e25fc1041ef40a4712bd",
+  "frames": 640,
+  "decoded_pixel_errors": 0,
+  "cpu_cycles": [
+    14096555,
+    12665306
+  ],
+  "cpu_reduction_pct": 10.15,
+  "method": "Match both large waves against the pre-cache renderer, through scrolling,\npose changes, wing clipping, overlapping birds and foreground effects."
+}

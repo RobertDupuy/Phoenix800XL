@@ -61,7 +61,7 @@ for tick in range(120):
  records.append(dict(tick=tick,control=m[S['g_sound_a']],voices=voices))
 assert blast_ticks==16 and overlap_ticks>=15
 assert not any(m[0x3e61+c]&15 for c in range(0,8,2)), 'effect failed to end'
-report=dict(car_sha256=hashlib.sha256((R/'build/Phoenix-First-Flight.car').read_bytes()).hexdigest(),
+report=dict(car_sha256=hashlib.sha256((R/'build/Phoenix800XL.car').read_bytes()).hexdigest(),
  envelope_combinations=cases,voice_allocation_cases=allocation_cases,gate_ticks=blast_ticks,
  real_damage_overlap_ticks=overlap_ticks,maximum_audio_cycles=max_cycles,records=records)
 (R/'evidence/v025').mkdir(parents=True,exist_ok=True)

@@ -316,9 +316,9 @@ render_live_ship:
  clc
  adc #76
  sta ship_hpos
- sta 0xc000
- sta 0xc001
- sta 0xc002
+ sta 0xd000
+ sta 0xd001
+ sta 0xd002
  rts
 
 .set shot_bounds_min,0x734

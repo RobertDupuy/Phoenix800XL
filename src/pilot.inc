@@ -60,7 +60,7 @@ pilot_move:
  sta 0x1400,y
  sta 0x1500,y
  sta 0x1600,y
- jmp pilot_copy
+ jmp xl_pilot_descend
 2:
  ldx #16
  lda #0
@@ -85,28 +85,7 @@ pilot_copy:
  tay
  ldx pilot_new_frame
  stx pilot_old_frame
- lda #2
- sta pilot_rows
-1:
- .irp row,0,1,2,3,4,5,6,7
- lda pilot_cyan+\row,x
- sta 0x1400+\row,y
- lda pilot_purple+\row,x
- sta 0x1500+\row,y
- lda pilot_pink+\row,x
- sta 0x1600+\row,y
- .endr
- txa
- clc
- adc #8
- tax
- tya
- clc
- adc #8
- tay
- dec pilot_rows
- beq pilot_commit_done
- jmp 1b
+ jmp xl_pilot_copy
 pilot_commit_done:
  rts
 
@@ -114,15 +93,15 @@ pilot_start:
  lda pilot_old_y
  beq 1f
  lda #128
-1: sta 0xc000
- sta 0xc001
- sta 0xc002
+1: sta 0xd000
+ sta 0xd001
+ sta 0xd002
  lda #170
- sta 0xc012
+ sta 0xd012
  lda #100
- sta 0xc013
+ sta 0xd013
  lda #102
- sta 0xc014
+ sta 0xd014
  rts
 
 player_restore_dli:
@@ -132,30 +111,30 @@ player_restore_dli:
  bcs 1f
  lda 0x338
  sta 0xd40a
- sta 0xc000
+ sta 0xd000
  clc
  adc #8
- sta 0xc001
+ sta 0xd001
  sec
  sbc #4
- sta 0xc002
+ sta 0xd002
  lda #198
- sta 0xc012
- sta 0xc013
+ sta 0xd012
+ sta 0xd013
  lda #70
- sta 0xc014
+ sta 0xd014
  jmp 2f
 1: lda ship_hpos
  sta 0xd40a
- sta 0xc000
- sta 0xc001
- sta 0xc002
+ sta 0xd000
+ sta 0xd001
+ sta 0xd002
  lda #14
- sta 0xc012
+ sta 0xd012
  lda #70
- sta 0xc013
+ sta 0xd013
  lda #44
- sta 0xc014
+ sta 0xd014
 2: lda #<shield_palette_dli
  sta 0x206
  lda #>shield_palette_dli
@@ -171,11 +150,11 @@ shield_palette_dli:
 shield_palette_set:
  lda #14
  sta 0xd40a
- sta 0xc016
+ sta 0xd016
  lda #44
- sta 0xc017
+ sta 0xd017
  lda #100
- sta 0xc018
+ sta 0xd018
 1: pla
  rti
 

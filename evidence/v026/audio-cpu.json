@@ -1,0 +1,16 @@
+{
+  "car_sha256": "4e5f1290f973d2a479f05ee6cc29badf73b707d3423e5365eb2ced9c7baf9008",
+  "tune_ticks": 4200,
+  "pitch_cases": 1744,
+  "large_bird_reference_control_ticks": 8192,
+  "formation_cases": 2048,
+  "arrival_seconds": 1.9672131147540983,
+  "arrival_max_hz": 1598.0111607142858,
+  "arrival_peak_volume": 3,
+  "noise_does_not_cut_bird_tone": true,
+  "underrun_fades_in_frames": 15,
+  "underrun_banks_tested": 8,
+  "small_queue_frames": 3,
+  "large_queue_frames": 4,
+  "transition_and_boss_queue_frames": 6
+}

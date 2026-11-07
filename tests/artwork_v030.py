@@ -31,10 +31,10 @@ for i,p in enumerate(F['frames']):
   if kind in (12,14):src[:,right:]=0
  same(p,src);used.add(('large-bird',frame))
 # Decode the actual banked ROM bytes rather than only generator manifests.
-rom=(B/'Phoenix-First-Flight.rom').read_bytes()
+rom=(B/'Phoenix800XL.rom').read_bytes()
 for bank in (2,5):
  for i,p in enumerate(F['frames']):
-  packed=rom[bank*32768+16384+i*256:bank*32768+16384+(i+1)*256]
+  packed=rom[(bank+2)*16384+i*256:(bank+2)*16384+(i+1)*256]
   decoded=[[packed[x//4*32+8+y]>>(6-(x%4)*2)&3 for x in range(32)] for y in range(16)]
   assert decoded==p;cases+=1
 for f in range(4):
@@ -81,14 +81,33 @@ for f in range(4):
 # Shield enters with exact red ship plane; expiration restores the yellow plane.
 m[S['shield_pose']]=0;m[S['shield_pmg_pose']]=255;t.call('shield_players')
 assert bytes(m[0x1600+216:0x1600+232])==(B/'ship-red.bin').read_bytes()[:16]
-assert m[0xc002]==m[0xc000]+4 and m[0xc014]==70
+assert m[0xd002]==m[0xd000]+4 and m[0xd014]==70
 m[S['shield_pose']]=255;t.call('shield_players')
 assert bytes(m[0x1600+216:0x1600+232])==(B/'ship-yellow.bin').read_bytes()[:16]
 cases+=2
+# The XL VBI copies must preserve the packed pixels through every shield
+# transition and restore every moving ship pose, including the cleared rim.
+green=(B/'shield-green.bin').read_bytes()
+for before in range(4):
+ for after in range(4):
+  m[S['shield_pose']]=before;t.call('shield_players')
+  m[S['shield_pose']]=after;t.call('shield_players')
+  assert bytes(m[0x1400+208:0x1400+240])==green[after*64:after*64+32]
+  assert bytes(m[0x1500+208:0x1500+240])==green[after*64+32:after*64+64]
+  for phase in range(4):
+   m[S['video_ship_x']]=96+phase*2
+   m[S['shield_pose']]=255;t.call('shield_players')
+   pose=((m[S['video_ship_x']]+4)>>1)&3
+   for name,base in [('white',0x1400),('red',0x1500),('yellow',0x1600)]:
+    plane=(B/f'ship-{name}.bin').read_bytes();offset=pose*16 if len(plane)==64 else 0
+    assert bytes(m[base+216:base+232])==plane[offset:offset+16]
+    if name!='yellow':assert not any(m[base+208:base+216]+m[base+232:base+240])
+   m[S['shield_pose']]=after;t.call('shield_players');cases+=1
+m[S['shield_pose']]=255;t.call('shield_players')
 # Each pilot pose and scrolling position is committed without touching player rows.
 m[S['large_shown']]=3;m[S['front_buffer']]=0
 player=bytes(m[0x1400+208:0x1400+240])+bytes(m[0x1500+208:0x1500+240])+bytes(m[0x1600+208:0x1600+240])
-for y in (79,80,169):
+for y in (79,80,81,82,83,84,169):
  for f in range(4):
   m[S['pilot_pending_y']]=y;m[S['pilot_pending_frame']]=f*16;t.call('pilot_commit')
   for name,base in [('cyan',0x1400),('purple',0x1500),('pink',0x1600)]:
@@ -107,5 +126,5 @@ for wave in (1,3,5):
  assert not m[S['layout_faults']];cases+=1
 assert len(used)==63,(len(used),sorted(used))
 assert len(rom)==262144
-report=dict(car_sha256=hashlib.sha256((B/'Phoenix-First-Flight.car').read_bytes()).hexdigest(),source_frames_used=len(used),restored_bird_hit_frames=8,checks=cases,pixel_shape_or_color_region_errors=0,normal_frames='exact source pixels; four left-return poses use horizontal reflection; transparent margins preserve anchors',injured_states='supplied full-spread frame with the appropriate wing removed',car_payload_bytes=len(rom))
+report=dict(car_sha256=hashlib.sha256((B/'Phoenix800XL.car').read_bytes()).hexdigest(),source_frames_used=len(used),restored_bird_hit_frames=8,checks=cases,pixel_shape_or_color_region_errors=0,normal_frames='exact source pixels; four left-return poses use horizontal reflection; transparent margins preserve anchors',injured_states='supplied full-spread frame with the appropriate wing removed',car_payload_bytes=len(rom))
 O=R/'evidence/v030';O.mkdir(exist_ok=True,parents=True);(O/'artwork.json').write_text(json.dumps(report,indent=2));print(report)

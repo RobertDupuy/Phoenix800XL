@@ -1,0 +1,11 @@
+{
+  "car_sha256": "942711eff8535cb97c96f1f4eaab9488c42356c5aa12de4fea8080d9c1b70a6e",
+  "checks": 411,
+  "rounds": 16,
+  "armor_and_barrier_cases": 120,
+  "entry_ticks": 120,
+  "victory_ticks": 160,
+  "next_wave": 6,
+  "award": 3200,
+  "method": "Focused CPU checks against the recovered arcade rules, with explicit fixtures."
+}

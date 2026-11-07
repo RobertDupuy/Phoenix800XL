@@ -20,20 +20,6 @@ shield_reset:
  lda #255
  sta shield_pose
  rts
-shield_input:
- lda shield_now
- sta shield_prev
- lda 0xe80f
- and #8
- eor #8
- sta shield_now
- beq shield_input_done
- lda shield_prev
- bne shield_input_done
- lda #1
- sta shield_edge
-shield_input_done:
- rts
 .section .shield_code,"ax",@progbits
 shield_update:
  ldx shield_edge
@@ -265,43 +251,37 @@ shield_players:
  lda shield_pmg_pose
  cmp #255
  bne 2f
- ldx #15
-1: lda ship_red,x
- sta 0x1600+player_pm_y,x
- dex
- bpl 1b
+ .irp row,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15
+ lda ship_red+\row
+ sta 0x1600+player_pm_y+\row
+ .endr
 2: pla
  sta shield_pmg_pose
  tax
  lda shield_green_offsets,x
  tax
- .irp row,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31
- lda shield_green+\row,x
- sta SHIP+player_shield_pm_y+\row
- lda shield_green+32+\row,x
- sta SHIP_RED+player_shield_pm_y+\row
- .endr
+ .include "build/xl-shield-copy.inc"
 shield_player_position:
  lda shield_pose
  sta 0x337
  lda #0xc6
- sta 0xc012
- sta 0xc013
+ sta 0xd012
+ sta 0xd013
  lda raw_ship_x
  and #248
  lsr
  clc
  adc #72
- sta 0xc000
+ sta 0xd000
  sta 0x338
  clc
  adc #8
- sta 0xc001
+ sta 0xd001
  sec
  sbc #4
- sta 0xc002
+ sta 0xd002
  lda #0x46
- sta 0xc014
+ sta 0xd014
  lda #0
  sta ship_hpos
  sec
@@ -316,26 +296,9 @@ shield_restore:
  sta shield_pmg_pose
  sta ship_pose
  lda #0x0e
- sta 0xc012
- ldx #7
- lda #0
-shield_clear_pm_top:
- sta SHIP+player_shield_pm_y,x
- sta SHIP_RED+player_shield_pm_y,x
- sta SHIP+player_pm_y+16,x
- sta SHIP_RED+player_pm_y+16,x
- dex
- bpl shield_clear_pm_top
- ldx #15
+ sta 0xd012
 shield_restore_ship:
- lda ship_white,x
- sta SHIP+player_pm_y,x
- lda ship_red,x
- sta SHIP_RED+player_pm_y,x
- lda ship_yellow,x
- sta 0x1600+player_pm_y,x
- dex
- bpl shield_restore_ship
+ jsr xl_restore_ship
 shield_players_done:
  clc
  rts
@@ -345,7 +308,10 @@ shield_green_offsets: .byte 0,64,128,192
 shield_cell_offsets: .byte 0,32,64,96,1,33,65,97,2,34,66,98,3,35,67,99
 shield_unique: .incbin "build/shield-unique.bin"
 shield_maps: .incbin "build/shield-maps.bin"
+.section .platform_assets,"a",@progbits
+.balign 256
 shield_green: .incbin "build/shield-green.bin"
+.section .effects,"a",@progbits
 shield_codes: .incbin "build/shield-codes.bin"
 
 .section .shield_code,"ax",@progbits
