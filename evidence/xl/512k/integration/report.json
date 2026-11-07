@@ -39,7 +39,7 @@
     "debugbrkrun": false,
     "history": false
   },
-  "car_sha256": "78e7f0ce35abe912f68ad46db641e99852ab710a1fff65e7709e44cdc0c60628",
+  "car_sha256": "7e8ef241db049a22fc4ed10d692ebc9ad965349592917515a4924db858b616de",
   "joystick_positions": [
     100,
     79,
@@ -61,7 +61,7 @@
       "audio_underruns": 0,
       "layout_faults": 0,
       "missing_audio_frames": 0,
-      "max_audio_gap_clocks": 29951
+      "max_audio_gap_clocks": 29952
     },
     {
       "wave": 2,
@@ -73,7 +73,7 @@
       "audio_underruns": 0,
       "layout_faults": 0,
       "missing_audio_frames": 0,
-      "max_audio_gap_clocks": 29951
+      "max_audio_gap_clocks": 29952
     },
     {
       "wave": 3,
@@ -91,8 +91,8 @@
       "wave": 4,
       "enemies": 7,
       "video_frames": 600,
-      "render_fps": 22.571,
-      "simulation_hz": 61.121,
+      "render_fps": 22.471,
+      "simulation_hz": 61.021,
       "late_vbi": 0,
       "audio_underruns": 0,
       "layout_faults": 0,
@@ -103,13 +103,13 @@
       "wave": 5,
       "enemies": 5,
       "video_frames": 600,
-      "render_fps": 18.876,
+      "render_fps": 18.676,
       "simulation_hz": 61.021,
       "late_vbi": 0,
       "audio_underruns": 0,
       "layout_faults": 0,
       "missing_audio_frames": 0,
-      "max_audio_gap_clocks": 29952
+      "max_audio_gap_clocks": 29950
     }
   ]
 }

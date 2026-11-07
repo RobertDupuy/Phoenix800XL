@@ -105,7 +105,9 @@ large_zero_fonts:
  cmp #33
  bcc large_scene_effects
 large_scene_birds:
+.if !XL_JCART
  jsr large_art_bank
+.endif
  ldx #7
 large_scene_slot:
  stx large_index
@@ -117,7 +119,7 @@ large_scene_next:
  dex
  bpl large_scene_slot
  lda #2
- sta 0xd500
+ xl_bank 2
 large_scene_effects:
  jsr supplied_palette_build
  jsr large_effect_cache_clear
@@ -220,7 +222,11 @@ large_draw_one:
  ora lg_maskptr
  sta lg_maskptr
  lda #3
- sta 0xd500
+.if XL_JCART
+ sta 0xd50c
+.else
+ xl_bank 3
+.endif
  .irp b,0,1,2
  ldy #\b
  lda (lg_maskptr),y

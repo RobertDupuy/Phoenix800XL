@@ -35,5 +35,5 @@ for wave in (3,4):
    bad=[i for i,(a,b) in enumerate(zip(*pictures)) if a!=b]
    raise AssertionError(dict(wave=wave,frame=frame,differences=len(bad),first=bad[:8],allocation=[(t.m.b[mod.S['layout_faults']],list(t.m.b[mod.S['lg_next']:mod.S['lg_next']+3])) for mod,t in mods]))
   frames+=1
-report=dict(car_sha256=hashlib.sha256((R/'Phoenix800XL.car').read_bytes()).hexdigest(),baseline_sha256=hashlib.sha256((args.baseline/'Phoenix800XL.car').read_bytes()).hexdigest(),frames=frames,decoded_pixel_errors=0,cpu_cycles=cycles,cpu_reduction_pct=round((1-cycles[1]/cycles[0])*100,2),method=__doc__)
+report=dict(car_sha256=hashlib.sha256((R/('Phoenix800XL-512K.car' if json.loads((R/'build/symbols.json').read_text()).get('XL_JCART') else 'Phoenix800XL.car')).read_bytes()).hexdigest(),baseline_sha256=hashlib.sha256((args.baseline/'Phoenix800XL.car').read_bytes()).hexdigest(),frames=frames,decoded_pixel_errors=0,cpu_cycles=cycles,cpu_reduction_pct=round((1-cycles[1]/cycles[0])*100,2),method=__doc__)
 out=R/'evidence/xl/cache';out.mkdir(parents=True,exist_ok=True);(out/'large-oracle.json').write_text(json.dumps(report,indent=2));print(json.dumps(report,indent=2))

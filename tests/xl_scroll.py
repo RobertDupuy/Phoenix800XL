@@ -69,7 +69,7 @@ for wave in [1,2,5,6,7]:
         expected=0 if wave==5 else (-((tick+1)//2))&255
         assert m[S['xl_star_scroll']]==expected,(wave,tick)
 
-report=dict(car_sha256=hashlib.sha256((R/'Phoenix800XL.car').read_bytes()).hexdigest(),
+report=dict(car_sha256=hashlib.sha256((R/('Phoenix800XL-512K.car' if json.loads((R/'build/symbols.json').read_text()).get('XL_JCART') else 'Phoenix800XL.car')).read_bytes()).hexdigest(),
             pixel_cases=cases,pixels_compared=cases*32000,pixel_errors=0,
             timing_cases=320,entrance_cases=256,blank_eight_line_bands=0,
             max_render_cpu_cycles=worst,

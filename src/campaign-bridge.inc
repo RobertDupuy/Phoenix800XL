@@ -1,13 +1,18 @@
 # Fixed-bank gates: all interrupt routines remain mapped during banked work.
+.if XL_JCART
+.set campaign_window,0xa000
+.else
+.set campaign_window,0x8000
+.endif
 .section .text,"ax",@progbits
 .macro campaign_gate name,offset
 \name:
  lda #3
- sta 0xd500
- jsr 0x8000+\offset
+ xl_bank 3
+ jsr campaign_window+\offset
  pha
  lda #2
- sta 0xd500
+ xl_bank 2
  pla
  rts
 .endm
@@ -23,16 +28,16 @@ campaign_gate arcade_bird_bomb,27
 
 mothership_blast:
  lda #8
- sta 0xd500
- jsr 0x8000
+ xl_bank 8
+ jsr campaign_window
  jmp victory_return
 mothership_award:
  lda #8
- sta 0xd500
- jsr 0x8003
+ xl_bank 8
+ jsr campaign_window+3
 victory_return:
  lda #2
- sta 0xd500
+ xl_bank 2
  rts
 
 .section .expanded_code,"ax",@progbits
@@ -195,7 +200,11 @@ campaign_render:
 .section .text,"ax",@progbits
 boss_copy_tile:
  lda #5
- sta 0xd500
+.if XL_JCART
+ sta 0xd509
+.else
+ xl_bank 5
+.endif
  .irp row,0,1,2,3,4,5,6,7
  ldy #\row
  lda (src_data),y
@@ -203,13 +212,13 @@ boss_copy_tile:
  sta (dst_ptr),y
  .endr
  lda #3
- sta 0xd500
+ xl_bank 3
  rts
 
 .section .text,"ax",@progbits
 boss_load_atlas:
  lda #6
- sta 0xd500
+ xl_bank 6
 1: lda lg_font_bases,x
  sta dst_ptr+1
  lda back_buffer
@@ -223,7 +232,11 @@ boss_load_atlas:
  lda boss_fine
  asl
  clc
+.if XL_JCART
+ adc #160
+.else
  adc #128
+.endif
  sta src_data+1
  lda #0
  sta src_data
@@ -246,11 +259,15 @@ boss_load_atlas:
  dex
  bne 2b
  lda #3
- sta 0xd500
+ xl_bank 3
  rts
 
 # Counts live immediately after the atlases in the same mapped ROM bank.
+.if XL_JCART
+.set boss_atlas_counts,0xb000
+.else
 .set boss_atlas_counts,0x9000
+.endif
 
 .section .expanded_code,"ax",@progbits
 mothership_picture:

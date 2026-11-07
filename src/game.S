@@ -1,3 +1,5 @@
+.include "build/cart-config.inc"
+.include "src/cart-banks.inc"
 # Phoenix800XL v1.0 — based on Phoenix5200 v0.31.
 # Seven large birds and five mothership escorts; standard 64 KiB XL/XE.
 # All code executed by the console is NMOS 6502 assembly.
@@ -76,7 +78,7 @@
 
 entry:
  lda #2
- sta 0xd500
+ xl_bank 2
  sei
  cld
  ldx #255
@@ -122,7 +124,7 @@ idle:
  lda start_requested
  beq idle_game
  lda #2
- sta 0xd500
+ xl_bank 2
  jsr prepare_gameplay
 idle_game:
  lda work_due
@@ -885,7 +887,7 @@ startup_init:
  sta 0xd01d
  sta intro_page
  lda #5
- sta 0xd500
+ xl_bank 5
  jsr expand_startup_fonts
  lda #<startup_nmi
  sta 0x202

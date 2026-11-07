@@ -46,5 +46,5 @@ for frame in range(args.frames):
   bad=[i for i,(a,b) in enumerate(zip(*pics)) if a!=b]
   raise AssertionError(dict(frame=frame,differences=len(bad),first=bad[:12],values=[(pics[0][i],pics[1][i])for i in bad[:12]]))
  checks+=1
-report=dict(car_sha256=hashlib.sha256((R/'Phoenix800XL.car').read_bytes()).hexdigest(),baseline_sha256=hashlib.sha256((args.baseline/'Phoenix800XL.car').read_bytes()).hexdigest(),method=__doc__,frames=checks,decoded_pixel_errors=0,cpu_cycles=cycles,cpu_reduction_pct=round((1-cycles[1]/cycles[0])*100,2))
+report=dict(car_sha256=hashlib.sha256((R/('Phoenix800XL-512K.car' if json.loads((R/'build/symbols.json').read_text()).get('XL_JCART') else 'Phoenix800XL.car')).read_bytes()).hexdigest(),baseline_sha256=hashlib.sha256((args.baseline/'Phoenix800XL.car').read_bytes()).hexdigest(),method=__doc__,frames=checks,decoded_pixel_errors=0,cpu_cycles=cycles,cpu_reduction_pct=round((1-cycles[1]/cycles[0])*100,2))
 out=R/'evidence/xl/cache';out.mkdir(exist_ok=True,parents=True);(out/'oracle.json').write_text(json.dumps(report,indent=2));print(json.dumps(report,indent=2))

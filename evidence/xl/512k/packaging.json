@@ -1,11 +1,12 @@
 {
-  "car_sha256": "78e7f0ce35abe912f68ad46db641e99852ab710a1fff65e7709e44cdc0c60628",
-  "baseline_sha256": "902bbd1b8110c43eac3cef7ddf032f11d159e899051f0e2ee63133ee7e22ddf0",
-  "car_type": 31,
+  "car_sha256": "7e8ef241db049a22fc4ed10d692ebc9ad965349592917515a4924db858b616de",
+  "car_type": 110,
   "rom_bytes": 524288,
   "file_bytes": 524304,
-  "header_checksum": 102976806,
-  "first_256k_identical": true,
-  "extra_banks": "16 banks of FF padding",
-  "game_code_changed": false
+  "checksum": 112231177,
+  "large_poses_verified": 120,
+  "mothership_halves_verified": 128,
+  "runtime_reset_stubs_verified": 12,
+  "normal_car_unchanged": true,
+  "method": "Check type 110, boot layout and lossless artwork repacking independently."
 }

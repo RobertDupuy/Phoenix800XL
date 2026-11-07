@@ -1,45 +1,62 @@
-# Phoenix800XL 512K MegaCart special build
+# Phoenix800XL 512K J(atari)Cart special build
 
-This separate cartridge was requested for Mean Hamster OS users needing a
-512 KiB image. It does not replace the normal 256 KiB release or change its URL.
+Load **Phoenix800XL-512K.car**. This replaces the failed MegaCart special build
+with **J(atari)Cart 512K / CAR type 110**, the same mapper as the supplied working
+Flicky cartridge. The normal 256K MegaCart release remains unchanged.
 
-Load **Phoenix800XL-512K.car**. It contains a 524,288-byte ROM plus the 16-byte
-CAR header (524,304 bytes total), using **MegaCart 512 KB / CAR type 31**.
-The cartridge still requires only a stock 64 KiB Atari XL/XE.
+The ROM is 524,288 bytes; the CAR file is 524,304 bytes including its header.
+It runs on a stock 64 KiB Atari XL/XE. Gameplay, sound, controls, seven large
+birds, five mothership escorts, T1X artwork and the latest scrolling background
+are retained. The middle planet remains removed.
 
-The first 256 KiB are identical to the published cartridge whose SHA-256 is
-`902bbd1b8110c43eac3cef7ddf032f11d159e899051f0e2ee63133ee7e22ddf0`.
-The additional 16 banks contain $FF padding. The CAR mapper number and checksum
-are updated for the larger image. Gameplay, sound, controls, seven large birds,
-five mothership escorts, scrolling background and T1X artwork are unchanged.
-The middle planet remains removed.
+This is a real banking conversion. J(atari)Cart maps an 8 KiB window at
+$A000–$BFFF, selected by the address of a write to $D500–$D53F. Startup now
+copies common code and artwork into RAM at $4000–$9FFF. Mothership code and data
+fit together in one ROM bank by reusing native artwork in RAM; its masks use
+otherwise unused RAM at $D800. Large bird artwork uses 30 complete poses per
+bank, selected by pose. Blank mothership tiles share an identical blank shape.
+Runtime banks include reset stubs. No artwork pixels were resampled or changed.
 
-Build this variant:
+Build:
 
 ```sh
 LLVM_MOS=/path/to/llvm-mos python3 tools/build.py --cart-size 512
+python3 tests/jcart_packaging.py
 ```
 
-Without the option, the build still produces the identical 256 KiB cartridge.
-The build writes separate filenames so it does not overwrite that cartridge.
+The default build still produces the byte-identical normal 256K cartridge.
+The special build uses a separate filename.
 
-Run the existing emulator integration checks against the 512K variant:
+Validation in stock 64 KiB NTSC AltirraBridge:
+
+- A joystick-only player completed all five waves, defeated the mothership and
+  reached wave 6. It used no game RAM writes, and exercised deaths and restarts.
+- Cold boot, joystick movement, shield, warm reset and cold reset passed.
+- Full-flock wave fixtures retained 16/16/7/7/5 enemies. Render rates were
+  29.961, 29.961, 21.872, 22.471 and 18.676 frames/s. No late VBI, audio
+  underruns, missing audio frames or layout faults occurred in those samples.
+- Both large waves matched the normal cartridge's decoded graphics across
+  640 frames. Mothership graphics matched across 280 damage/scroll fixtures.
+- The scrolling background passed 544 pixel comparisons, all 256 entrance
+  offsets and 320 timing checks, with no pixel errors or blank bands.
+- Packaging checks validate all 120 large-bird poses, 128 mothership tile
+  halves, cartridge checksum, resident RAM copies and runtime reset stubs.
+
+The measured large-bird rendering CPU cost increased 0.53%; mothership cost
+increased 0.07% in the matched graphics fixtures. No enemy counts were reduced.
+Reports and emulator screenshots are in `evidence/xl/512k`. Older evidence
+elsewhere retains the normal cartridge's original hashes and provenance.
+Physical loading through HamsterOS still needs the user's hardware test.
+
+Emulator checks:
 
 ```sh
 ALTIRRA_BRIDGE_PACKAGE=/path/to/AltirraBridge-nightly-linux-x86_64 \
 PHOENIX_XL_CART="$PWD/Phoenix800XL-512K.car" python3 tests/xl_integration.py
+ALTIRRA_BRIDGE_PACKAGE=/path/to/AltirraBridge-nightly-linux-x86_64 \
+PHOENIX_XL_CART="$PWD/Phoenix800XL-512K.car" python3 tests/xl_playthrough.py
 ```
 
-The special build is tested in AltirraBridge as a stock 64 KiB NTSC 800XL.
-Cold boot, joystick movement, shield, all five waves, warm reset and cold reset
-passed. The wave checks retained 16/16/7/7/5 enemies with zero late VBI,
-audio underruns, missing audio frames or layout faults. The default 256K build
-reproduces the published cartridge byte-for-byte; the 512K image passes the
-header, length, checksum and unchanged-game-bank comparisons.
-Actual loading through HamsterOS on physical hardware has not been tested.
-This is a capacity-format variant, not a change to HamsterOS or its firmware.
-The general README and prior evidence describe the normal 256 KiB build;
-the special build's packaging and emulator results are in `evidence/xl/512k`.
-
-Mapper reference:
+Mapper references:
+https://github.com/jhusak/jataricart
 https://raw.githubusercontent.com/atari800/atari800/master/DOC/cart.txt

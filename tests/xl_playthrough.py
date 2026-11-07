@@ -21,7 +21,7 @@ with XL(O) as e:
             events.append(event);last=key;print(event,flush=True)
             a.screenshot(path=str(O/f'event-{f:06}.png'))
         if m[0x83]>=6:break
-    report=dict(method=__doc__,car_sha256=hashlib.sha256((ROOT/'Phoenix800XL.car').read_bytes()).hexdigest(),
+    report=dict(method=__doc__,car_sha256=hashlib.sha256(e.car_path.read_bytes()).hexdigest(),
         frames=f+args.step,max_wave=max_wave,completed_first_cycle=max_wave>=6,events=events,
         late_vbi=int.from_bytes(m[0x308:0x30a],'little'),layout_faults=m[0x32d])
     (O/'report.json').write_text(json.dumps(report,indent=2))

@@ -14,7 +14,7 @@
 .global hud_init,hud_digit,high_score_update
 hud_init:
  lda #5
- sta 0xd500
+ xl_bank 5
  ldx #0
 hud_init_loop:
  .irp p,0,256,512,768
@@ -25,7 +25,7 @@ hud_init_loop:
  inx
  bne hud_init_loop
  lda #2
- sta 0xd500
+ xl_bank 2
  rts
 high_score_update:
  ldx #0

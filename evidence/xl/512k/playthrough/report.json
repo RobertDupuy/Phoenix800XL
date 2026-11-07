@@ -1,0 +1,611 @@
+{
+  "method": "Joystick-only play: RAM observations guide the player; no game memory writes.",
+  "car_sha256": "7e8ef241db049a22fc4ed10d692ebc9ad965349592917515a4924db858b616de",
+  "frames": 15096,
+  "max_wave": 6,
+  "completed_first_cycle": true,
+  "events": [
+    {
+      "frame": 0,
+      "wave": 1,
+      "state": 1,
+      "lives": 3,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 4,
+      "wave": 1,
+      "state": 4,
+      "lives": 3,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 128,
+      "wave": 1,
+      "state": 1,
+      "lives": 3,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 1192,
+      "wave": 1,
+      "state": 3,
+      "lives": 3,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        2,
+        8,
+        0
+      ]
+    },
+    {
+      "frame": 1288,
+      "wave": 1,
+      "state": 4,
+      "lives": 2,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        3,
+        2,
+        0
+      ]
+    },
+    {
+      "frame": 1416,
+      "wave": 1,
+      "state": 1,
+      "lives": 2,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        3,
+        2,
+        0
+      ]
+    },
+    {
+      "frame": 1656,
+      "wave": 2,
+      "state": 1,
+      "lives": 2,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        3,
+        6,
+        0
+      ]
+    },
+    {
+      "frame": 2336,
+      "wave": 2,
+      "state": 3,
+      "lives": 2,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        6,
+        4,
+        0
+      ]
+    },
+    {
+      "frame": 2432,
+      "wave": 2,
+      "state": 4,
+      "lives": 1,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        6,
+        4,
+        0
+      ]
+    },
+    {
+      "frame": 2560,
+      "wave": 2,
+      "state": 1,
+      "lives": 1,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        6,
+        4,
+        0
+      ]
+    },
+    {
+      "frame": 3124,
+      "wave": 3,
+      "state": 1,
+      "lives": 1,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        8,
+        8,
+        0
+      ]
+    },
+    {
+      "frame": 4520,
+      "wave": 3,
+      "state": 3,
+      "lives": 1,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        1,
+        2,
+        2,
+        0
+      ]
+    },
+    {
+      "frame": 4612,
+      "wave": 3,
+      "state": 2,
+      "lives": 0,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        1,
+        2,
+        2,
+        0
+      ]
+    },
+    {
+      "frame": 4800,
+      "wave": 1,
+      "state": 4,
+      "lives": 3,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 4924,
+      "wave": 1,
+      "state": 1,
+      "lives": 3,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 5768,
+      "wave": 1,
+      "state": 3,
+      "lives": 3,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        3,
+        8,
+        0
+      ]
+    },
+    {
+      "frame": 5860,
+      "wave": 1,
+      "state": 4,
+      "lives": 2,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        4,
+        2,
+        0
+      ]
+    },
+    {
+      "frame": 5988,
+      "wave": 1,
+      "state": 1,
+      "lives": 2,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        4,
+        2,
+        0
+      ]
+    },
+    {
+      "frame": 6236,
+      "wave": 1,
+      "state": 3,
+      "lives": 2,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        5,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 6328,
+      "wave": 1,
+      "state": 4,
+      "lives": 1,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        5,
+        4,
+        0
+      ]
+    },
+    {
+      "frame": 6456,
+      "wave": 1,
+      "state": 1,
+      "lives": 1,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        5,
+        4,
+        0
+      ]
+    },
+    {
+      "frame": 6596,
+      "wave": 2,
+      "state": 1,
+      "lives": 1,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        5,
+        6,
+        0
+      ]
+    },
+    {
+      "frame": 7668,
+      "wave": 3,
+      "state": 1,
+      "lives": 1,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        9,
+        6,
+        0
+      ]
+    },
+    {
+      "frame": 8208,
+      "wave": 4,
+      "state": 1,
+      "lives": 1,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        1,
+        6,
+        6,
+        0
+      ]
+    },
+    {
+      "frame": 8808,
+      "wave": 4,
+      "state": 3,
+      "lives": 1,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        2,
+        1,
+        6,
+        0
+      ]
+    },
+    {
+      "frame": 8900,
+      "wave": 4,
+      "state": 2,
+      "lives": 0,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        2,
+        2,
+        6,
+        0
+      ]
+    },
+    {
+      "frame": 9088,
+      "wave": 1,
+      "state": 4,
+      "lives": 3,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 9212,
+      "wave": 1,
+      "state": 1,
+      "lives": 3,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 10092,
+      "wave": 1,
+      "state": 3,
+      "lives": 3,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        2,
+        6,
+        0
+      ]
+    },
+    {
+      "frame": 10188,
+      "wave": 1,
+      "state": 4,
+      "lives": 2,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        3,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 10316,
+      "wave": 1,
+      "state": 1,
+      "lives": 2,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        3,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 10996,
+      "wave": 2,
+      "state": 1,
+      "lives": 2,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        4,
+        2,
+        0
+      ]
+    },
+    {
+      "frame": 12320,
+      "wave": 3,
+      "state": 1,
+      "lives": 2,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        0,
+        8,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 13044,
+      "wave": 4,
+      "state": 1,
+      "lives": 2,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        1,
+        3,
+        5,
+        0
+      ]
+    },
+    {
+      "frame": 13692,
+      "wave": 5,
+      "state": 1,
+      "lives": 2,
+      "boss": 1,
+      "score": [
+        0,
+        0,
+        1,
+        9,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 13812,
+      "wave": 5,
+      "state": 1,
+      "lives": 2,
+      "boss": 2,
+      "score": [
+        0,
+        0,
+        1,
+        9,
+        0,
+        0
+      ]
+    },
+    {
+      "frame": 14936,
+      "wave": 5,
+      "state": 1,
+      "lives": 2,
+      "boss": 3,
+      "score": [
+        0,
+        0,
+        1,
+        9,
+        6,
+        0
+      ]
+    },
+    {
+      "frame": 15000,
+      "wave": 5,
+      "state": 1,
+      "lives": 3,
+      "boss": 3,
+      "score": [
+        0,
+        0,
+        3,
+        7,
+        6,
+        0
+      ]
+    },
+    {
+      "frame": 15032,
+      "wave": 5,
+      "state": 1,
+      "lives": 3,
+      "boss": 4,
+      "score": [
+        0,
+        0,
+        3,
+        7,
+        6,
+        0
+      ]
+    },
+    {
+      "frame": 15092,
+      "wave": 6,
+      "state": 1,
+      "lives": 3,
+      "boss": 0,
+      "score": [
+        0,
+        0,
+        3,
+        7,
+        6,
+        0
+      ]
+    }
+  ],
+  "late_vbi": 0,
+  "layout_faults": 0
+}

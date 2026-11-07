@@ -1,6 +1,6 @@
 # Phoenix for Atari 800XL
 
-**512K special build:** use `Phoenix800XL-512K.car` for the separate MegaCart
+**512K special build:** use `Phoenix800XL-512K.car` for the separate J(atari)Cart
 512 KiB variant requested for Mean Hamster OS. See [SPECIAL-512K.md](SPECIAL-512K.md)
 for its build command and validation. The normal 256 KiB release is unchanged.
 

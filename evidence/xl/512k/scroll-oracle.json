@@ -1,0 +1,11 @@
+{
+  "car_sha256": "7e8ef241db049a22fc4ed10d692ebc9ad965349592917515a4924db858b616de",
+  "pixel_cases": 544,
+  "pixels_compared": 17408000,
+  "pixel_errors": 0,
+  "timing_cases": 320,
+  "entrance_cases": 256,
+  "blank_eight_line_bands": 0,
+  "max_render_cpu_cycles": 28574,
+  "method": "All scroll offsets against an independent pixel compositor, including wraps.\n\nCPU fixtures place a full flock and exercise shield/death scenes explicitly.\nThis tests the rendered cartridge code, not the assembled source text.\n"
+}

@@ -33,7 +33,7 @@ for pose in range(4):
             assert actual==scene(m).tobytes(),(pose,phase,buffer,'pixels')
             high=max(high,m[S['next_char']]); cases+=1
 
-report=dict(car_sha256=hashlib.sha256((R/'Phoenix800XL.car').read_bytes()).hexdigest(),
+report=dict(car_sha256=hashlib.sha256((R/('Phoenix800XL-512K.car' if json.loads((R/'build/symbols.json').read_text()).get('XL_JCART') else 'Phoenix800XL.car')).read_bytes()).hexdigest(),
             cases=cases,pixel_errors=0,layout_faults=0,max_render_cpu_cycles=worst,
             max_next_char=high,method=__doc__)
 out=R/'evidence/xl/scroll';out.mkdir(parents=True,exist_ok=True)

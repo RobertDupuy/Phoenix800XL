@@ -921,7 +921,12 @@ boss_patch_new:
  ora boss_t0
  sta boss_src2
  lda boss_half_hi,x
+.if XL_JCART
+ clc
+ adc #12
+.else
  ora #16
+.endif
  sta boss_src2+1
  jsr boss_copy_tile
 boss_bg_nextcell:
@@ -1213,7 +1218,9 @@ campaign_bomb_allocate:
  rts
 .section .boss_data,"a",@progbits
 .balign 256
+.if !XL_JCART
 boss_gfx: .incbin "build/boss-glyphs.bin"
+.endif
 .include "build/award-stars.inc"
 boss_dive_candidates: .incbin "build/bird_dive_spawn_positions.bin"
 boss_initial: .incbin "build/boss-body.bin"
@@ -1226,19 +1233,37 @@ boss_row_offsets: .byte 0,26,52,78,104,130,156,182,208,234
 boss_wipe_glyph: .incbin "build/wipe-glyph.bin"
 .balign 256
 boss_wipe_radius: .incbin "build/wipe-radius.bin"
+.if XL_JCART
+.set boss_native,native_tiles
+.set boss_native_masks,0xd800
+.else
 boss_native: .incbin "build/native-tiles.bin"
 boss_native_masks: .incbin "build/native-masks.bin"
+.endif
 
 boss_half_lo:
  .set n,0
  .rept 64
+.if XL_JCART && (n >= 48)
+ .byte (31*64)&255
+.else
  .byte (n*64)&255
+.endif
  .set n,n+1
  .endr
 boss_half_hi:
  .set n,0
  .rept 64
+.if XL_JCART
+ # Shapes 112..127 are blank; share the existing blank shape 95.
+ .if n < 48
+ .byte 160+(n>>2)
+ .else
+ .byte 167
+ .endif
+.else
  .byte 128+(n>>2)
+.endif
  .set n,n+1
  .endr
 

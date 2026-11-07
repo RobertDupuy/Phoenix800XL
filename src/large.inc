@@ -252,7 +252,7 @@ large_pixel_next:
  dec large_hit_count
  bne large_collision_pixel
  lda #2
- sta 0xd500
+ xl_bank 2
  ldx large_index
 large_collision_next:
  dex
@@ -262,7 +262,7 @@ large_collision_done:
  rts
 large_pixel_hit:
  lda #2
- sta 0xd500
+ xl_bank 2
  ldx large_index
  lda enemy_on,x
  cmp #11
@@ -428,16 +428,48 @@ palette_done:
  sta gameplay_color
  rts
 large_art_bank:
+.if XL_JCART
+ # Each 8 KiB bank holds 30 complete 256-byte poses plus reset space.
+ ldx large_index
+ lda large_pose,x
+ cmp #30
+ bcc jcart_large_first
+ sbc #30
+ clc
+ adc #0xa0
+ sta large_src+1
+ lda large_mode
+ cmp #2
+ beq jcart_large_second_upper
+ sta 0xd50e
+ rts
+jcart_large_second_upper:
+ sta 0xd510
+ rts
+jcart_large_first:
+ clc
+ adc #0xa0
+ sta large_src+1
+ lda large_mode
+ cmp #2
+ beq jcart_large_second_lower
+ sta 0xd50d
+ rts
+jcart_large_second_lower:
+ sta 0xd50f
+ rts
+.else
  lda large_mode
  cmp #2
  beq large_art_second
  lda #4
- sta 0xd500
+ xl_bank 4
  rts
 large_art_second:
  lda #7
- sta 0xd500
+ xl_bank 7
  rts
+.endif
 
 .section .large_data,"a",@progbits
 .set large_y,0x3870
