@@ -1,5 +1,9 @@
 # Phoenix for Atari 800XL
 
+**512K special build:** use `Phoenix800XL-512K.car` for the separate MegaCart
+512 KiB variant requested for Mean Hamster OS. See [SPECIAL-512K.md](SPECIAL-512K.md)
+for its build command and validation. The normal 256 KiB release is unchanged.
+
 An NTSC Atari 800XL port of the current Phoenix5200 release-candidate build.
 Runs with stock 64 KB RAM and standard ANTIC, GTIA and POKEY hardware.
 

@@ -84,7 +84,7 @@ if __name__ == '__main__':
         a.cold_reset(); a.frame(700)
         assert a.peek(S['state'])[0] == 0
         report=dict(method=__doc__,config=e.config,
-            car_sha256=hashlib.sha256((ROOT/'Phoenix800XL.car').read_bytes()).hexdigest(),
+            car_sha256=hashlib.sha256(e.car_path.read_bytes()).hexdigest(),
             joystick_positions=[x0,x1,x2,x3],shield_down=True,
             cold_boot=True,warm_reset=True,cold_reset=True,timing=rows)
         (O/'report.json').write_text(json.dumps(report,indent=2))

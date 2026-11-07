@@ -1,6 +1,6 @@
 """Assemble the Atari XL program and package its MegaCart cartridge image."""
 from pathlib import Path
-import os, subprocess, struct, json, re, hashlib, shutil
+import argparse, os, subprocess, struct, json, re, hashlib, shutil
 from prepare_large import prepare as prepare_large
 from prepare_flight_art import prepare as prepare_flight_art
 from prepare_hud import prepare as prepare_hud
@@ -11,6 +11,12 @@ from prepare_art import prepare
 from prepare_formation import prepare as prepare_formation
 from prepare_victory import prepare as prepare_victory
 from prepare_xl import prepare as prepare_xl
+parser=argparse.ArgumentParser(description=__doc__)
+parser.add_argument('--cart-size',type=int,choices=(256,512),default=256,
+                    help='MegaCart ROM capacity in KiB (default: 256)')
+args=parser.parse_args()
+cart_type={256:30,512:31}[args.cart_size]
+cart_name='Phoenix800XL' if args.cart_size==256 else 'Phoenix800XL-512K'
 R=Path(__file__).resolve().parents[1]
 B=R/'build'; B.mkdir(exist_ok=True)
 MOS=Path(os.environ['LLVM_MOS'])/'bin' if os.environ.get('LLVM_MOS') else Path(shutil.which('mos-common-clang') or '/missing/mos-common-clang').parent
@@ -88,7 +94,8 @@ banks[5][0x4000:0x7fc0]=padded2+bytes(0x3fc0-len(padded2))
 packed=(B/'intro-fonts-packed.bin').read_bytes();maps=(B/'intro-maps.bin').read_bytes()
 banks[3][0x6400:0x6400+len(packed)]=packed
 banks[3][0x7800:0x7800+len(maps)]=maps
-# Convert the banked 5200 layout into ten 16 KiB MegaCart banks, padded to 256 KiB.
+# Convert the banked 5200 layout into ten 16 KiB MegaCart banks, then pad
+# to the requested capacity. The larger cartridge keeps identical game banks.
 # Bank 0: boot/platform. Bank 1: resident code copied into $4000-$7FFF.
 # Banks 2..9: the eight original upper windows, now selected through $D500.
 subprocess.run([str(MOS/'llvm-objcopy'),'-O','binary','--only-section=.platform','build/game.elf','build/platform.bin'],cwd=R,check=True)
@@ -103,7 +110,7 @@ for section,offset,capacity in [('boot',0,256),('loader',256,256),('cart_tail',0
  assert len(data)<=capacity,(section,len(data))
  boot[offset:offset+len(data)]=data
 (B/'boot-xl.bin').write_bytes(boot)
-xlbanks=[bytearray([255])*16384 for _ in range(16)]
+xlbanks=[bytearray([255])*16384 for _ in range(args.cart_size//16)]
 background=(B/'xl-background.bin').read_bytes()
 assert len(background)==7168
 xlbanks[0][:len(background)]=background
@@ -114,10 +121,10 @@ for n,bank in enumerate(banks):
  xlbanks[n+2][:]=bank[0x4000:]
  xlbanks[n+2][0x3fd0:]=boot[0xfd0:]
 rom=b''.join(xlbanks)
-(B/'Phoenix800XL.rom').write_bytes(rom)
-car=b'CART'+struct.pack('>III',30,sum(rom)&0xffffffff,0)+rom
-(B/'Phoenix800XL.car').write_bytes(car)
-(R/'Phoenix800XL.car').write_bytes(car)
+(B/(cart_name+'.rom')).write_bytes(rom)
+car=b'CART'+struct.pack('>III',cart_type,sum(rom)&0xffffffff,0)+rom
+(B/(cart_name+'.car')).write_bytes(car)
+(R/(cart_name+'.car')).write_bytes(car)
 nm=subprocess.check_output([str(MOS/'llvm-nm'),'build/game.elf'],cwd=R,text=True)
 symbols={m[3]:int(m[1],16) for line in nm.splitlines() if (m:=re.match(r'^([0-9A-Fa-f]+)\s+(\w)\s+(.+)$',line))}
 assert symbols['large_collision']<0xa400
@@ -129,6 +136,6 @@ for page in range(48):
  assert base[symbols['pattern_pages']-0x4000+page]==expected
 (B/'symbols.json').write_text(json.dumps(symbols,indent=2))
 assert rom[0x3ffa:0x4000]==bytes([0xd0,0xbf,0,4,0xf9,0xbf])
-assert len(rom)==262144
+assert len(rom)==args.cart_size*1024
 assert symbols['platform_end']<=0xd000
-print(json.dumps({'payload_bytes':len(rom),'car_type':30,'entry':hex(symbols['entry']),'sha256':hashlib.sha256(car).hexdigest()},indent=2))
+print(json.dumps({'payload_bytes':len(rom),'car_type':cart_type,'file':cart_name+'.car','entry':hex(symbols['entry']),'sha256':hashlib.sha256(car).hexdigest()},indent=2))

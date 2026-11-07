@@ -46,7 +46,8 @@ class XL:
         self.config = self.a.config()
         assert self.config['machine'] == machine and self.config['memory'] == '64K'
         assert not self.config['rapidus'] and not self.config['vbxe']
-        self.a.boot(str(ROOT/'Phoenix800XL.car'))
+        self.car_path=Path(os.environ.get('PHOENIX_XL_CART',str(ROOT/'Phoenix800XL.car'))).resolve()
+        self.a.boot(str(self.car_path))
     def close(self):
         self.proc.terminate()
         self.proc.wait(timeout=10)
